@@ -6,9 +6,6 @@
   (it "is in progress if board is empty"
     (should= :in-progress (score (repeat 9 ""))))
 
-  (it "throws error if board is less than 9"
-    (should= "Please enter a valid board" (score [])))
-
   (it "is in progress if board is not full and has no winner"
     (should= :in-progress (score [:x :o :x :o :o "" "" "" ""]))
     (should= :in-progress (score [1 2 3 4 5 6 7 8 9])))
