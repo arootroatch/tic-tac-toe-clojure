@@ -1,5 +1,4 @@
-(ns tic-tac-toe.scoring
-  (:require [tic-tac-toe.utils :refer [throw-invalid-board-error]]))
+(ns tic-tac-toe.scoring)
 
 (defn ->paths [board]
   "Top, middle, bottom, left, middle, right, l-r, r-l"
