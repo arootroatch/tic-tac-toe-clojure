@@ -24,6 +24,3 @@
     (won? board) (get-winner board)))
 
 
-(defn -main
-  [& args]
-  (println "Hello World"))
