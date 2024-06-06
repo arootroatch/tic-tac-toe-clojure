@@ -19,7 +19,6 @@
 
 (defn score [board]
   (cond
-    (< (count board) 9) (throw-invalid-board-error)
     (and (not (won? board)) (not (every? #{:x :o} board))) :in-progress
     (and (not (won? board)) (every? #{:x :o} board)) "It's a tie!"
     (won? board) (get-winner board)))
