@@ -1,7 +1,5 @@
 (ns tic-tac-toe.utils)
 
-(defn throw-invalid-board-error [] "Please enter a valid board")
-
 (defn throw-invalid-move-error [] "Please enter a valid move (1-9)")
 
 (defn print-board [board]
