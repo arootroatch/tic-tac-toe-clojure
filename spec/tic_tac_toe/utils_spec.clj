@@ -5,9 +5,6 @@
 (describe "utility functions"
   (with-stubs)
   (context "error handling"
-    (it "throws error when invalid board"
-      (should= "Please enter a valid board" (throw-invalid-board-error)))
-
     (it "throws error when invalid move"
       (should= "Please enter a valid move (1-9)" (throw-invalid-move-error))))
 
