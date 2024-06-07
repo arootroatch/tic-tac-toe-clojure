@@ -37,14 +37,14 @@
         (let [result (play-move empty-board :o)]
           (should= [1 2 3 4 5 6 7 8 :o] result))))
 
-    (it "O plays one of X's already played cell"
+    (it "O plays one of X's already played cells"
       (let [board (assoc empty-board 0 :x)
             message (with-out-str (with-in-str "1\n2" (play-move board :o)))
             result (with-in-str "1\n2" (play-move board :o))]
         (should= "Please choose an empty cell\n" message)
         (should= [:x :o 3 4 5 6 7 8 9] result)))
 
-    (it "O plays one of O's already played cell"
+    (it "O plays one of O's already played cells"
       (let [board (assoc empty-board 0 :o)
             message (with-out-str (with-in-str "1\n2" (play-move board :o)))
             result (with-in-str "1\n2" (play-move board :o))]
