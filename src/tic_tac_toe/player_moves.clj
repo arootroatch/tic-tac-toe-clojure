@@ -7,7 +7,7 @@
     (catch Exception _)))
 
 (defn play-move [board player]
-  #_(println "Please enter your move (type 1-9 and hit enter):")
+  (println "Please enter your move (type 1-9 and hit enter):")
   (loop [move (read-move)]
       (if (number? (get board move))
         (assoc board move player)
