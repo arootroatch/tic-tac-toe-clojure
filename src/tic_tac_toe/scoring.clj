@@ -10,19 +10,21 @@
             (take-nth 4 board)
             (take-nth 2 (drop-last (drop 2 board))))))
 
-(defn- won? [board]
-  (or (some #(every? #{:x} %) (->paths board))
-      (some #(every? #{:o} %) (->paths board))))
+(defn- won? [paths]
+  (or (some #(every? #{:x} %) paths)
+      (some #(every? #{:o} %) paths)))
 
-(defn- get-winner [board]
-  ())
+(defn- get-winner [paths]
+  (cond
+    (some #(every? #{:x} %) paths) "X"
+    (some #(every? #{:o} %) paths) "O"))
 
 (defn score [board]
-  (cond
-    (won? board) (get-winner board)
-    (every? #{:x :o} board) "It's a tie!"
-    :else :in-progress))
-
+  (let [paths (->paths board)]
+    (cond
+      (won? paths) (get-winner paths)
+      (every? #{:x :o} board) "It's a tie!"
+      :else :in-progress)))
 
 
 

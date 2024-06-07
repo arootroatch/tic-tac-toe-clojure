@@ -10,10 +10,10 @@
     (should= :in-progress (score [:x :o :x :o :o 6 7 8 9]))
     (should= :in-progress (score [1 2 3 4 5 6 7 8 9])))
 
-  #_(it "returns winner if three in a row"
-    (should= :x (score [:x :x :x 4 5 6 7 8 9]))
-    (should= :x (score [1 2 3 :x :x :x 7 8 9]))
-    (should= :o (score [1 2 3 :o :o :o 7 8 9])))
+  (it "returns winner if three in a row"
+    (should= "X" (score [:x :x :x 4 5 6 7 8 9]))
+    (should= "X" (score [1 2 3 :x :x :x 7 8 9]))
+    (should= "O" (score [1 2 3 :o :o :o 7 8 9])))
 
   (it "is a tie if board is full and has no winner"
     (should= "It's a tie!" (score [:x :o :x :x :x :o :o :x :o])))
