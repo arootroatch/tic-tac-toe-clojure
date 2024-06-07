@@ -11,15 +11,18 @@
             (take-nth 2 (drop-last (drop 2 board))))))
 
 (defn- won? [board]
-  (some (or #(every? #{:x} %) #(every? #{:o} %)) (->paths board)))
+  (or (some #(every? #{:x} %) (->paths board))
+      (some #(every? #{:o} %) (->paths board))))
 
 (defn- get-winner [board]
-  (first (flatten (filter (or #(every? #{:x} %) #(every? #{:o} %)) (->paths board)))))
+  ())
 
 (defn score [board]
   (cond
-    (and (not (won? board)) (not (every? #{:x :o} board))) :in-progress
-    (and (not (won? board)) (every? #{:x :o} board)) "It's a tie!"
-    (won? board) (get-winner board)))
+    (won? board) (get-winner board)
+    (every? #{:x :o} board) "It's a tie!"
+    :else :in-progress))
+
+
 
 
