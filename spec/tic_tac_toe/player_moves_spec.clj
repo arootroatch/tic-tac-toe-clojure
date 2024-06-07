@@ -7,10 +7,9 @@
 (describe "making moves"
   (context "play-move"
 
-    #_(it "prompts user for input at beginning of turn"
-      (should= "Please enter your move (type 1-9 and hit enter):"
-               (with-out-str (play-move empty-board :x)))
-      (should= [:x 2 3 4 5 6 7 8 9] (with-in-str "1" (play-move empty-board :x))))
+    (it "prompts user for input at beginning of turn"
+      (with-in-str "1" (should= "Please enter your move (type 1-9 and hit enter):\n"
+               (with-out-str (play-move empty-board :x)))))
 
     (it "plays first cell"
       (with-in-str "1"
@@ -30,7 +29,7 @@
     (it "does not print an error when user enters a valid move"
       (with-in-str "3"
         (let [message (with-out-str (play-move empty-board :x))]
-          (should= "" message))))
+          (should= "Please enter your move (type 1-9 and hit enter):\n" message))))
 
     (it "O plays a move"
       (with-in-str "9"
@@ -41,14 +40,14 @@
       (let [board (assoc empty-board 0 :x)
             message (with-out-str (with-in-str "1\n2" (play-move board :o)))
             result (with-in-str "1\n2" (play-move board :o))]
-        (should= "Please choose an empty cell\n" message)
+        (should= "Please enter your move (type 1-9 and hit enter):\nPlease choose an empty cell\n" message)
         (should= [:x :o 3 4 5 6 7 8 9] result)))
 
     (it "O plays one of O's already played cells"
       (let [board (assoc empty-board 0 :o)
             message (with-out-str (with-in-str "1\n2" (play-move board :o)))
             result (with-in-str "1\n2" (play-move board :o))]
-        (should= "Please choose an empty cell\n" message)
+        (should= "Please enter your move (type 1-9 and hit enter):\nPlease choose an empty cell\n" message)
         (should= [:o :o 3 4 5 6 7 8 9] result)))
 
     (it "plays a move that is out of range"

@@ -16,8 +16,8 @@
 
 (defn- get-winner [paths]
   (cond
-    (some #(every? #{:x} %) paths) "X"
-    (some #(every? #{:o} %) paths) "O"))
+    (some #(every? #{:x} %) paths) "X wins!"
+    (some #(every? #{:o} %) paths) "O wins!"))
 
 (defn score [board]
   (let [paths (->paths board)]
