@@ -1,7 +1,12 @@
 (ns tic-tac-toe.main
   (:require [tic-tac-toe.bot-moves :refer [play-bot-turn]]
             [tic-tac-toe.player-moves :refer [play-user-turn]]
-            [tic-tac-toe.utils :refer [initial-board player-sequence print-board score]]))
+            [tic-tac-toe.print-utils :refer [print-board]]
+            [tic-tac-toe.eval-board :refer [score]]))
+
+(def initial-board [1 2 3 4 5 6 7 8 9])
+
+(def player-sequence (cycle [:x :o]))
 
 (defn- dispatch-player [board player]
   (if (= player :x)
