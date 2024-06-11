@@ -1,13 +1,6 @@
 (ns tic-tac-toe.bot-moves
-  (:require [tic-tac-toe.utils :refer [->paths]]))
-
-(defn evaluate-board [board]
-  (let [paths (->paths board)]
-    (cond
-      (some #(every? #{:x} %) paths) -10
-      (some #(every? #{:o} %) paths) 10
-      (every? #{:x :o} board) 0
-      :else :in-progress)))
+  (:require [tic-tac-toe.eval-board :refer [evaluate-board]]
+            [tic-tac-toe.print-utils :refer [display-bot-move-message]]))
 
 (declare minimax)
 
@@ -53,5 +46,5 @@
 
 (defn play-bot-turn [board player]
   (let [move (find-best-move board player)]
-    (println (str "Your opponent plays " move "!"))
+    (display-bot-move-message move)
     (assoc board (dec move) player)))
