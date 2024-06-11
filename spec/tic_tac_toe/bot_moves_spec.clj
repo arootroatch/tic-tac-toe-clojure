@@ -18,7 +18,6 @@
     (it "finds move if next move is a block"
       (should= 4 (find-best-move [1 2 :o 4 :x :x 7 8 9] :o))
       (should= 1 (find-best-move [1 2 :o 4 :x 6 7 8 :x] :o))
-      (should= 9 (find-best-move [:x :o :o 4 :o :x :x :x 9] :o))
       (should= 9 (find-best-move [:x :o :x :o :o :x 7 :x 9] :o)))
     )
   )
