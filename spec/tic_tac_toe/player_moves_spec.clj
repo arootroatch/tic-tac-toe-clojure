@@ -8,8 +8,9 @@
   (context "play-move"
 
     (it "prompts user for input at beginning of turn"
-      (with-in-str "1" (should= "Please enter your move (type 1-9 and hit enter):\n"
-               (with-out-str (play-move empty-board :x)))))
+      (with-in-str "1"
+        (should= "Please enter your move (type 1-9 and hit enter):\n"
+                 (with-out-str (play-move empty-board :x)))))
 
     (it "plays first cell"
       (with-in-str "1"

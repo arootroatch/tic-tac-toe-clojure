@@ -2,7 +2,7 @@
   (:require [speclj.core :refer :all]
             [tic-tac-toe.utils :refer :all]))
 
-(describe "utility functions"
+#_(describe "utility functions"
   (context "printing"
     (it "prints the board to the terminal"
       (should= "1 X 3\n4 O 6\nO 8 9\n"

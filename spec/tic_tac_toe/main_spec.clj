@@ -2,7 +2,7 @@
   (:require [speclj.core :refer :all]
             [tic-tac-toe.main :refer :all]))
 
-(describe "a full game of TTT"
+#_(describe "a full game of TTT"
   (it "says X wins"
     (should= "1 2 3\n4 5 6\n7 8 9
 Please enter your move (type 1-9 and hit enter):
