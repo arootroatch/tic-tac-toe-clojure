@@ -6,7 +6,8 @@
     (cond
       (some #(every? #{:x} %) paths) -10
       (some #(every? #{:o} %) paths) 10
-      :else 0)))
+      (every? #{:x :o} board) 0
+      :else :in-progress)))
 
 (declare minimax)
 
@@ -31,12 +32,11 @@
         (recur (rest available) (max best-score score))))))
 
 (defn- minimax [board max? depth]
+  (let [game-state (evaluate-board board)]
     (cond
-      (= 10 (evaluate-board board)) (- 10 depth)
-      (= -10 (evaluate-board board)) (+ -10 depth)
-      (every? #{:x :o} board) 0
+      (not= :in-progress game-state) game-state
       max? (max-move board :o depth)
-      :else (min-move board :x depth)))
+      :else (min-move board :x depth))))
 
 (defn find-best-move [board player]
   (loop [available (filter number? board)
