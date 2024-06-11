@@ -1,6 +1,5 @@
 (ns tic-tac-toe.bot-moves
-  (:require [tic-tac-toe.scoring :refer [->paths]]))
-
+  (:require [tic-tac-toe.utils :refer [->paths]]))
 
 (defn evaluate-board [board]
   (let [paths (->paths board)]
@@ -33,9 +32,9 @@
 
 (defn- minimax [board max? depth]
     (cond
-      (every? #{:x :o} board) 0
       (= 10 (evaluate-board board)) (- 10 depth)
       (= -10 (evaluate-board board)) (+ -10 depth)
+      (every? #{:x :o} board) 0
       max? (max-move board :o depth)
       :else (min-move board :x depth)))
 
@@ -52,7 +51,7 @@
           (recur (rest available) move score)
           (recur (rest available) best-move best-score))))))
 
-(defn play-bot [board player]
+(defn play-bot-turn [board player]
   (let [move (find-best-move board player)]
     (println (str "Your opponent plays " move "!"))
     (assoc board (dec move) player)))
