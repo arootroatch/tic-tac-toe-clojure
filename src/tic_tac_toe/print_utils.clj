@@ -7,9 +7,9 @@
 (defn display-bot-move-message [move] (println (str "Your opponent plays " move "!")))
 
 (defn- format-board [board]
-  (let [purple "\u001B[35m"
-        white "\u001B[0m"]
-    (map #(if (keyword? %) (.toUpperCase (name %)) %) board)))
+  (let [purple "\u001b[35m"
+        reset "\u001b[0m"]
+    (map #(if (keyword? %) (.toUpperCase (name %)) (str purple % reset)) board)))
 
 (defn print-board [board]
   (let [board (format-board board)]
