@@ -18,6 +18,7 @@
   (it "finds move with most potential to win if not blocked"
     (should= 5 (find-best-move [:o :x :o :x 5 6 7 8 :x] :o)))
 
+  (tags :slow)
   (it "plays center if first move is a corner"
     (should= 5 (find-best-move [:x 2 3 4 5 6 7 8 9] :o))
     (should= 5 (find-best-move [1 2 :x 4 5 6 7 8 9] :o))

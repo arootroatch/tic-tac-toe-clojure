@@ -2,22 +2,20 @@
   (:require [speclj.core :refer :all]
             [tic-tac-toe.print-utils :refer :all]))
 
-(defn- format-board [board]
-  (let [purple "\u001b[35m"
-        reset "\u001b[0m"]
-    (map #(if (keyword? %) (.toUpperCase (name %)) (str purple % reset)) board)))
+(def purple "\u001b[35m")
 
-(defn print-board-test [board]
-  (let [board (format-board board)]
-    (println (first board) (second board) (nth board 2))
-    (println (nth board 3) (nth board 4) (nth board 5))
-    (println (nth board 6) (nth board 7) (nth board 8))))
+(def reset "\u001b[0m")
 
 (describe "utility functions"
   (it "prints the board to the terminal"
-    (let [result (with-out-str (print-board-test [1 :x 3 4 :o 6 :o 8 9]))]
-      (should= result
-        (with-out-str (print-board [1 :x 3 4 :o 6 :o 8 9])))))
+    (should= (str purple 1 reset " " purple 2 reset " " purple 3 reset "\n"
+                  purple 4 reset " " purple 5 reset " " purple 6 reset "\n"
+                  purple 7 reset " " purple 8 reset " " purple 9 reset "\n")
+             (with-out-str (print-board [1 2 3 4 5 6 7 8 9])))
+    (should= (str purple 1 reset " X " purple 3 reset "\n"
+                  purple 4 reset " O " purple 6 reset "\n"
+                  "O " purple 8 reset " " purple 9 reset "\n")
+             (with-out-str (print-board [1 :x 3 4 :o 6 :o 8 9]))))
 
   (it "asks for a valid move"
     (should= "Please choose an empty cell\n"
@@ -25,8 +23,6 @@
 
   (it "asks user to input a move"
     (should= "Please enter your move (type 1-9 and hit enter):\n"
-             (with-out-str (prompt-user-for-move))))
-
-  )
+             (with-out-str (prompt-user-for-move)))))
 
 
