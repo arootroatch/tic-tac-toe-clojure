@@ -1,15 +1,11 @@
 (ns tic-tac-toe.player-moves
-  (:require [tic-tac-toe.print-utils :refer [display-invalid-move-error prompt-user-for-move]]))
-
-(defn- read-move []
-  (try
-    (dec (Integer/parseInt (read-line)))
-    (catch Exception _)))
+  (:require [tic-tac-toe.print-utils :as print-utils]))
 
 (defn play-user-turn [board player]
-  (prompt-user-for-move)
-  (loop [move (read-move)]
+  (print-utils/prompt-user-for-move)
+  (loop [move (print-utils/read-user-input)]
+    (prn "move" move)
     (if (number? (get board move))
       (assoc board move player)
-      (do (display-invalid-move-error)
-          (recur (read-move))))))
+      (do (print-utils/display-invalid-move-error)
+          (recur (print-utils/read-user-input))))))
