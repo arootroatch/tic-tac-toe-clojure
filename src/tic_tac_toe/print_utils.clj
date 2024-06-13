@@ -16,5 +16,3 @@
     (println (str (first board) " " (second board) " " (nth board 2) "\n"
                   (nth board 3) " " (nth board 4) " " (nth board 5) "\n"
                   (nth board 6) " " (nth board 7) " " (nth board 8)))))
-
-
