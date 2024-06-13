@@ -16,3 +16,20 @@
     (println (str (first board) " " (second board) " " (nth board 2) "\n"
                   (nth board 3) " " (nth board 4) " " (nth board 5) "\n"
                   (nth board 6) " " (nth board 7) " " (nth board 8)))))
+
+(defn read-user-input []
+  (try
+    (dec (Integer/parseInt (read-line)))
+    (catch Exception _)))
+
+(defn prompt-user-for-level []
+  (println "Please select level of difficulty:")
+  (println "1 - Easy")
+  (println "2 - Medium")
+  (println "3 - Unbeatable")
+  (loop [input (inc (read-user-input))]
+    (if (and (> input 0) (< input 4))
+      input
+      (do (println "Please enter a number 1-3")
+          (recur (inc (read-user-input)))))))
+

@@ -1,5 +1,6 @@
 (ns tic-tac-toe.print-utils-spec
   (:require [speclj.core :refer :all]
+            [speclj.stub :as stub]
             [tic-tac-toe.print-utils :refer :all]))
 
 (def purple "\u001b[35m")
@@ -23,6 +24,29 @@
 
   (it "asks user to input a move"
     (should= "Please enter your move (type 1-9 and hit enter):\n"
-             (with-out-str (prompt-user-for-move)))))
+             (with-out-str (prompt-user-for-move))))
+
+  (context "prompt-user-for-level"
+    (with-stubs)
+    (redefs-around [println (stub :println)])
+
+    (it "asks user to select level of difficulty"
+      (with-in-str "1" (prompt-user-for-level))
+      (should= [["Please select level of difficulty:"] ["1 - Easy"] ["2 - Medium"] ["3 - Unbeatable"]]
+               (stub/invocations-of :println)))
+
+    (it "gets user selection 1-3"
+        (should= 1 (with-in-str "1" (prompt-user-for-level)))
+        (should= 2 (with-in-str "2" (prompt-user-for-level)))
+        (should= 3 (with-in-str "3" (prompt-user-for-level)))
+      )
+
+    (it "rejects input that is not 1-3"
+      (should= 1 (with-in-str "4\n1" (prompt-user-for-level))))
+
+    (it "rejects non-numeric input"
+      (should= "1" (with-in-str "blah\n1" (prompt-user-for-level))))
+
+    ))
 
 

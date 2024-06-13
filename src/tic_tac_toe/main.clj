@@ -8,15 +8,16 @@
 
 (def player-sequence (cycle [:x :o]))
 
-(defn- dispatch-player [board player]
+(defn- dispatch-player [level board player round]
   (if (= player :x)
     (play-user-turn board player)
-    (play-bot-turn board player)))
+    (play-bot-turn level board player round)))
 
 (defn -main []
   (loop [board initial-board
-         player player-sequence]
+         player player-sequence
+         round 1]
     (print-board board)
     (if (not= (score board) :in-progress)
       (println (score board))
-      (recur (dispatch-player board (first player)) (rest player)))))
+      (recur (dispatch-player level board (first player) round) (rest player) (inc round)))))
