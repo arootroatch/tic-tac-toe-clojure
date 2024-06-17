@@ -13,21 +13,21 @@
                   find-best-move (stub :find-best-move)])
 
   (it "calls find-easy-move"
-    (get-bot-move 1 [1 2 3 4 5 6 7 8 9] :o 1)
-    (get-bot-move 1 [:x 2 3 4 5 6 7 8 9] :o 1)
+    (get-bot-move 1 [1 2 3 4 5 6 7 8 9] :o)
+    (get-bot-move 1 [:x 2 3 4 5 6 7 8 9] :o)
     (should= [[[1 2 3 4 5 6 7 8 9]] [[:x 2 3 4 5 6 7 8 9]]]
              (stub/invocations-of :find-easy-move))
     #_(should-have-invoked :find-easy-move {:with [[[1 2 3 4 5 6 7 8 9]] [[:x 2 3 4 5 6 7 8 9]]]}))
 
   (it "calls find-medium-move"
-    (get-bot-move 2 [1 2 3 4 5 6 7 8 9] :o 1)
-    (get-bot-move 2 [:x 2 3 4 5 6 7 8 9] :o 1)
-    (should= [[[1 2 3 4 5 6 7 8 9] 1] [[:x 2 3 4 5 6 7 8 9] 1]]
+    (get-bot-move 2 [1 2 3 4 5 6 7 8 9] :o)
+    (get-bot-move 2 [:x 2 3 4 5 6 7 8 9] :o)
+    (should= [[[1 2 3 4 5 6 7 8 9]] [[:x 2 3 4 5 6 7 8 9]]]
              (stub/invocations-of :find-medium-move)))
 
   (it "calls find-best-move"
-    (get-bot-move 3 [1 2 3 4 5 6 7 8 9] :o 1)
-    (get-bot-move 3 [:x 2 3 4 5 6 7 8 9] :o 1)
+    (get-bot-move 3 [1 2 3 4 5 6 7 8 9] :o)
+    (get-bot-move 3 [:x 2 3 4 5 6 7 8 9] :o)
     (should= [[[1 2 3 4 5 6 7 8 9] :o] [[:x 2 3 4 5 6 7 8 9] :o]]
              (stub/invocations-of :find-best-move)))
 

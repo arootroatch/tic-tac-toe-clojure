@@ -1,4 +1,4 @@
-(ns tic-tac-toe.print-utils)
+(ns tic-tac-toe.ui)
 
 (defn display-invalid-move-error [] (println "Please choose an empty cell"))
 
@@ -19,17 +19,25 @@
 
 (defn read-user-input []
   (try
-    (dec (Integer/parseInt (read-line)))
+    (Integer/parseInt (read-line))
     (catch Exception _)))
+
+(defn- print-level-selection [level]
+  (case level
+    1 (println "Easy mode activated!")
+    2 (println "Medium mode activated!")
+    3 (println "Unbeatable mode activated!")
+    ))
 
 (defn prompt-user-for-level []
   (println "Please select level of difficulty:")
   (println "1 - Easy")
   (println "2 - Medium")
   (println "3 - Unbeatable")
-  (loop [input (inc (read-user-input))]
-    (if (and (> input 0) (< input 4))
-      input
+  (loop [input (read-user-input)]
+    (if (and (number? input) (> input 0) (< input 4))
+      (do (print-level-selection input)
+        input)
       (do (println "Please enter a number 1-3")
-          (recur (inc (read-user-input)))))))
+          (recur (read-user-input))))))
 

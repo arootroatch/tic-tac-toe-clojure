@@ -4,7 +4,7 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :main tic-tac-toe.main
-  :dependencies [[org.clojure/clojure "1.8.0"]]
-  :profiles {:dev {:dependencies [[speclj "3.4.6"]]}}
+  :dependencies [[org.clojure/clojure "1.8.0"] [org.clojure/math.combinatorics "0.3.0"]]
+  :profiles {:dev {:dependencies [[speclj "3.4.6"] [org.clojure/math.combinatorics "0.3.0"]]}}
   :plugins [[speclj "3.4.6"]]
   :test-paths ["spec"])
