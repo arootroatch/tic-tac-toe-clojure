@@ -17,11 +17,11 @@
   (let [paths (eval-board/->paths board)]
     (flatten (filter #(can-win? % player) paths))))
 
-(defn find-medium-move [board round]
-  (case round
-    1 (if (played-corner? board) 5 1)
-    2 (cond
-        (not-empty (path-to-win board :x)) (first (filter number? (path-to-win board :x)))
-        (not-empty (path-to-win board :o)) (first (filter number? (path-to-win board :o)))
-        :else (easy/find-easy-move board))
-    ))
+(defn find-medium-move [board]
+  (cond
+    (every? number? board) 1
+    (= 1 (count (filter keyword? board))) (if (played-corner? board) 5 1)
+    (not-empty (path-to-win board :x)) (first (filter number? (path-to-win board :x)))
+    (not-empty (path-to-win board :o)) (first (filter number? (path-to-win board :o)))
+    :else (easy/find-easy-move board))
+  )
