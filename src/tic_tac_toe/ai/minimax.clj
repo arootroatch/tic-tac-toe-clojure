@@ -43,7 +43,6 @@
       (let [move (first available)
             new-board (assoc board (dec move) player)
             score (minimax new-board false 0)]
-        (prn "score" score)
         (if (> score best-score)
           (recur (rest available) move score)
           (recur (rest available) best-move best-score))))))
