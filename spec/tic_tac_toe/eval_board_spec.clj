@@ -5,10 +5,13 @@
 (describe "evaluating the game board"
 
   (it "evaluates board state"
-    (should= 10 (evaluate-board [:o :o :o :x :x :o :x 8 :x]))
-    (should= 10 (evaluate-board [:o 2 :x :o :x :x :o :x :o]))
-    (should= -10 (evaluate-board [1 2 :x 4 :x :o :x 7 :o]))
-    (should= 0 (evaluate-board [:x :x :o :o :o :x :x :o :x])))
+    (should= 10 (evaluate-board [:o :o :o :x :x :o :x 8 :x] 0))
+    (should= 10 (evaluate-board [:o 2 :x :o :x :x :o :x :o] 0))
+    (should= 8 (evaluate-board [:o 2 :x :o :x :x :o :x :o] 2))
+    (should= -10 (evaluate-board [1 2 :x 4 :x :o :x 7 :o] 0))
+    (should= -8 (evaluate-board [1 2 :x 4 :x :o :x 7 :o] 2))
+    (should= 0 (evaluate-board [:x :x :o :o :o :x :x :o :x] 0))
+    (should= 0 (evaluate-board [:x :x :o :o :o :x :x :o :x] 2)))
 
   (it "separates board into winning paths"
     (should= (repeat 8 (repeat 3 "")) (->paths (repeat 9 "")))
