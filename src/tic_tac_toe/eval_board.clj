@@ -18,10 +18,10 @@
       (every? #{:x :o} board) "It's a tie!"
       :else :in-progress)))
 
-(defn evaluate-board [board]
+(defn evaluate-board [board depth]
   (let [paths (->paths board)]
     (cond
-      (some #(every? #{:x} %) paths) -10
-      (some #(every? #{:o} %) paths) 10
+      (some #(every? #{:x} %) paths) (+ -10 depth)
+      (some #(every? #{:o} %) paths) (- 10 depth)
       (every? #{:x :o} board) 0
       :else :in-progress)))

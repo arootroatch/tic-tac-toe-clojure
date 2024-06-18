@@ -28,7 +28,7 @@
 (def max-move (memoize max-move))
 
 (defn- minimax [board max? depth]
-  (let [game-state (evaluate-board board)]
+  (let [game-state (evaluate-board board depth)]
     (cond
       (not= :in-progress game-state) game-state
       max? (max-move board :o depth)
@@ -43,6 +43,7 @@
       (let [move (first available)
             new-board (assoc board (dec move) player)
             score (minimax new-board false 0)]
+        (prn "score" score)
         (if (> score best-score)
           (recur (rest available) move score)
           (recur (rest available) best-move best-score))))))
