@@ -2,7 +2,10 @@
 
 (defn display-invalid-move-error [] (println "Please choose an empty cell"))
 
-(defn prompt-user-for-move [] (println "Please enter your move (type 1-9 and hit enter):"))
+(defn prompt-user-for-move [player mode]
+  (if (= 1 mode)
+    (println (str (.toUpperCase (name player)) "'s turn!\nPlease enter your move (type 1-9 and hit enter):"))
+    (println "Please enter your move (type 1-9 and hit enter):")))
 
 (defn display-bot-move-message [move] (println (str "Your opponent plays " move "!")))
 
@@ -15,7 +18,7 @@
   (let [board (format-board board)]
     (println (str (first board) " " (second board) " " (nth board 2) "\n"
                   (nth board 3) " " (nth board 4) " " (nth board 5) "\n"
-                  (nth board 6) " " (nth board 7) " " (nth board 8)))))
+                  (nth board 6) " " (nth board 7) " " (nth board 8) "\n"))))
 
 (defn read-user-input []
   (try
@@ -26,8 +29,7 @@
   (case level
     1 (println "Easy mode activated!")
     2 (println "Medium mode activated!")
-    3 (println "Unbeatable mode activated!")
-    ))
+    3 (println "Unbeatable mode activated!")))
 
 (defn prompt-user-for-level []
   (println "Please select level of difficulty:")
@@ -39,5 +41,25 @@
       (do (print-level-selection input)
         input)
       (do (println "Please enter a number 1-3")
+          (recur (read-user-input))))))
+
+(defn- print-mode-selection [mode]
+  (case mode
+    1 (println "Human vs Human activated!")
+    2 (println "Human vs Computer activated!")
+    3 (println "Computer vs Human activated!")
+    4 (println "Computer vs Computer activated!")))
+
+(defn prompt-user-for-mode []
+  (println "Please select game mode:")
+  (println "1 - Human vs Human")
+  (println "2 - Human vs Computer (Human plays first)")
+  (println "3 - Computer vs Human (Computer plays first)")
+  (println "4 - Computer vs Computer")
+  (loop [input (read-user-input)]
+    (if (and (number? input) (> input 0) (< input 5))
+      (do (print-mode-selection input)
+          input)
+      (do (println "Please enter a number 1-4")
           (recur (read-user-input))))))
 
