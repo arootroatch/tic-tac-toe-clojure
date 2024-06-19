@@ -1,8 +1,9 @@
 (ns tic-tac-toe.main
-  (:require [tic-tac-toe.bot-moves :refer [play-bot-turn]]
-            [tic-tac-toe.eval-board :refer [score]]
-            [tic-tac-toe.player-moves :refer [play-user-turn]]
-            [tic-tac-toe.ui :refer [print-board prompt-user-for-level]]))
+  (:require [tic-tac-toe.eval-board :refer [score]]
+            [tic-tac-toe.player :refer [take-turn]]
+            [tic-tac-toe.ui :refer [print-board prompt-user-for-level]]
+            [tic-tac-toe.human-moves]
+            [tic-tac-toe.bot-moves]))
 
 (def initial-board [1 2 3 4 5 6 7 8 9])
 
@@ -10,8 +11,8 @@
 
 (defn- dispatch-player [level board player]
   (if (= player :x)
-    (play-user-turn board player)
-    (play-bot-turn level board player)))
+    (take-turn {:level 0 :board board :player player})
+    (take-turn {:level level :board board :player player})))
 
 (defn -main []
   (let [level (prompt-user-for-level)]
