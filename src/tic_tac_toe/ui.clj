@@ -7,7 +7,11 @@
     (println (str (.toUpperCase (name player)) "'s turn!\nPlease enter your move (type 1-9 and hit enter):"))
     (println "Please enter your move (type 1-9 and hit enter):")))
 
-(defn display-bot-move-message [move] (println (str "Your opponent plays " move "!")))
+(defn display-bot-move-message [move mode player]
+  (if (= mode 4)
+    (println (str (.toUpperCase (name player)) " plays " move "!"))
+    (println (str "Your opponent plays " move "!"))))
+
 
 (defn- format-board [board]
   (let [purple "\u001b[35m"
@@ -20,6 +24,7 @@
                   (nth board 3) " " (nth board 4) " " (nth board 5) "\n"
                   (nth board 6) " " (nth board 7) " " (nth board 8) "\n"))))
 
+
 (defn read-user-input []
   (try
     (Integer/parseInt (read-line))
@@ -27,28 +32,31 @@
 
 (defn- print-level-selection [level]
   (case level
-    1 (println "Easy mode activated!")
-    2 (println "Medium mode activated!")
-    3 (println "Unbeatable mode activated!")))
+    1 (println "Easy mode activated!\n")
+    2 (println "Medium mode activated!\n")
+    3 (println "Unbeatable mode activated!\n")))
 
-(defn prompt-user-for-level []
-  (println "Please select level of difficulty:")
+(defn prompt-user-for-level [ai mode]
+  (cond
+    (and (= ai 1) (= mode 4)) (println "Please select level for player X:")
+    (and (= ai 2) (= mode 4)) (println "Please select level for player O:")
+    :else (println "Please select level of difficulty:"))
   (println "1 - Easy")
   (println "2 - Medium")
   (println "3 - Unbeatable")
   (loop [input (read-user-input)]
     (if (and (number? input) (> input 0) (< input 4))
       (do (print-level-selection input)
-        input)
+          input)
       (do (println "Please enter a number 1-3")
           (recur (read-user-input))))))
 
 (defn- print-mode-selection [mode]
   (case mode
-    1 (println "Human vs Human activated!")
-    2 (println "Human vs Computer activated!")
-    3 (println "Computer vs Human activated!")
-    4 (println "Computer vs Computer activated!")))
+    1 (println "Human vs Human activated!\n")
+    2 (println "Human vs Computer activated!\n")
+    3 (println "Computer vs Human activated!\n")
+    4 (println "Computer vs Computer activated!\n")))
 
 (defn prompt-user-for-mode []
   (println "Please select game mode:")

@@ -9,18 +9,21 @@
 
 (def player-sequence (cycle [:x :o]))
 
-(defn- dispatch-player [level board player mode]
+(defn- dispatch-player [first-ai-level second-ai-level board player mode]
   (cond
     (or (and (= player :o) (= mode 2))
-        (and (= player :x) (= mode 3))) (take-turn {:level level :board board :player player :mode mode})
-    :else (take-turn {:level 0 :board board :player player :mode mode})))
+        (and (= player :x) (= mode 3))
+        (and (= player :x) (= mode 4))) (take-turn {:level first-ai-level :board board :player player :mode mode})
+    (and (= player :o) (= mode 4)) (take-turn {:level second-ai-level :board board :player player :mode mode})
+    :else (take-turn {:board board :player player :mode mode})))
 
 (defn -main []
   (let [mode (ui/prompt-user-for-mode)
-        level (if (= 1 mode) 0 (ui/prompt-user-for-level))]
+        first-ai-level (if (= 1 mode) nil (ui/prompt-user-for-level 1 mode))
+        second-ai-level (if (= 4 mode) (ui/prompt-user-for-level 2 mode) nil)]
     (loop [board initial-board
            player player-sequence]
       (ui/print-board board)
       (if (not= (score board) :in-progress)
         (println (score board))
-        (recur (dispatch-player level board (first player) mode) (rest player))))))
+        (recur (dispatch-player first-ai-level second-ai-level board (first player) mode) (rest player))))))
