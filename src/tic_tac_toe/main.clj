@@ -1,9 +1,9 @@
 (ns tic-tac-toe.main
-  (:require [tic-tac-toe.eval-board :refer [score]]
-            [tic-tac-toe.player :refer [take-turn]]
-            [tic-tac-toe.ui :as ui]
+  (:require [tic-tac-toe.bot-moves]
+            [tic-tac-toe.eval-board :refer [score]]
             [tic-tac-toe.human-moves]
-            [tic-tac-toe.bot-moves]))
+            [tic-tac-toe.player :refer [take-turn]]
+            [tic-tac-toe.ui :as ui]))
 
 (def initial-board [1 2 3 4 5 6 7 8 9])
 
@@ -11,7 +11,8 @@
 
 (defn- dispatch-player [level board player mode]
   (cond
-    (and (= player :o) (= mode 2)) (take-turn {:level level :board board :player player :mode mode})
+    (or (and (= player :o) (= mode 2))
+        (and (= player :x) (= mode 3))) (take-turn {:level level :board board :player player :mode mode})
     :else (take-turn {:level 0 :board board :player player :mode mode})))
 
 (defn -main []

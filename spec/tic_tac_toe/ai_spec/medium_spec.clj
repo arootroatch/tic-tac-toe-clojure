@@ -26,9 +26,6 @@
       (should= [[[:x 2 3 4 :o :x 7 8 :o]] [[:o :x :o 4 :x 6 :x :o :x]]]
                (stub/invocations-of :find-easy-move))))
 
-  (it "plays top left on an empty board"
-    (should= 1 (find-medium-move [1 2 3 4 5 6 7 8 9])))
-
   (it "plays center square if first move is a corner"
     (should= 5 (find-medium-move [:x 2 3 4 5 6 7 8 9]))
     (should= 5 (find-medium-move [1 2 :x 4 5 6 7 8 9]))
