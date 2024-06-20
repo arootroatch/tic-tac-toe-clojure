@@ -37,20 +37,20 @@
                (stub/invocations-of :find-best-move)))
 
     (it "plays the bot move to the board"
-      (player/take-turn {:level 1 :board [1 2 3 4 5 6 7 8 9] :player :o})
-      (should-have-invoked :play-bot-move {:with [[1 2 3 4 5 6 7 8 9] nil :o]}))
+      (player/take-turn {:level 1 :board [1 2 3 4 5 6 7 8 9] :player :o :mode 2})
+      (should-have-invoked :play-bot-move {:with [nil [1 2 3 4 5 6 7 8 9] 2 :o]}))
     )
 
 
   (context "play-bot-move"
     (it "plays bot move to board"
-      (should= [1 2 3 4 :o 6 7 8 9] (play-bot-move [1 2 3 4 5 6 7 8 9] 5 :o))
-      (should= [:o 2 3 4 5 6 7 8 9] (play-bot-move [1 2 3 4 5 6 7 8 9] 1 :o))
-      (should= [1 2 3 4 5 6 7 8 :o] (play-bot-move [1 2 3 4 5 6 7 8 9] 9 :o)))
+      (should= [1 2 3 4 :o 6 7 8 9] (play-bot-move 5 [1 2 3 4 5 6 7 8 9] 2 :o))
+      (should= [:o 2 3 4 5 6 7 8 9] (play-bot-move 1 [1 2 3 4 5 6 7 8 9] 2 :o))
+      (should= [1 2 3 4 5 6 7 8 :o] (play-bot-move 9 [1 2 3 4 5 6 7 8 9] 2 :o)))
 
     (it "displays bot-move to user"
       (with-redefs [ui/display-bot-move-message (stub :display-bot-move-message)]
-        (play-bot-move [1 2 3 4 5 6 7 8 9] 5 :o)
-        (should-have-invoked :display-bot-move-message {:with [5]})))
+        (play-bot-move 5 [1 2 3 4 5 6 7 8 9] 2 :o)
+        (should-have-invoked :display-bot-move-message {:with [5 2 :o]})))
     ))
 
