@@ -18,10 +18,11 @@
       (every? #{:x :o} board) "It's a tie!"
       :else :in-progress)))
 
-(defn evaluate-board [board depth]
-  (let [paths (->paths board)]
+(defn evaluate-board [board depth maximizer]
+  (let [paths (->paths board)
+        minimizer (if (= maximizer :x) :o :x)]
     (cond
-      (some #(every? #{:x} %) paths) (+ -10 depth)
-      (some #(every? #{:o} %) paths) (- 10 depth)
+      (some #(every? #{minimizer} %) paths) (+ -10 depth)
+      (some #(every? #{maximizer} %) paths) (- 10 depth)
       (every? #{:x :o} board) 0
       :else :in-progress)))
