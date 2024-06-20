@@ -4,15 +4,6 @@
 
 (describe "evaluating the game board"
 
-  (it "evaluates board state"
-    (should= 10 (evaluate-board [:o :o :o :x :x :o :x 8 :x] 0))
-    (should= 10 (evaluate-board [:o 2 :x :o :x :x :o :x :o] 0))
-    (should= 8 (evaluate-board [:o 2 :x :o :x :x :o :x :o] 2))
-    (should= -10 (evaluate-board [1 2 :x 4 :x :o :x 7 :o] 0))
-    (should= -8 (evaluate-board [1 2 :x 4 :x :o :x 7 :o] 2))
-    (should= 0 (evaluate-board [:x :x :o :o :o :x :x :o :x] 0))
-    (should= 0 (evaluate-board [:x :x :o :o :o :x :x :o :x] 2)))
-
   (it "separates board into winning paths"
     (should= (repeat 8 (repeat 3 "")) (->paths (repeat 9 "")))
     (should= [[1 2 3] [4 5 6] [7 8 9]
@@ -23,6 +14,28 @@
               [:o 4 7] [:o :x :x] [:o 6 :x]
               [:o :x :x] [:o :x 7]]
              (->paths [:o :o :o 4 :x 6 7 :x :x])))
+
+
+  (context "evaluate-board"
+    (it "evaluates board state with O as maximizer"
+      (should= 10 (evaluate-board [:o :o :o :x :x :o :x 8 :x] 0 :o))
+      (should= 10 (evaluate-board [:o 2 :x :o :x :x :o :x :o] 0 :o))
+      (should= 8 (evaluate-board [:o 2 :x :o :x :x :o :x :o] 2 :o))
+      (should= -10 (evaluate-board [1 2 :x 4 :x :o :x 7 :o] 0 :o))
+      (should= -8 (evaluate-board [1 2 :x 4 :x :o :x 7 :o] 2 :o))
+      (should= 0 (evaluate-board [:x :x :o :o :o :x :x :o :x] 0 :o))
+      (should= 0 (evaluate-board [:x :x :o :o :o :x :x :o :x] 2 :o)))
+
+    (it "evaluates board state with X as maximizer"
+      (should= 10 (evaluate-board [:x :x :x :o :o :x :o 8 :o] 0 :x))
+      (should= 10 (evaluate-board [:x 2 :o :x :o :o :x :o :x] 0 :x))
+      (should= 8 (evaluate-board [:x 2 :o :x :o :o :x :o :x] 2 :x))
+      (should= -10 (evaluate-board [1 2 :o 4 :o :x :o 7 :x] 0 :x))
+      (should= -8 (evaluate-board [1 2 :o 4 :o :x :o 7 :x] 2 :x))
+      (should= 0 (evaluate-board [:o :o :x :x :x :o :o :x :o] 0 :x))
+      (should= 0 (evaluate-board [:o :o :x :x :x :o :o :x :o] 2 :x)))
+    )
+
 
 
   (context "scoring a game"
