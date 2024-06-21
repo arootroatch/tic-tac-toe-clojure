@@ -1,6 +1,8 @@
 (ns tic-tac-toe.eval-board)
 
-(defn ->paths [board]
+(defmulti ->paths (fn [x] (count x)))
+
+(defmethod ->paths 9 [board]
   "Top, middle, bottom, left, middle, right, l-r, r-l"
   (concat (partition 3 board)
           (list
@@ -9,6 +11,18 @@
             (take-nth 3 (drop 2 board))
             (take-nth 4 board)
             (take-nth 2 (drop-last (drop 2 board))))))
+
+(defmethod ->paths 16 [board]
+  "Rows top to bottom, columns left to right, diagonals l-r and r-l"
+  (concat (partition 4 board)
+          (list
+            (take-nth 4 board)
+            (take-nth 4 (drop 1 board))
+            (take-nth 4 (drop 2 board))
+            (take-nth 4 (drop 3 board))
+            (take-nth 5 board)
+            (take-nth 3 (drop-last (drop 3 board))))))
+
 
 (defn score [board]
   (let [paths (->paths board)]

@@ -4,16 +4,25 @@
 
 (describe "evaluating the game board"
 
-  (it "separates board into winning paths"
-    (should= (repeat 8 (repeat 3 "")) (->paths (repeat 9 "")))
-    (should= [[1 2 3] [4 5 6] [7 8 9]
-              [1 4 7] [2 5 8] [3 6 9]
-              [1 5 9] [3 5 7]]
-             (->paths [1 2 3 4 5 6 7 8 9]))
-    (should= [[:o :o :o] [4 :x 6] [7 :x :x]
-              [:o 4 7] [:o :x :x] [:o 6 :x]
-              [:o :x :x] [:o :x 7]]
-             (->paths [:o :o :o 4 :x 6 7 :x :x])))
+  (context "->paths"
+    (it "separates board into winning 3x3 paths"
+      (should= (repeat 8 (repeat 3 "")) (->paths  (repeat 9 "")))
+      (should= [[1 2 3] [4 5 6] [7 8 9]
+                [1 4 7] [2 5 8] [3 6 9]
+                [1 5 9] [3 5 7]]
+               (->paths [1 2 3 4 5 6 7 8 9]))
+      (should= [[:o :o :o] [4 :x 6] [7 :x :x]
+                [:o 4 7] [:o :x :x] [:o 6 :x]
+                [:o :x :x] [:o :x 7]]
+               (->paths [:o :o :o 4 :x 6 7 :x :x])))
+
+    (it "separate board into winning 4x4 paths"
+      (should= (repeat 10 (repeat 4 "")) (->paths (repeat 16 "")))
+      (should= [[1 2 3 4] [5 6 7 8] [9 10 11 12] [13 14 15 16]
+                [1 5 9 13] [2 6 10 14] [3 7 11 15] [4 8 12 16]
+                [1 6 11 16] [4 7 10 13]]
+               (->paths [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16])))
+    )
 
 
   (context "evaluate-board"
@@ -46,11 +55,19 @@
       (should= :in-progress (score [:x :o :x :o :o 6 7 8 9]))
       (should= :in-progress (score [1 2 3 4 5 6 7 8 9])))
 
-    (it "returns winner if three in a row"
+    (it "returns winner if three in a row on 3x3"
       (should= "X wins!" (score [:x :x :x 4 5 6 7 8 9]))
       (should= "X wins!" (score [1 2 3 :x :x :x 7 8 9]))
       (should= "O wins!" (score [1 2 3 :o :o :o 7 8 9])))
 
+    (it "returns winner if four in a row on 4x4"
+      (should= "X wins!" (score [:x :x :x :x 5 6 7 8 9 10 11 12 13 14 15 16]))
+      (should= "X wins!" (score [1 2 3 4 :x :x :x :x 9 10 11 12 13 14 15 16]))
+      (should= "X wins!" (score [:x 2 3 4 :x 6 7 8 :x 10 11 12 :x 14 15 16]))
+      (should= "X wins!" (score [:x 2 3 4 5 :x 7 8 9 10 :x 12 13 14 15 :x]))
+      )
+
     (it "is a tie if board is full and has no winner"
-      (should= "It's a tie!" (score [:x :o :x :x :x :o :o :x :o])))
+      (should= "It's a tie!" (score [:x :o :x :x :x :o :o :x :o]))
+      (should= "It's a tie!" (score [:x :o :x :x :x :o :o :x :o :x :o :x :o :x :x :o])))
     ))
