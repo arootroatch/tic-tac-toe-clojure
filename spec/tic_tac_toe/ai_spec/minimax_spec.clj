@@ -40,6 +40,7 @@
              (if (= "X wins!" (play-sim-game (first all-move-combos))) true false)
              (inc game-count)))))
 
+
 (defn- play-ai-game []
   (loop [player (cycle [:x :o])
          board [1 2 3 4 5 6 7 8 9]]

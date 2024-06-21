@@ -1,7 +1,7 @@
 (ns tic-tac-toe.bot-moves-spec
   (:require [speclj.core :refer :all]
             [speclj.stub :as stub]
-            [tic-tac-toe.ui :as ui]
+            [tic-tac-toe.ui.print-utils :as print-utils]
             [tic-tac-toe.ai.easy :refer [find-easy-move]]
             [tic-tac-toe.ai.medium :refer [find-medium-move]]
             [tic-tac-toe.ai.minimax :refer [find-best-move]]
@@ -49,7 +49,7 @@
       (should= [1 2 3 4 5 6 7 8 :o] (play-bot-move 9 [1 2 3 4 5 6 7 8 9] 2 :o)))
 
     (it "displays bot-move to user"
-      (with-redefs [ui/display-bot-move-message (stub :display-bot-move-message)]
+      (with-redefs [print-utils/display-bot-move-message (stub :display-bot-move-message)]
         (play-bot-move 5 [1 2 3 4 5 6 7 8 9] 2 :o)
         (should-have-invoked :display-bot-move-message {:with [5 2 :o]})))
     ))

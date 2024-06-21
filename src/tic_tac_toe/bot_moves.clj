@@ -3,7 +3,7 @@
             [tic-tac-toe.ai.medium :refer [find-medium-move]]
             [tic-tac-toe.ai.minimax :refer [find-best-move]]
             [tic-tac-toe.player :as player]
-            [tic-tac-toe.ui :refer [display-bot-move-message]]))
+            [tic-tac-toe.ui.print-utils :refer [display-bot-move-message]]))
 
 (defn play-bot-move [move board mode player]
   (display-bot-move-message move mode player)
