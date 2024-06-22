@@ -41,14 +41,14 @@
     (it "finds when a path is one move from winning for the given player"
       (should= [:x 5 :x] (path-to-win [1 2 3 :x 5 :x 7 8 9] :x))
       (should= [:x :x 7] (path-to-win [:x 2 3 :x 5 6 7 8 9] :x))
-      (should= [3 :x :x] (path-to-win [1 2 3 4 :x 6 :x 8 9] :x)))
+      (should= [3 :x :x] (path-to-win [1 2 3 4 :x 6 :x 8 9] :x))
+      (should= [:x :x :x 8] (path-to-win [1 2 3 4 :x :x :x 8 9 10 11 12 13 14 15 16] :x))
+      (should= [:o :o :o 16] (path-to-win [:o 2 3 4 5 :o 7 8 9 10 :o 12 13 14 15 16] :o)))
 
     (it "returns empty when no path is one move from winning for the given player"
       (should= [] (path-to-win [:x :x :o :x :x :o :o :o :x] :x))
       (should= [] (path-to-win [:o :x :o 4 :x 6 :x :o :x] :x))
       (should= [] (path-to-win [:x 2 3 4 :o :x 7 8 :o] :x))
       (should= [] (path-to-win [1 2 3 4 5 6 7 8 9] :x))
-      (should= [] (path-to-win [:o 2 3 4 5 6 7 8 9] :o))
-
-      )
+      (should= [] (path-to-win [:o 2 3 4 5 6 7 8 9] :o)))
     ))

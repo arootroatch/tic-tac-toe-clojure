@@ -54,6 +54,15 @@
       (should= 5 (find-best-move [1 2 3 4 5 6 7 8 :o] :x)))
     )
 
+  (context "plays 4x4 board"
+    (it "finds move if next move is a win"
+      (should= 5 (find-best-move [:x 2 3 :x 5 :o :o :o 9 10 :x 12 13 :x 15 16] :o))
+      (should= 5 (find-best-move [:o 2 3 :o 5 :x :x :x 9 10 :o 12 13 :o 15 16] :x)))
+
+    #_(focus-it "finds move on empty board"
+      (should= nil (find-best-move (vec (range 1 17)) :x)))
+    )
+
   (tags :slow)
   (it "wins or ties every possible game against human player"
     (should= true (unbeatable?)))

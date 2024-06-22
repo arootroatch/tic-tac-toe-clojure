@@ -36,8 +36,7 @@
   (let [board (format-board board)]
     (println (str (first board) " " (second board) " " (nth board 2) "\n"
                   (nth board 3) " " (nth board 4) " " (nth board 5) "\n"
-                  (nth board 6) " " (nth board 7) " " (nth board 8) "\n")))
-  )
+                  (nth board 6) " " (nth board 7) " " (nth board 8) "\n"))))
 
 (defmethod print-board 16 [board]
   (let [board (format-board board)]

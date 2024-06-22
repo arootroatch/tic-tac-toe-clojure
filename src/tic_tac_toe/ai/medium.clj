@@ -9,7 +9,7 @@
       (not (number? (nth board 8)))))
 
 (defn- can-win? [path player]
-  (and (= 2 (count (filter #{player} path)))
+  (and (= (if (= 4 (count path)) 3 2) (count (filter #{player} path)))
        (some number? path)))
 
 (defn path-to-win [board player]
