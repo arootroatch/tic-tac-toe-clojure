@@ -1,7 +1,6 @@
 (ns tic-tac-toe.bot-moves
-  (:require [tic-tac-toe.ai.easy :refer [find-easy-move]]
-            [tic-tac-toe.ai.medium :refer [find-medium-move]]
-            [tic-tac-toe.ai.minimax :refer [find-best-move]]
+  (:require [tic-tac-toe.ai.easy-medium :refer [find-medium-move find-easy-move]]
+            [tic-tac-toe.ai.minimax :refer [find-best-move-memo]]
             [tic-tac-toe.player :as player]
             [tic-tac-toe.ui.print-utils :refer [display-bot-move-message]]))
 
@@ -18,6 +17,5 @@
     (play-bot-move move board mode player)))
 
 (defmethod player/take-turn 3 [{:keys [board mode player]}]
-  (let [move (find-best-move board player)]
+  (let [move (find-best-move-memo board player)]
     (play-bot-move move board mode player)))
-

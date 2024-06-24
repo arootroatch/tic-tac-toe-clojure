@@ -1,4 +1,4 @@
-(ns tic-tac-toe.player-moves-spec
+(ns tic-tac-toe.human-moves-spec
   (:require [speclj.core :refer :all]
             [speclj.stub :as stub]
             [tic-tac-toe.player :as player]

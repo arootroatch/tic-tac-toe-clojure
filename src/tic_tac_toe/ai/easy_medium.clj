@@ -1,6 +1,5 @@
-(ns tic-tac-toe.ai.medium
-  (:require [tic-tac-toe.ai.easy :as easy]
-            [tic-tac-toe.eval-board :as eval-board]))
+(ns tic-tac-toe.ai.easy-medium
+  (:require [tic-tac-toe.eval-board :as eval-board]))
 
 (defn- played-corner? [board]
   (or (not (number? (nth board 0)))
@@ -16,9 +15,13 @@
   (let [paths (eval-board/->paths board)]
     (flatten (filter #(can-win? % player) paths))))
 
+(defn find-easy-move [board]
+  (let [available (filter number? board)]
+    (nth available (rand-int (count available)))))
+
 (defn find-medium-move [board]
   (cond
-    (= 1 (count (filter keyword? board))) (if (played-corner? board) 5 1)
+    (and (= 9 (count board)) (= 1 (count (filter keyword? board)))) (if (played-corner? board) 5 1)
     (not-empty (path-to-win board :x)) (first (filter number? (path-to-win board :x)))
     (not-empty (path-to-win board :o)) (first (filter number? (path-to-win board :o)))
-    :else (easy/find-easy-move board)))
+    :else (find-easy-move board)))

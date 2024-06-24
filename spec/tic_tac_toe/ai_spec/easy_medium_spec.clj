@@ -1,8 +1,7 @@
-(ns tic-tac-toe.ai-spec.medium-spec
+(ns tic-tac-toe.ai-spec.easy-medium-spec
   (:require [speclj.core :refer :all]
             [speclj.stub :as stub]
-            [tic-tac-toe.ai.easy :as easy]
-            [tic-tac-toe.ai.medium :refer :all]))
+            [tic-tac-toe.ai.easy-medium :refer :all]))
 
 (describe "medium mode"
   (with-stubs)
@@ -20,7 +19,7 @@
   (it "play random available move if can't win or block"
     (should-contain (find-medium-move [:o :x :o 4 :x 6 :x :o :x]) [4 6])
     (should-contain (find-medium-move [:x 2 3 4 :o :x 7 8 :o]) [2 3 4 7 8])
-    (with-redefs [easy/find-easy-move (stub :find-easy-move)]
+    (with-redefs [find-easy-move (stub :find-easy-move)]
       (find-medium-move [:x 2 3 4 :o :x 7 8 :o])
       (find-medium-move [:o :x :o 4 :x 6 :x :o :x])
       (should= [[[:x 2 3 4 :o :x 7 8 :o]] [[:o :x :o 4 :x 6 :x :o :x]]]
@@ -51,4 +50,11 @@
       (should= [] (path-to-win [:x 2 3 4 :o :x 7 8 :o] :x))
       (should= [] (path-to-win [1 2 3 4 5 6 7 8 9] :x))
       (should= [] (path-to-win [:o 2 3 4 5 6 7 8 9] :o)))
-    ))
+    )
+
+  (context "find-easy-move"
+    (it "picks an available move at random"
+      (should-contain (find-easy-move [1 2 3 4 5 6 7 8 9]) [1 2 3 4 5 6 7 8 9])
+      (should-contain (find-easy-move [:x 2 3 4 5 6 7 8 9]) [2 3 4 5 6 7 8 9])
+      (should-contain (find-easy-move [:x :x 3 4 5 :o 7 :o :x]) [3 4 5 7])
+      )))

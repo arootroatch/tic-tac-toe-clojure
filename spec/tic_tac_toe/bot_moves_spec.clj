@@ -2,9 +2,8 @@
   (:require [speclj.core :refer :all]
             [speclj.stub :as stub]
             [tic-tac-toe.ui.print-utils :as print-utils]
-            [tic-tac-toe.ai.easy :refer [find-easy-move]]
-            [tic-tac-toe.ai.medium :refer [find-medium-move]]
-            [tic-tac-toe.ai.minimax :refer [find-best-move]]
+            [tic-tac-toe.ai.easy-medium :refer [find-medium-move find-easy-move]]
+            [tic-tac-toe.ai.minimax :refer [find-best-move-memo]]
             [tic-tac-toe.bot-moves :refer :all]
             [tic-tac-toe.player :as player]))
 
@@ -15,29 +14,29 @@
   (context "defmethods"
     (redefs-around [find-easy-move (stub :find-easy-move)
                     find-medium-move (stub :find-medium-move)
-                    find-best-move (stub :find-best-move)
+                    find-best-move-memo (stub :find-best-move)
                     play-bot-move (stub :play-bot-move)])
 
     (it "calls find-easy-move"
-      (player/take-turn {:level 1 :board [1 2 3 4 5 6 7 8 9] :player :o})
-      (player/take-turn {:level 1 :board [:x 2 3 4 5 6 7 8 9] :player :o})
+      (player/take-turn {:first-ai-level 1 :board [1 2 3 4 5 6 7 8 9] :player :o :mode 2 :second-ai-level nil})
+      (player/take-turn {:first-ai-level 1 :board [:x 2 3 4 5 6 7 8 9] :player :o :mode 2 :second-ai-level nil})
       (should= [[[1 2 3 4 5 6 7 8 9]] [[:x 2 3 4 5 6 7 8 9]]]
                (stub/invocations-of :find-easy-move)))
 
     (it "calls find-medium-move"
-      (player/take-turn {:level 2 :board [1 2 3 4 5 6 7 8 9] :player :o})
-      (player/take-turn {:level 2 :board [:x 2 3 4 5 6 7 8 9] :player :o})
+      (player/take-turn {:first-ai-level 2 :board [1 2 3 4 5 6 7 8 9] :player :x :mode 3 :second-ai-level nil})
+      (player/take-turn {:second-ai-level 2 :board [:x 2 3 4 5 6 7 8 9] :player :o :mode 4 :first-ai-level 1})
       (should= [[[1 2 3 4 5 6 7 8 9]] [[:x 2 3 4 5 6 7 8 9]]]
                (stub/invocations-of :find-medium-move)))
 
     (it "calls find-best-move"
-      (player/take-turn {:level 3 :board [1 2 3 4 5 6 7 8 9] :player :o})
-      (player/take-turn {:level 3 :board [:x 2 3 4 5 6 7 8 9] :player :o})
-      (should= [[[1 2 3 4 5 6 7 8 9] :o] [[:x 2 3 4 5 6 7 8 9] :o]]
+      (player/take-turn {:first-ai-level 3 :board [1 2 3 4 5 6 7 8 9] :player :x :mode 4 :second-ai-level nil})
+      (player/take-turn {:second-ai-level 3 :board [:x 2 3 4 5 6 7 8 9] :player :o :mode 4 :first-ai-level 1})
+      (should= [[[1 2 3 4 5 6 7 8 9] :x] [[:x 2 3 4 5 6 7 8 9] :o]]
                (stub/invocations-of :find-best-move)))
 
     (it "plays the bot move to the board"
-      (player/take-turn {:level 1 :board [1 2 3 4 5 6 7 8 9] :player :o :mode 2})
+      (player/take-turn {:first-ai-level 1 :board [1 2 3 4 5 6 7 8 9] :player :o :mode 2})
       (should-have-invoked :play-bot-move {:with [nil [1 2 3 4 5 6 7 8 9] 2 :o]}))
     )
 
