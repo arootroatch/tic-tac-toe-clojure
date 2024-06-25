@@ -16,10 +16,9 @@
       (let [move (first available)
             new-board (assoc board (dec move) player)
             score (minimax new-board (not max?) (inc depth) (switch-player player) new-alpha new-beta)]
-        (recur (rest available)
-               ((if max? max min) best-score score)
-               (if max? (max alpha score) alpha)
-               (if max? beta (min beta score)))))))
+        (if max?
+          (recur (rest available) (max best-score score) (max alpha score) beta)
+          (recur (rest available) (min best-score score) alpha (min beta score)))))))
 
 (def minmax-move-memo (memoize minmax-move))
 
