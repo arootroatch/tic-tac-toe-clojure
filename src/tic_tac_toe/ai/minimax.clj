@@ -32,16 +32,14 @@
 
 (defn- search-with-minimax [board player available]
   (loop [available available
-         best-move nil
+         best-move -1
          best-score -1000]
     (if (empty? available)
       best-move
       (let [move (first available)
             new-board (assoc board (dec move) player)
             score (minimax new-board false 0 (switch-player player) -1000 1000)]
-        (if (> score best-score)
-          (recur (rest available) move score)
-          (recur (rest available) best-move best-score))))))
+          (recur (rest available) (if (> score best-score) move best-move) (max score best-score))))))
 
 (def search-with-minimax-memo (memoize search-with-minimax))
 
