@@ -1,9 +1,9 @@
 (ns tic-tac-toe.player)
 
-(defn- dispatch-player [x]
+(defn- dispatch-player [{:keys [player mode first-ai-level second-ai-level]}]
   (cond
-    (or (and (= (:player x) :o) (= (:mode x) 2))
-        (and (= (:player x) :x) (or (= (:mode x) 3) (= (:mode x) 4)))) (:first-ai-level x)
-    (and (= (:player x) :o) (= (:mode x) 4)) (:second-ai-level x)))
+    (or (and (= player :o) (= mode 2))
+        (and (= player :x) (or (= mode 3) (= mode 4)))) first-ai-level
+    (and (= player :o) (=  mode 4)) second-ai-level))
 
 (defmulti take-turn dispatch-player)
