@@ -19,7 +19,7 @@
 (def purple "\u001b[35m")
 (def reset "\u001b[0m")
 
-(defmulti format-board #(count %))
+(defmulti format-board count)
 
 (defmethod format-board 9 [board]
   (map #(if (keyword? %) (.toUpperCase (name %)) (str purple % reset)) board))
@@ -31,7 +31,7 @@
        board))
 
 
-(defmulti print-board (fn [x] (count x)))
+(defmulti print-board count)
 
 (defmethod print-board 9 [board]
   (let [board (format-board board)]

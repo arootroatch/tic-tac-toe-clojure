@@ -6,7 +6,7 @@
 
   (context "->paths"
     (it "separates board into winning 3x3 paths"
-      (should= (repeat 8 (repeat 3 "")) (->paths  (repeat 9 "")))
+      (should= (repeat 8 (repeat 3 "")) (->paths (repeat 9 "")))
       (should= [[1 2 3] [4 5 6] [7 8 9]
                 [1 4 7] [2 5 8] [3 6 9]
                 [1 5 9] [3 5 7]]
@@ -22,6 +22,16 @@
                 [1 5 9 13] [2 6 10 14] [3 7 11 15] [4 8 12 16]
                 [1 6 11 16] [4 7 10 13]]
                (->paths [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16])))
+
+    (it "separate board into winning 3 dimensional paths"
+      #_(should= (repeat 49 (repeat 3 "")) (->paths (repeat 27 "")))
+      (should= [[1 2 3] [4 5 6] [7 8 9] [10 11 12] [13 14 15] [16 17 18] [19 20 21] [22 23 24] [25 26 27] ;all 2D rows
+                [1 4 7] [2 5 8] [3 6 9] [10 13 16] [11 14 17] [12 15 18] [19 22 25] [20 23 26] [21 24 27] ;all 2D columns
+                [1 5 9] [10 14 18] [19 23 27] [3 5 7] [12 14 16] [21 23 25] ;all 2D diagonals l-r then r-l
+                [1 11 21] [1 13 25] [1 14 27] [3 14 25] [3 15 27] [7 13 19] [8 14 20] [9 15 21] [7 14 21] [7 17 27] ;3D diagonals
+                [3 11 19] [9 17 25] [9 14 19] [2 14 26] [4 14 24] [6 14 22] ;3D diagonals
+                [1 10 19] [2 11 20] [3 12 21] [4 13 22] [5 14 23] [6 15 24] [7 16 25] [8 17 26] [9 18 27]] ;3D columns
+               (->paths (range 1 28))))
     )
 
 
@@ -66,6 +76,9 @@
       (should= "X wins!" (score [:x 2 3 4 :x 6 7 8 :x 10 11 12 :x 14 15 16]))
       (should= "X wins!" (score [:x 2 3 4 5 :x 7 8 9 10 :x 12 13 14 15 :x]))
       )
+
+    (it "returns winner on 3x3x3 board"
+      (should= "X wins!" (score (concat [:x] (range 2 14) [:x] (range 15 27) [:x]))))
 
     (it "is a tie if board is full and has no winner"
       (should= "It's a tie!" (score [:x :o :x :x :x :o :o :x :o]))
