@@ -1,4 +1,4 @@
-(ns tic-tac-toe.ui-spec.print-utils-spec
+(ns tic-tac-toe.ui.print-utils-spec
   (:require [speclj.core :refer :all]
             [tic-tac-toe.ui.print-utils :refer :all]))
 

@@ -1,4 +1,4 @@
-(ns tic-tac-toe.ui-spec.get-board-selection-spec
+(ns tic-tac-toe.ui.get-board-selection-spec
   (:require [speclj.core :refer :all]
             [speclj.stub :as stub]
             [tic-tac-toe.ui.get-board-selection :refer :all]))
