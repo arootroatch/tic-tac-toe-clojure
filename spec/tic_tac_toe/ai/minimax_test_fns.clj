@@ -1,4 +1,4 @@
-(ns tic-tac-toe.ai-spec.minimax-test-fns
+(ns tic-tac-toe.ai.minimax-test-fns
   (:require [clojure.math.combinatorics :as combo]
             [clojure.test :refer :all]
             [tic-tac-toe.ai.minimax :refer :all]

@@ -1,4 +1,4 @@
-(ns tic-tac-toe.ui-spec.get-user-input-spec
+(ns tic-tac-toe.ui.get-user-input-spec
   (:require [speclj.core :refer :all]
             [speclj.stub :as stub]
             [tic-tac-toe.ui.get-user-input :refer :all]))

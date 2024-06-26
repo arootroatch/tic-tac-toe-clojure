@@ -1,6 +1,6 @@
-(ns tic-tac-toe.ai-spec.minimax-spec
+(ns tic-tac-toe.ai.minimax-spec
   (:require [speclj.core :refer :all]
-            [tic-tac-toe.ai-spec.minimax-test-fns :refer :all]
+            [tic-tac-toe.ai.minimax-test-fns :refer :all]
             [tic-tac-toe.ai.minimax :refer :all]))
 
 (describe "computer opponent - is maximizer"
@@ -131,9 +131,9 @@
       (should= 2 (find-best-move-memo [:o 2 :x 4 5 6 7 8 9 10 11 12 13 14 :x 16] :o))
       (should= 2 (find-best-move-memo [:o 2 3 :x 5 6 7 8 9 10 11 12 13 14 15 :x] :o)))
 
-    (it "finds 5th move"
+    (it "finds 6th move"
               ;picks three even with no max depth
-      (should= 3 (find-best-move-memo [:o :o 3 :x 5 6 7 8 :x 10 11 :x 13 14 15 16] :o)))
+      (should= 3 (find-best-move-memo [:o :o 3 :x 5 6 7 8 :x 10 11 :x 13 14 15 16] :x)))
     ))
 
 

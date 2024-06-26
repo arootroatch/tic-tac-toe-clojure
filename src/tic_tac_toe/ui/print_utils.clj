@@ -15,10 +15,11 @@
     (println (str (.toUpperCase (name player)) " plays " move "!"))
     (println (str "Your opponent plays " move "!"))))
 
-(defmulti format-board #(count %))
 
 (def purple "\u001b[35m")
 (def reset "\u001b[0m")
+
+(defmulti format-board #(count %))
 
 (defmethod format-board 9 [board]
   (map #(if (keyword? %) (.toUpperCase (name %)) (str purple % reset)) board))

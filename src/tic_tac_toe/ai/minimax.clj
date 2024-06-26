@@ -6,7 +6,7 @@
 (defn- switch-player [player]
   (if (= player :x) :o :x))
 
-(defn- minmax-move [board max? player depth alpha beta]
+(defn- minimax-move [board max? player depth alpha beta]
   (loop [available (filter number? board)
          best-score (if max? -1000 1000)
          new-alpha alpha
@@ -20,14 +20,14 @@
           (recur (rest available) (max best-score score) (max alpha score) beta)
           (recur (rest available) (min best-score score) alpha (min beta score)))))))
 
-(def minmax-move-memo (memoize minmax-move))
+(def minimax-move-memo (memoize minimax-move))
 
 (defn- minimax [board max? depth player alpha beta]
   (let [maximizer (if max? player (switch-player player))
         game-state (evaluate-board board depth maximizer)]
     (cond (not= :in-progress game-state) game-state
           (> depth 4) 0
-          :else (minmax-move-memo board max? player depth alpha beta))))
+          :else (minimax-move-memo board max? player depth alpha beta))))
 
 (defn- search-with-minimax [board player available]
   (loop [available available
@@ -45,7 +45,7 @@
 (defn- find-best-move [board player]
   (let [available (filter number? board)]
     (cond (every? number? board) 1
-          (>= (count available) 13) (first available)
+          (>= (count available) 12) (first available)
           :else (search-with-minimax-memo board player available))))
 
 (def find-best-move-memo (memoize find-best-move))
