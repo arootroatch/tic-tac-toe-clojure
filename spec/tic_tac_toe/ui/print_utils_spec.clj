@@ -47,13 +47,13 @@
 
     (context "print-board"
       (it "prints 3x3 board to the terminal"
-        (should= (str purple 1 reset " " purple 2 reset " " purple 3 reset "\n"
-                      purple 4 reset " " purple 5 reset " " purple 6 reset "\n"
-                      purple 7 reset " " purple 8 reset " " purple 9 reset "\n\n")
+        (should= (str " " purple 1 reset "  " purple 2 reset "  " purple 3 reset "\n"
+                      " " purple 4 reset "  " purple 5 reset "  " purple 6 reset "\n"
+                      " " purple 7 reset "  " purple 8 reset "  " purple 9 reset "\n\n")
                  (with-out-str (print-board empty-3x3)))
-        (should= (str purple 1 reset " X " purple 3 reset "\n"
-                      purple 4 reset " O " purple 6 reset "\n"
-                      "O " purple 8 reset " " purple 9 reset "\n\n")
+        (should= (str " " purple 1 reset "  X  " purple 3 reset "\n"
+                      " " purple 4 reset "  O  " purple 6 reset "\n"
+                      " O  " purple 8 reset "  " purple 9 reset "\n\n")
                  (with-out-str (print-board [1 :x 3 4 :o 6 :o 8 9]))))
 
       (it "prints 4x4 board to the terminal"
@@ -67,4 +67,16 @@
                       " X  X  O  O\n"
                       purple 13 reset "  X  X  O\n\n")
                  (with-out-str (print-board [1 :x 3 4 :o 6 :o 8 :x :x :o :o 13 :x :x :o]))))
+
+      (it "prints 3x3x3 board to the terminal"
+        (should= (str " " purple 1 reset "  " purple 2 reset "  " purple 3 reset "\n"
+                      " " purple 4 reset "  " purple 5 reset "  " purple 6 reset "\n"
+                      " " purple 7 reset "  " purple 8 reset "  " purple 9 reset "\n\n"
+                      purple 10 reset " " purple 11 reset " " purple 12 reset "\n"
+                      purple 13 reset " " purple 14 reset " " purple 15 reset "\n"
+                      purple 16 reset " " purple 17 reset " " purple 18 reset "\n\n"
+                      purple 19 reset " " purple 20 reset " " purple 21 reset "\n"
+                      purple 22 reset " " purple 23 reset " " purple 24 reset "\n"
+                      purple 25 reset " " purple 26 reset " " purple 27 reset "\n\n")
+                  (with-out-str (print-board (range 1 28)))))
       )))
