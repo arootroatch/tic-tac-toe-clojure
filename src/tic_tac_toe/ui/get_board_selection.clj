@@ -1,6 +1,10 @@
 (ns tic-tac-toe.ui.get-board-selection
   (:require [tic-tac-toe.ui.get-user-input :refer [get-input-in-range]]))
 
+(def initial-3x3-board [1 2 3 4 5 6 7 8 9])
+(def initial-4x4-board [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16])
+(def initial-3x3x3-board (vec (range 1 28)))
+
 (defn- print-board-selection [mode]
   (case mode
     1 (println "3x3 board activated!\n")
