@@ -1,5 +1,7 @@
 (ns tic-tac-toe.player)
 
+(def player-sequence (cycle [:x :o]))
+
 (defn- dispatch-player [{:keys [player mode first-ai-level second-ai-level]}]
   (cond
     (or (and (= player :o) (= mode 2))
