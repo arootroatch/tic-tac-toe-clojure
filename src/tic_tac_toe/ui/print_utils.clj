@@ -16,6 +16,50 @@
     (println (str "Your opponent plays " move "!"))))
 
 
+(defn print-board-selection [input]
+  (case input
+    1 (println "3x3 board activated!\n")
+    2 (println "4x4 board activated!\n")
+    3 (println "3 dimensional board activated!\n")))
+
+(defn prompt-user-for-board []
+  (println "Please select board:")
+  (println "1 - 3x3")
+  (println "2 - 4x4")
+  (println "3 - 3x3x3 (3 Dimensional)"))
+
+
+(defn print-level-selection [level]
+  (case level
+    1 (println "Easy mode activated!\n")
+    2 (println "Medium mode activated!\n")
+    3 (println "Unbeatable mode activated!\n")))
+
+(defn prompt-user-for-level [ai mode]
+  (cond
+    (and (= ai 1) (= mode 4)) (println "Please select level for player X:")
+    (and (= ai 2) (= mode 4)) (println "Please select level for player O:")
+    :else (println "Please select level of difficulty:"))
+  (println "1 - Easy")
+  (println "2 - Medium")
+  (println "3 - Unbeatable"))
+
+
+(defn print-mode-selection [mode]
+  (case mode
+    1 (println "Human vs Human activated!\n")
+    2 (println "Human vs Computer activated!\n")
+    3 (println "Computer vs Human activated!\n")
+    4 (println "Computer vs Computer activated!\n")))
+
+(defn prompt-user-for-mode []
+  (println "Please select game mode (X always plays first):")
+  (println "1 - Human vs Human")
+  (println "2 - Human vs Computer (Human plays first)")
+  (println "3 - Computer vs Human (Computer plays first)")
+  (println "4 - Computer vs Computer"))
+
+
 (def purple "\u001b[35m")
 (def reset "\u001b[0m")
 
