@@ -10,6 +10,7 @@
 
 (def initial-3x3-board [1 2 3 4 5 6 7 8 9])
 (def initial-4x4-board [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16])
+(def initial-3x3x3-board (vec (range 1 28)))
 
 (def player-sequence (cycle [:x :o]))
 
@@ -19,7 +20,7 @@
         first-ai-level (if (= 1 mode) nil (get-level-selection 1 mode))
         second-ai-level (if (= 4 mode) (get-level-selection 2 mode) nil)
         game-options {:mode mode :first-ai-level first-ai-level :second-ai-level second-ai-level}]
-    (loop [board (if (= 1 board-selection) initial-3x3-board initial-4x4-board)
+    (loop [board (case board-selection 1 initial-3x3-board 2 initial-4x4-board 3 initial-3x3x3-board)
            player player-sequence]
       (print-utils/print-board board)
       (if (not= (score board) :in-progress)
