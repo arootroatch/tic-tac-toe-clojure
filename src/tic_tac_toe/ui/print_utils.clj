@@ -19,17 +19,10 @@
 (def purple "\u001b[35m")
 (def reset "\u001b[0m")
 
-(defmulti format-board count)
-
-(defmethod format-board 9 [board]
-  (map #(if (keyword? %) (.toUpperCase (name %)) (str purple % reset)) board))
-
-(defmethod format-board 16 [board]
+(defn format-board [board]
   (map #(cond (keyword? %) (str " " (.toUpperCase (name %)))
               (< % 10) (str " " purple % reset)
-              :else (str purple % reset))
-       board))
-
+              :else (str purple % reset)) board))
 
 (defmulti print-board count)
 
@@ -45,3 +38,11 @@
                   (nth board 4) " " (nth board 5) " " (nth board 6) " " (nth board 7) "\n"
                   (nth board 8) " " (nth board 9) " " (nth board 10) " " (nth board 11) "\n"
                   (nth board 12) " " (nth board 13) " " (nth board 14) " " (nth board 15) "\n"))))
+
+(defmethod print-board 27 [board]
+  (let [top-board (first (partition 9 board))
+        middle-board (second (partition 9 board))
+        bottom-board (last (partition 9 board))]
+    (print-board top-board)
+    (print-board middle-board)
+    (print-board bottom-board)))
