@@ -32,6 +32,12 @@
                  (with-out-str (prompt-user-for-move :o 1 empty-4x4))))
       )
 
+    (context "display-bot-thinking"
+      (it "prints message to let the user know the computer is processing"
+        (should= "Player X is thinking..."
+                 (with-out-str (display-bot-thinking-message :x)))
+        (should= "Player O is thinking..."
+                 (with-out-str (display-bot-thinking-message :o)))))
 
     (context "display-bot-move-message"
       (it "informs human of computer's move"

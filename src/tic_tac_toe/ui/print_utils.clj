@@ -10,6 +10,9 @@
       (= 16 (count board)) (println "Please enter your move (type 1-16 and hit enter):")
       :else (println "Please enter your move (type 1-9 and hit enter):"))))
 
+(defn display-bot-thinking-message [player]
+  (println (str "Player " (.toUpperCase (name player)) " is thinking...")))
+
 (defn display-bot-move-message [move mode player]
   (if (= mode 4)
     (println (str (.toUpperCase (name player)) " plays " move "!"))
@@ -29,20 +32,20 @@
   (println "3 - 3x3x3 (3 Dimensional)"))
 
 
-(defn print-level-selection [level]
-  (case level
-    1 (println "Easy mode activated!\n")
-    2 (println "Medium mode activated!\n")
-    3 (println "Unbeatable mode activated!\n")))
+(defn print-level-selection [level mode board]
+   (case level
+     1 (println "Easy mode activated!\n")
+     2 (println "Medium mode activated!\n")
+     3 (if (and (= 3 board) (= 2 mode)) (println "Hard mode activated!\n") (println "Unbeatable mode activated!\n"))))
 
-(defn prompt-user-for-level [ai mode]
+(defn prompt-user-for-level [ai mode board]
   (cond
     (and (= ai 1) (= mode 4)) (println "Please select level for player X:")
     (and (= ai 2) (= mode 4)) (println "Please select level for player O:")
     :else (println "Please select level of difficulty:"))
   (println "1 - Easy")
   (println "2 - Medium")
-  (println "3 - Unbeatable"))
+  (if (and (= 2 mode) (= 3 board)) (println "3 - Hard") (println "3 - Unbeatable")))
 
 
 (defn print-mode-selection [mode]

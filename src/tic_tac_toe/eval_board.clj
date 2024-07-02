@@ -11,21 +11,14 @@
 (defmethod ->paths 16 [board]
   "Rows top to bottom, columns left to right, diagonals l-r and r-l"
   (concat (partition 4 board)
-          (map #(take-nth 4 (drop % board))[0 1 2 3])
+          (map #(take-nth 4 (drop % board)) [0 1 2 3])
           (list (take-nth 5 board) (take-nth 3 (drop-last (drop 3 board))))))
 
 (defn- ->3D-diagonals [board]
-  (concat (map #(take-nth % board) [10 12 13])
-          (map #(take-nth % (drop 2 board)) [11 12])
-          (map #(drop-last (take-nth 6 (drop % board))) [6 7 8])
-          (map #(take-nth % (drop 6 board)) [7 10])
-          (list
-            (drop-last (take-nth 8 (drop 2 board)))
-            (take-nth 8 (drop 8 board))
-            (drop-last (take-nth 5 (drop 8 board)))
-            (take-nth 12 (drop 1 board))
-            (take-nth 10 (drop 3 board))
-            (take-nth 8 (drop 5 board)))))
+  (concat (map #(take-nth % board) [13])
+          (map #(take-nth % (drop 2 board)) [11])
+          (map #(take-nth % (drop 6 board)) [7])
+          (list (drop-last (take-nth 5 (drop 8 board))))))
 
 (defn- ->2D-diagonals [board]
   (concat (map #(take 3 (take-nth 4 (drop % board))) [0 9 18])
