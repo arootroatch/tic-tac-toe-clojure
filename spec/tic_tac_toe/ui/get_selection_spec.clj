@@ -55,6 +55,12 @@
                 ["Unbeatable mode activated!\n"]]
                (stub/invocations-of :println)))
 
+    (it "says 'hard' instead of 'unbeatable' if 3d and user goes first"
+              (with-in-str "3" (get-selection {:option :level :ai 1 :mode 2 :board 3}))
+      (should= [["Please select level of difficulty:"] ["1 - Easy"] ["2 - Medium"] ["3 - Hard"]
+                ["Hard mode activated!\n"]]
+               (stub/invocations-of :println)))
+
 
     (it "specifies X if mode is CvC and selecting first player level"
       (with-in-str "1" (get-selection {:option :level :ai 1 :mode 4}))

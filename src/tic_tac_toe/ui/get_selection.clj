@@ -13,10 +13,10 @@
   (let [input (get-input-in-range 4)]
     (do (print/print-board-selection input) input)))
 
-(defmethod get-selection :level [{:keys [ai mode]}]
-  (print/prompt-user-for-level ai mode)
+(defmethod get-selection :level [{:keys [ai mode board]}]
+  (print/prompt-user-for-level ai mode board)
   (let [input (get-input-in-range 4)]
-    (do (print/print-level-selection input) input)))
+    (do (print/print-level-selection input mode board) input)))
 
 (defmethod get-selection :mode [_]
   (print/prompt-user-for-mode)
