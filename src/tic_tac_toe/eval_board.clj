@@ -34,7 +34,6 @@
           (->3D-diagonals board)
           (map #(take-nth 9 (drop % board)) [0 1 2 3 4 5 6 7 8])))
 
-
 (defn score [board]
   (let [paths (->paths board)]
     (cond

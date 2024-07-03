@@ -6,7 +6,8 @@
 
 (describe "get-selection"
   (with-stubs)
-  (redefs-around [println (stub :println)])
+  (redefs-around [println (stub :println)
+                 load-file (stub :load-file)])
 
   (context "board-selection"
     (it "asks user to select board and confirms 3x3"
@@ -127,5 +128,5 @@
       (should= 2 (with-in-str "2" (get-selection {:option :mode})))
       (should= 3 (with-in-str "3" (get-selection {:option :mode})))
       (should= 4 (with-in-str "4" (get-selection {:option :mode})))
-      ))
-  )
+      )
+    ))

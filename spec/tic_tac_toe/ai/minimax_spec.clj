@@ -136,6 +136,7 @@
       (should= 2 (find-best-move-memo [:o 2 3 :x 5 6 7 8 9 10 11 12 13 14 15 :x] :o)))
 
     (it "finds 6th move"
+      (tags :slow)
       ;picks three even with no max depth
       (should= 3 (find-best-move-memo [:o :o 3 :x 5 6 7 8 :x 10 11 :x 13 14 15 16] :x)))
     )
