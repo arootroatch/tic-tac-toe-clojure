@@ -1,11 +1,12 @@
 (ns tic-tac-toe.ai.minimax-spec
   (:require [speclj.core :refer :all]
             [tic-tac-toe.ai.minimax :refer :all]
-            [tic-tac-toe.ai.minimax-test-fns :refer :all]))
+            [tic-tac-toe.ai.minimax-test-fns :refer :all]
+            [tic-tac-toe.ui.print-utils :as print]))
 
 (describe "computer opponent - is maximizer"
   (with-stubs)
-  (redefs-around [println (stub :println)])
+  (redefs-around [print/display-bot-thinking-message (stub :thinking)])
 
   (context "prove unbeatable"
     (tags :slow)
