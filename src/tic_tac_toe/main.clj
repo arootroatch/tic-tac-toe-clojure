@@ -6,8 +6,9 @@
             [tic-tac-toe.ui.get-selection :refer [get-selection initial-3x3-board initial-4x4-board initial-3x3x3-board]]
             [tic-tac-toe.ui.print-utils :as print-utils]))
 
-(defn -main []
-  (let [mode (get-selection {:option :mode})
+(defn -main [&args]
+  (let [gui (if (= &args "gui") (do (load-file "src/tic_tac_toe/gui/core.clj") 1) nil)
+        mode (get-selection {:option :mode})
         board-selection (get-selection {:option :board})
         first-ai-level (if (= 1 mode) nil (get-selection {:option :level :ai 1 :mode mode :board board-selection}))
         second-ai-level (if (= 4 mode) (get-selection {:option :level :ai 2 :mode mode}) nil)

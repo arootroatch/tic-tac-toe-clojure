@@ -62,7 +62,6 @@
   (println "3 - Computer vs Human (Computer plays first)")
   (println "4 - Computer vs Computer"))
 
-
 (def purple "\u001b[35m")
 (def reset "\u001b[0m")
 
@@ -93,3 +92,7 @@
     (print-board top-board)
     (print-board middle-board)
     (print-board bottom-board)))
+
+
+
+
