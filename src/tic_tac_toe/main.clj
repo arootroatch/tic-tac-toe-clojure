@@ -8,11 +8,11 @@
 
 (defn -main [&args]
   (let [gui (if (= &args "gui") (do (load-file "src/tic_tac_toe/gui/core.clj") 1) nil)
-        mode (get-selection {:option :mode})
-        board-selection (get-selection {:option :board})
-        first-ai-level (if (= 1 mode) nil (get-selection {:option :level :ai 1 :mode mode :board board-selection}))
-        second-ai-level (if (= 4 mode) (get-selection {:option :level :ai 2 :mode mode}) nil)
-        game-options {:mode mode :first-ai-level first-ai-level :second-ai-level second-ai-level}]
+        mode (get-selection {:option :mode :gui gui})
+        board-selection (get-selection {:option :board :gui ui})
+        first-ai-level (if (= 1 mode) nil (get-selection {:option :level :ai 1 :mode mode :board board-selection :gui gui}))
+        second-ai-level (if (= 4 mode) (get-selection {:option :level :ai 2 :mode mode :gui gui}) nil)
+        game-options {:mode mode :first-ai-level first-ai-level :second-ai-level second-ai-level :gui gui}]
     (loop [board (case board-selection 1 initial-3x3-board 2 initial-4x4-board 3 initial-3x3x3-board)
            player player-sequence]
       (print-utils/print-board board)
