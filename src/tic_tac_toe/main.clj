@@ -21,8 +21,7 @@
 
 (defn -main
   ([]
-   (play-loop nil))
+   (play-loop false))
   ([&args]
-   (let [gui (if (= &args "gui") (do (load-file "src/tic_tac_toe/gui/core.clj") 1) nil)]
-     (play-loop gui)))
-  )
+   (let [gui (if (= &args "gui") (do (load-file "src/tic_tac_toe/gui/core.clj") true) false)]
+     (play-loop gui))))
