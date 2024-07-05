@@ -7,7 +7,6 @@
             [tic-tac-toe.gui.play :refer [play]]))
 
 (def window-size 800)
-(def square-size 50)
 
 (defn setup []
   (q/background 0 0 0)

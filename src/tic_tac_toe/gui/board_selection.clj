@@ -1,6 +1,7 @@
 (ns tic-tac-toe.gui.board-selection
   (:require [quil.core :as q]
-            [tic-tac-toe.gui.components :refer [three-board four-board]]))
+            [tic-tac-toe.gui.components :refer [three-board four-board]]
+            [tic-tac-toe.ui.print-utils :as print]))
 
 (defn- three-by-three-container [x y]
   (q/fill 0 0 0)
@@ -27,7 +28,7 @@
   (four-board (+ x 50) (- y 60) 40))
 
 (defn board-selection []
-  (q/text "Please select a board:" 400 150)
+  (q/text (first print/board-prompt) 400 150)
   (three-by-three-container 400 330)
   (four-by-four-container 400 580))
 
