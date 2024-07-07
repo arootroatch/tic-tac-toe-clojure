@@ -6,22 +6,18 @@
             [tic-tac-toe.ui.get-selection :refer [get-selection initial-3x3-board initial-3x3x3-board initial-4x4-board]]
             [tic-tac-toe.ui.print-utils :as print-utils]))
 
-(defn- play-loop [gui]
-  (let [mode (get-selection {:option :mode})
-        board-selection (get-selection {:option :board})
-        first-ai-level (if (= 1 mode) nil (get-selection {:option :level :ai 1 :mode mode :board board-selection}))
-        second-ai-level (if (= 4 mode) (get-selection {:option :level :ai 2 :mode mode}) nil)
-        game-options {:mode mode :first-ai-level first-ai-level :second-ai-level second-ai-level}]
-    (loop [board (case board-selection 1 initial-3x3-board 2 initial-4x4-board 3 initial-3x3x3-board)
-           player player-sequence]
-      (print-utils/print-board board)
-      (if (not= (score board) :in-progress)
-        (println (score board))
-        (recur (take-turn (assoc game-options :board board :player (first player))) (rest player))))))
-
 (defn -main
   ([]
-   (play-loop false))
+   (let [mode (get-selection {:option :mode})
+         board-selection (get-selection {:option :board})
+         first-ai-level (if (= 1 mode) nil (get-selection {:option :level :ai 1 :mode mode :board board-selection}))
+         second-ai-level (if (= 4 mode) (get-selection {:option :level :ai 2 :mode mode}) nil)
+         game-options {:mode mode :first-ai-level first-ai-level :second-ai-level second-ai-level}]
+     (loop [board (case board-selection 1 initial-3x3-board 2 initial-4x4-board 3 initial-3x3x3-board)
+            player player-sequence]
+       (print-utils/print-board board)
+       (if (not= (score board) :in-progress)
+         (println (score board))
+         (recur (take-turn (assoc game-options :board board :player (first player))) (rest player))))))
   ([&args]
-   (let [gui (if (= &args "gui") (do (load-file "src/tic_tac_toe/gui/core.clj") true) false)]
-     (play-loop gui))))
+   (when (= "gui" &args) (load-file "src/tic_tac_toe/gui/core.clj"))))
