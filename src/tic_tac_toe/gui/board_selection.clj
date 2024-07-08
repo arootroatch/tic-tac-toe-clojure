@@ -7,24 +7,16 @@
 (defn- three-board-preview [x y square-size]
   (q/fill 255 255 255)
   (q/stroke 0 0 0)
-  (run! #(q/rect % y square-size square-size)
-        [x (+ square-size x) (+ (* 2 square-size) x)])
-  (run! #(q/rect % (+ square-size y) square-size square-size)
-        [x (+ square-size x) (+ (* 2 square-size) x)])
-  (run! #(q/rect % (+ (* 2 square-size) y) square-size square-size)
-        [x (+ square-size x) (+ (* 2 square-size) x)]))
+  (doseq [row [0 1 2]
+          col [0 1 2]]
+    (q/rect (+ x (* col square-size)) (+ y (* row square-size)) square-size square-size)))
 
 (defn- four-board-preview [x y square-size]
   (q/fill 255 255 255)
   (q/stroke 0 0 0)
-  (run! #(q/rect % y square-size square-size)
-        [x (+ square-size x) (+ (* 2 square-size) x) (+ x (* 3 square-size))])
-  (run! #(q/rect % (+ square-size y) square-size square-size)
-        [x (+ square-size x) (+ (* 2 square-size) x) (+ x (* 3 square-size))])
-  (run! #(q/rect % (+ (* 2 square-size) y) square-size square-size)
-        [x (+ square-size x) (+ (* 2 square-size) x) (+ x (* 3 square-size))])
-  (run! #(q/rect % (+ (* 3 square-size) y) square-size square-size)
-        [x (+ square-size x) (+ (* 2 square-size) x) (+ x (* 3 square-size))]))
+  (doseq [row [0 1 2 3]
+          col [0 1 2 3]]
+    (q/rect (+ x (* col square-size)) (+ y (* row square-size)) square-size square-size)))
 
 (defn- three-by-three-container [x y]
   (if (utils/mouse-over? x y 600 200) (q/fill 100 100 100) (q/fill 0 0 0))
@@ -48,11 +40,14 @@
   (q/text "4 x 4" (- x 120) (+ y 10))
   (four-board-preview (+ x 50) (- y 60) 40))
 
-(defn board-selection [state]
+(defn board-selection-screen []
+  (q/background 0 0 0)
   (q/text-size 30)
   (q/text (first print/board-prompt) 400 100)
   (three-by-three-container 400 280)
-  (four-by-four-container 400 530)
+  (four-by-four-container 400 530))
+
+(defn board-selection [state]
   (cond
     (:board state) (:board state)
     (and (q/mouse-pressed?) (utils/mouse-over? 400 280 600 200)) selection/initial-3x3-board

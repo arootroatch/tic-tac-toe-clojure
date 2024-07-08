@@ -4,14 +4,17 @@
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.ui.print-utils :as print]))
 
-(defn first-level-selection [state]
+(defn first-level-selection-screen [state]
+  (q/background 0 0 0)
   (q/text-size 30)
   (if (= 4 (:mode state))
     (q/text (first print/level-prompt) 400 100)
     (q/text (nth print/level-prompt 2) 400 100))
   (text-button (nth print/level-prompt 3) 400 300 400 60)
   (text-button (nth print/level-prompt 4) 400 380 400 60)
-  (text-button (nth print/level-prompt 6) 400 460 400 60)
+  (text-button (nth print/level-prompt 6) 400 460 400 60))
+
+(defn first-level-selection [state]
   (cond
     (:first-ai-level state) (:first-ai-level state)
     (and (q/mouse-pressed?) (utils/mouse-over? 400 300 400 60)) 1
