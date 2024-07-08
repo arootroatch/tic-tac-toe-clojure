@@ -12,6 +12,6 @@
   (text-button (nth print/level-prompt 6) 400 460 400 60)
   (cond
     (:second-ai-level state) (:second-ai-level state)
-    (and (q/mouse-pressed?) (utils/mouse-over? 400 300 400 60)) :easy
-    (and (q/mouse-pressed?) (utils/mouse-over? 400 380 600 60)) :medium
-    (and (q/mouse-pressed?) (utils/mouse-over? 400 460 600 60)) :hard))
+    (and (q/mouse-pressed?) (utils/mouse-over? 400 300 400 60)) 1
+    (and (q/mouse-pressed?) (utils/mouse-over? 400 380 600 60)) 2
+    (and (q/mouse-pressed?) (utils/mouse-over? 400 460 600 60)) 3))
