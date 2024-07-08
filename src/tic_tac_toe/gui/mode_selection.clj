@@ -13,7 +13,7 @@
   (text-button (nth print/mode-prompt 4) 400 490 600 60)
   (cond
     (:mode state) (:mode state)
-    (and (q/mouse-pressed?) (utils/mouse-over? 400 250 600 60)) :HvH
-    (and (q/mouse-pressed?) (utils/mouse-over? 400 300 600 60)) :HvC
-    (and (q/mouse-pressed?) (utils/mouse-over? 400 410 600 60)) :CvH
-    (and (q/mouse-pressed?) (utils/mouse-over? 400 490 600 60)) :CvC))
+    (and (q/mouse-pressed?) (utils/mouse-over? 400 250 600 60)) 1
+    (and (q/mouse-pressed?) (utils/mouse-over? 400 300 600 60)) 2
+    (and (q/mouse-pressed?) (utils/mouse-over? 400 410 600 60)) 3
+    (and (q/mouse-pressed?) (utils/mouse-over? 400 490 600 60)) 4))
