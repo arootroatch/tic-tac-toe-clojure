@@ -26,15 +26,16 @@
    :second-ai-level nil
    :player          :x
    :human?          nil
-   :game-state      :not-started
+   :game-state      :in-progress
    :gui             true})
 
 (defn ai-turn [state]
   (let [{:keys [mode player]} state
         new-board (player/take-turn state)]
     (assoc state
+      :current-screen (play state)
       :board new-board
-      :human? (when (not= 4 mode) true)
+      :human? (if (not= 4 mode) true false)
       :player (utils/switch-player player)
       :game-state (eval/score new-board))))
 
@@ -52,12 +53,12 @@
 (defn draw-state [state]
   (:current-screen state))
 
-;(q/defsketch gui-TTT
-;             :title "Tic-Tac-Toe"
-;             :size [window-size window-size]
-;             :setup setup
-;             :draw draw-state
-;             :mouse-clicked handle-click
-;             :update update-state
-;             :features [:keep-on-top]
-;             :middleware [m/fun-mode])
+(q/defsketch gui-TTT
+             :title "Tic-Tac-Toe"
+             :size [window-size window-size]
+             :setup setup
+             :draw draw-state
+             :mouse-clicked handle-click
+             :update update-state
+             :features [:keep-on-top]
+             :middleware [m/fun-mode])

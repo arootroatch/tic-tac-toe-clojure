@@ -4,21 +4,21 @@
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.ui.get-selection :as selection]))
 
-(defn- three-board-preview [x y square-size]
+(defn three-board-preview [x y square-size]
   (q/fill 255 255 255)
   (q/stroke 0 0 0)
   (doseq [row [0 1 2]
           col [0 1 2]]
     (q/rect (+ x (* col square-size)) (+ y (* row square-size)) square-size square-size)))
 
-(defn- four-board-preview [x y square-size]
+(defn four-board-preview [x y square-size]
   (q/fill 255 255 255)
   (q/stroke 0 0 0)
   (doseq [row [0 1 2 3]
           col [0 1 2 3]]
     (q/rect (+ x (* col square-size)) (+ y (* row square-size)) square-size square-size)))
 
-(defn- three-by-three-container [x y]
+(defn three-by-three-container [x y]
   (if (utils/mouse-over? x y 600 200) (q/fill 100 100 100) (q/fill 0 0 0))
   (q/stroke 255 255 255)
   (q/stroke-weight 5)
@@ -29,7 +29,7 @@
   (q/text "3 x 3" (- x 120) (+ y 10))
   (three-board-preview (+ x 60) (- y 50) 50))
 
-(defn- four-by-four-container [x y]
+(defn four-by-four-container [x y]
   (if (utils/mouse-over? x y 600 200) (q/fill 100 100 100) (q/fill 0 0 0))
   (q/stroke 255 255 255)
   (q/stroke-weight 5)
