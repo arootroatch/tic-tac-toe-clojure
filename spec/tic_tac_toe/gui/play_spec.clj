@@ -71,131 +71,81 @@
 
   (context "clicked 3x3"
     (it "returns number of square clicked 0"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 250})
-                    q/mouse-y (stub :mouse-y {:return 250})]
-        (should= 0 (clicked {:board [1 2 3 4 5 6 7 8 9]}))))
+      (should= 0 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 250 :y 250})))
 
     (it "returns number of square clicked 1"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 400})
-                    q/mouse-y (stub :mouse-y {:return 250})]
-        (should= 1 (clicked {:board [1 2 3 4 5 6 7 8 9]}))))
+      (should= 1 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 400 :y 250})))
 
     (it "returns number of square clicked 2"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 550})
-                    q/mouse-y (stub :mouse-y {:return 250})]
-        (should= 2 (clicked {:board [1 2 3 4 5 6 7 8 9]}))))
+      (should= 2 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 550 :y 250})))
 
     (it "returns number of square clicked 3"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 250})
-                    q/mouse-y (stub :mouse-y {:return 400})]
-        (should= 3 (clicked {:board [1 2 3 4 5 6 7 8 9]}))))
+      (should= 3 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 250 :y 400})))
 
     (it "returns number of square clicked 4"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 400})
-                    q/mouse-y (stub :mouse-y {:return 400})]
-        (should= 4 (clicked {:board [1 2 3 4 5 6 7 8 9]}))))
+      (should= 4 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 400 :y 400})))
 
     (it "returns number of square clicked 5"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 550})
-                    q/mouse-y (stub :mouse-y {:return 400})]
-        (should= 5 (clicked {:board [1 2 3 4 5 6 7 8 9]}))))
+      (should= 5 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 550 :y 400})))
 
     (it "returns number of square clicked 6"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 250})
-                    q/mouse-y (stub :mouse-y {:return 550})]
-        (should= 6 (clicked {:board [1 2 3 4 5 6 7 8 9]}))))
+      (should= 6 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 250 :y 550})))
 
     (it "returns number of square clicked 7"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 400})
-                    q/mouse-y (stub :mouse-y {:return 550})]
-        (should= 7 (clicked {:board [1 2 3 4 5 6 7 8 9]}))))
+      (should= 7 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 400 :y 550})))
 
     (it "returns number of square clicked 8"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 550})
-                    q/mouse-y (stub :mouse-y {:return 550})]
-        (should= 8 (clicked {:board [1 2 3 4 5 6 7 8 9]}))))
+      (should= 8 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 550 :y 550})))
     )
 
   (context "clicked 4x4"
     (it "returns number of square clicked 0"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 220})
-                    q/mouse-y (stub :mouse-y {:return 220})]
-        (should= 0 (clicked {:board (vec (range 1 17))}))))
+        (should= 0 (clicked {:board (vec (range 1 17))} {:x 220 :y 220})))
 
     (it "returns number of square clicked 1"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 340})
-                    q/mouse-y (stub :mouse-y {:return 220})]
-        (should= 1 (clicked {:board (vec (range 1 17))}))))
+        (should= 1 (clicked {:board (vec (range 1 17))} {:x 340 :y 220})))
 
     (it "returns number of square clicked 2"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 460})
-                    q/mouse-y (stub :mouse-y {:return 220})]
-        (should= 2 (clicked {:board (vec (range 1 17))}))))
+        (should= 2 (clicked {:board (vec (range 1 17))} {:x 460 :y 220})))
 
     (it "returns number of square clicked 3"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 580})
-                    q/mouse-y (stub :mouse-y {:return 220})]
-        (should= 3 (clicked {:board (vec (range 1 17))}))))
+        (should= 3 (clicked {:board (vec (range 1 17))} {:x 580 :y 220})))
 
     (it "returns number of square clicked 4"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 220})
-                    q/mouse-y (stub :mouse-y {:return 340})]
-        (should= 4 (clicked {:board (vec (range 1 17))}))))
+        (should= 4 (clicked {:board (vec (range 1 17))} {:x 220 :y 340})))
 
     (it "returns number of square clicked 5"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 340})
-                    q/mouse-y (stub :mouse-y {:return 340})]
-        (should= 5 (clicked {:board (vec (range 1 17))}))))
+        (should= 5 (clicked {:board (vec (range 1 17))} {:x 340 :y 340})))
 
     (it "returns number of square clicked 6"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 460})
-                    q/mouse-y (stub :mouse-y {:return 340})]
-        (should= 6 (clicked {:board (vec (range 1 17))}))))
+        (should= 6 (clicked {:board (vec (range 1 17))} {:x 460 :y 340})))
 
     (it "returns number of square clicked 7"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 580})
-                    q/mouse-y (stub :mouse-y {:return 340})]
-        (should= 7 (clicked {:board (vec (range 1 17))}))))
+        (should= 7 (clicked {:board (vec (range 1 17))} {:x 580 :y 340})))
 
     (it "returns number of square clicked 8"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 220})
-                    q/mouse-y (stub :mouse-y {:return 460})]
-        (should= 8 (clicked {:board (vec (range 1 17))}))))
+        (should= 8 (clicked {:board (vec (range 1 17))} {:x 220 :y 460})))
 
     (it "returns number of square clicked 9"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 340})
-                    q/mouse-y (stub :mouse-y {:return 460})]
-        (should= 9 (clicked {:board (vec (range 1 17))}))))
+        (should= 9 (clicked {:board (vec (range 1 17))} {:x 340 :y 460})))
 
     (it "returns number of square clicked 10"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 460})
-                    q/mouse-y (stub :mouse-y {:return 460})]
-        (should= 10 (clicked {:board (vec (range 1 17))}))))
+        (should= 10 (clicked {:board (vec (range 1 17))} {:x 460 :y 460})))
 
     (it "returns number of square clicked 11"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 580})
-                    q/mouse-y (stub :mouse-y {:return 460})]
-        (should= 11 (clicked {:board (vec (range 1 17))}))))
+        (should= 11 (clicked {:board (vec (range 1 17))} {:x 580 :y 460})))
 
     (it "returns number of square clicked 12"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 220})
-                    q/mouse-y (stub :mouse-y {:return 580})]
-        (should= 12 (clicked {:board (vec (range 1 17))}))))
+        (should= 12 (clicked {:board (vec (range 1 17))} {:x 220 :y 580})))
 
     (it "returns number of square clicked 13"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 340})
-                    q/mouse-y (stub :mouse-y {:return 580})]
-        (should= 13 (clicked {:board (vec (range 1 17))}))))
+        (should= 13 (clicked {:board (vec (range 1 17))} {:x 340 :y 580})))
 
     (it "returns number of square clicked 14"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 460})
-                    q/mouse-y (stub :mouse-y {:return 580})]
-        (should= 14 (clicked {:board (vec (range 1 17))}))))
+        (should= 14 (clicked {:board (vec (range 1 17))} {:x 460 :y 580})))
 
     (it "returns number of square clicked 15"
-      (with-redefs [q/mouse-x (stub :mouse-x {:return 580})
-                    q/mouse-y (stub :mouse-y {:return 580})]
-        (should= 15 (clicked {:board (vec (range 1 17))}))))
+        (should= 15 (clicked {:board (vec (range 1 17))} {:x 580 :y 580})))
     ))
 
 
