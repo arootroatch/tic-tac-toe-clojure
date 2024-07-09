@@ -45,12 +45,14 @@
   (q/text-size 30)
   (q/text (first print/board-prompt) 400 100)
   (three-by-three-container 400 280)
-  (four-by-four-container 400 530))
+  (four-by-four-container 400 530)
+  :board-selection)
 
-(defn board-selection [state]
+(defmethod utils/handle-click :board-selection [state mouse-xy]
   (cond
     (:board state) (:board state)
-    (and (q/mouse-pressed?) (utils/mouse-over? 400 280 600 200)) selection/initial-3x3-board
-    (and (q/mouse-pressed?) (utils/mouse-over? 400 530 600 200)) selection/initial-4x4-board))
+    (utils/mouse-over? 400 280 600 200 mouse-xy) (assoc state :board selection/initial-3x3-board)
+    (utils/mouse-over? 400 530 600 200 mouse-xy) (assoc state :board selection/initial-4x4-board)
+    :else state))
 
 

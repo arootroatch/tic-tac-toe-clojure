@@ -20,7 +20,7 @@
     (and (= 8 (first moves)) (not (some #{2} moves)))))
 
 (defn- play-minimax-turn [board player]
-  (let [move (find-best-move-memo board player)]
+  (let [move (find-best-move-memo board player false)]
     (assoc board (dec move) player)))
 
 (defn- play-sim-game [coll]

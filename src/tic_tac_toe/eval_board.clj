@@ -16,10 +16,10 @@
 
 (defn- ->3D-diagonals [board]
   (list
-      (take-nth 13 board)
-      (take-nth 11 (drop 2 board))
-      (take-nth 7 (drop 6 board))
-      (drop-last (take-nth 5 (drop 8 board)))))
+    (take-nth 13 board)
+    (take-nth 11 (drop 2 board))
+    (take-nth 7 (drop 6 board))
+    (drop-last (take-nth 5 (drop 8 board)))))
 
 (defn- ->2D-diagonals [board]
   (concat (map #(take 3 (take-nth 4 (drop % board))) [0 9 18])

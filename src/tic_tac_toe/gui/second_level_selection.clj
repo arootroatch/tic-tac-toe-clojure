@@ -10,11 +10,13 @@
   (q/text (nth print/level-prompt 1) 400 100)
   (text-button (nth print/level-prompt 3) 400 300 400 60)
   (text-button (nth print/level-prompt 4) 400 380 400 60)
-  (text-button (nth print/level-prompt 6) 400 460 400 60))
+  (text-button (nth print/level-prompt 6) 400 460 400 60)
+  :second-level-selection)
 
-(defn second-level-selection [state]
+(defmethod utils/handle-click :second-level-selection [state mouse-xy]
   (cond
     (:second-ai-level state) (:second-ai-level state)
-    (and (q/mouse-pressed?) (utils/mouse-over? 400 300 400 60)) 1
-    (and (q/mouse-pressed?) (utils/mouse-over? 400 380 600 60)) 2
-    (and (q/mouse-pressed?) (utils/mouse-over? 400 460 600 60)) 3))
+    (utils/mouse-over? 400 300 400 60 mouse-xy) (assoc state :second-ai-level 1)
+    (utils/mouse-over? 400 380 600 60 mouse-xy) (assoc state :second-ai-level 2)
+    (utils/mouse-over? 400 460 600 60 mouse-xy) (assoc state :second-ai-level 3)
+    :else state))

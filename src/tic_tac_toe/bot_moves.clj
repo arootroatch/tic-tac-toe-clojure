@@ -4,18 +4,18 @@
             [tic-tac-toe.player :as player]
             [tic-tac-toe.ui.print-utils :refer [display-bot-move-message]]))
 
-(defn play-bot-move [move board mode player]
-  (display-bot-move-message move mode player)
+(defn play-bot-move [move board mode player gui]
+  (when (not gui) (display-bot-move-message move mode player))
   (assoc board (dec move) player))
 
-(defmethod player/take-turn 1 [{:keys [board mode player]}]
+(defmethod player/take-turn 1 [{:keys [board mode player gui]}]
   (let [move (find-easy-move board)]
-    (play-bot-move move board mode player)))
+    (play-bot-move move board mode player gui)))
 
-(defmethod player/take-turn 2 [{:keys [board mode player]}]
+(defmethod player/take-turn 2 [{:keys [board mode player gui]}]
   (let [move (find-medium-move board)]
-    (play-bot-move move board mode player)))
+    (play-bot-move move board mode player gui)))
 
-(defmethod player/take-turn 3 [{:keys [board mode player]}]
-  (let [move (find-best-move-memo board player)]
-    (play-bot-move move board mode player)))
+(defmethod player/take-turn 3 [{:keys [board mode player gui]}]
+  (let [move (find-best-move-memo board player gui)]
+    (play-bot-move move board mode player gui)))
