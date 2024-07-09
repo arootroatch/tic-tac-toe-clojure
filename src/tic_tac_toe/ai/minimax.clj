@@ -52,11 +52,11 @@
           (> depth 4) 0
           :else (minimax-move-memo board max? player depth alpha beta))))
 
-(defn- search-with-minimax [board player]
+(defn- search-with-minimax [board player gui]
   (loop [available (get-relevant-moves board player)
          best-move -1
          best-score -1000]
-    (print/display-bot-thinking-message player)
+    (when (not gui) (print/display-bot-thinking-message player))
     (if (empty? available)
       best-move
       (let [move (first available)
@@ -66,7 +66,7 @@
 
 (def search-with-minimax-memo (memoize search-with-minimax))
 
-(defn- find-best-move [board player]
+(defn- find-best-move [board player gui]
   (let [available (filter number? board)
         winning-move (ai/get-winning-move board player)
         blocking-move (ai/get-winning-move board (switch-player player))
@@ -77,6 +77,6 @@
           (and (= 16 (count board)) (>= (count available) 12)) (first available)
           (and (= 27 (count board)) (number? (nth board 13))) 14
           (and (= 27 (count board)) (contains? move-table board)) (get move-table board)
-          :else (search-with-minimax-memo board player))))
+          :else (search-with-minimax-memo board player gui))))
 
 (def find-best-move-memo (memoize find-best-move))
