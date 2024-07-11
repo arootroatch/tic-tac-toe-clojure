@@ -2,7 +2,32 @@
   (:require [quil.core :as q]
             [speclj.core :refer :all]
             [speclj.stub :as stub]
-            [tic-tac-toe.gui.play :refer :all]))
+            [tic-tac-toe.gui.components :as components]
+            [tic-tac-toe.gui.mode-selection :refer [mode-selection-screen]]
+            [tic-tac-toe.gui.play :refer :all]
+            [tic-tac-toe.gui.utils :as utils]))
+
+(def in-progress-state {:current-screen :play
+                        :board          [1 2 3 4 5 6 7 8 9]
+                        :game-state     :in-progress
+                        :player         :x
+                        :human?         true})
+
+(def end-state {:current-screen :play
+                :board          [:x :x :x :o :o 6 7 8 9]
+                :game-state     "X wins!"
+                :player         :x
+                :human?         true})
+
+(def initial-state {:current-screen  :mode-selection
+                    :mode            nil
+                    :board           nil
+                    :first-ai-level  nil
+                    :second-ai-level nil
+                    :player          :x
+                    :human?          nil
+                    :game-state      :in-progress
+                    :gui             true})
 
 (describe "play screen"
   (with-stubs)
@@ -10,8 +35,7 @@
                   q/fill (stub :fill)
                   q/text (stub :text)
                   q/text-size (stub :text-size)
-                  q/text-align (stub :text-align)
-                  q/mouse-pressed? (stub :mouse-pressed {:return true})])
+                  q/text-align (stub :text-align)])
 
   (context "create-square"
     (redefs-around [q/mouse-x (stub :mouse-x {:return 400})
@@ -68,84 +92,161 @@
                  (stub/invocations-of :create-square))))
     )
 
+  (context "play"
+    (redefs-around [q/background (stub :background)
+                    three-board (stub :three-board)
+                    four-board (stub :four-board)
+                    components/text-button (stub :text-button)])
+    (it "resets background"
+      (play in-progress-state) (should-have-invoked :background {:with [0 0 0]}))
 
-  (context "clicked 3x3"
-    (it "returns number of square clicked 0"
-      (should= 0 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 250 :y 250})))
+    (it "sets text size to 30"
+      (play in-progress-state) (should-have-invoked :text-size {:with [30]}))
 
-    (it "returns number of square clicked 1"
-      (should= 1 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 400 :y 250})))
+    (it "sets text color fill to white"
+      (play in-progress-state) (should-have-invoked :fill {:with [255 255 255]}))
 
-    (it "returns number of square clicked 2"
-      (should= 2 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 550 :y 250})))
+    (it "signals when the computer is taking it's turn"
+      (play (assoc in-progress-state :human? false))
+      (should-have-invoked :text {:with ["Your opponent is thinking..." 400 100]}))
 
-    (it "returns number of square clicked 3"
-      (should= 3 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 250 :y 400})))
+    (it "signals when Xs turn"
+      (play in-progress-state)
+      (should-have-invoked :text {:with ["X's turn!" 400 100]}))
 
-    (it "returns number of square clicked 4"
-      (should= 4 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 400 :y 400})))
+    (it "signals when Os turn"
+      (play (assoc in-progress-state :player :o))
+      (should-have-invoked :text {:with ["O's turn!" 400 100]}))
 
-    (it "returns number of square clicked 5"
-      (should= 5 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 550 :y 400})))
+    (it "displays X wins"
+      (play end-state)
+      (should-have-invoked :text {:with ["X wins!" 400 100]}))
 
-    (it "returns number of square clicked 6"
-      (should= 6 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 250 :y 550})))
+    (it "displays O wins"
+      (play {:game-state "O wins!"})
+      (should-have-invoked :text {:with ["O wins!" 400 100]}))
 
-    (it "returns number of square clicked 7"
-      (should= 7 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 400 :y 550})))
+    (it "displays 3x3 board"
+      (play in-progress-state)
+      (should-have-invoked :three-board {:with [x-3 y-3 size-3 [1 2 3 4 5 6 7 8 9] :in-progress]}))
 
-    (it "returns number of square clicked 8"
-      (should= 8 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 550 :y 550})))
-    )
+    (it "displays 4x4 board"
+      (play (assoc in-progress-state :board (vec (range 1 17))))
+      (should-have-invoked :four-board {:with [x-4 y-4 size-4 (vec (range 1 17)) :in-progress]}))
 
-  (context "clicked 4x4"
-    (it "returns number of square clicked 0"
-        (should= 0 (clicked {:board (vec (range 1 17))} {:x 220 :y 220})))
+    (it "displays play again button at end of game"
+      (play end-state)
+      (should-have-invoked :text-button {:with ["Play again?" 400 700 600 60]}))
 
-    (it "returns number of square clicked 1"
-        (should= 1 (clicked {:board (vec (range 1 17))} {:x 340 :y 220})))
+    (it "does not display play again button during game"
+      (play in-progress-state)
+      (should-not-have-invoked :text-button))
 
-    (it "returns number of square clicked 2"
-        (should= 2 (clicked {:board (vec (range 1 17))} {:x 460 :y 220})))
+    (it "returns play for :current-screen"
+      (should= :play (play in-progress-state)))
+  )
 
-    (it "returns number of square clicked 3"
-        (should= 3 (clicked {:board (vec (range 1 17))} {:x 580 :y 220})))
 
-    (it "returns number of square clicked 4"
-        (should= 4 (clicked {:board (vec (range 1 17))} {:x 220 :y 340})))
+(context "clicked 3x3"
+  (it "returns number of square clicked 0"
+    (should= 0 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 250 :y 250})))
 
-    (it "returns number of square clicked 5"
-        (should= 5 (clicked {:board (vec (range 1 17))} {:x 340 :y 340})))
+  (it "returns number of square clicked 1"
+    (should= 1 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 400 :y 250})))
 
-    (it "returns number of square clicked 6"
-        (should= 6 (clicked {:board (vec (range 1 17))} {:x 460 :y 340})))
+  (it "returns number of square clicked 2"
+    (should= 2 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 550 :y 250})))
 
-    (it "returns number of square clicked 7"
-        (should= 7 (clicked {:board (vec (range 1 17))} {:x 580 :y 340})))
+  (it "returns number of square clicked 3"
+    (should= 3 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 250 :y 400})))
 
-    (it "returns number of square clicked 8"
-        (should= 8 (clicked {:board (vec (range 1 17))} {:x 220 :y 460})))
+  (it "returns number of square clicked 4"
+    (should= 4 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 400 :y 400})))
 
-    (it "returns number of square clicked 9"
-        (should= 9 (clicked {:board (vec (range 1 17))} {:x 340 :y 460})))
+  (it "returns number of square clicked 5"
+    (should= 5 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 550 :y 400})))
 
-    (it "returns number of square clicked 10"
-        (should= 10 (clicked {:board (vec (range 1 17))} {:x 460 :y 460})))
+  (it "returns number of square clicked 6"
+    (should= 6 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 250 :y 550})))
 
-    (it "returns number of square clicked 11"
-        (should= 11 (clicked {:board (vec (range 1 17))} {:x 580 :y 460})))
+  (it "returns number of square clicked 7"
+    (should= 7 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 400 :y 550})))
 
-    (it "returns number of square clicked 12"
-        (should= 12 (clicked {:board (vec (range 1 17))} {:x 220 :y 580})))
+  (it "returns number of square clicked 8"
+    (should= 8 (clicked {:board [1 2 3 4 5 6 7 8 9]} {:x 550 :y 550})))
+  )
 
-    (it "returns number of square clicked 13"
-        (should= 13 (clicked {:board (vec (range 1 17))} {:x 340 :y 580})))
+(context "clicked 4x4"
+  (it "returns number of square clicked 0"
+    (should= 0 (clicked {:board (vec (range 1 17))} {:x 220 :y 220})))
 
-    (it "returns number of square clicked 14"
-        (should= 14 (clicked {:board (vec (range 1 17))} {:x 460 :y 580})))
+  (it "returns number of square clicked 1"
+    (should= 1 (clicked {:board (vec (range 1 17))} {:x 340 :y 220})))
 
-    (it "returns number of square clicked 15"
-        (should= 15 (clicked {:board (vec (range 1 17))} {:x 580 :y 580})))
-    ))
+  (it "returns number of square clicked 2"
+    (should= 2 (clicked {:board (vec (range 1 17))} {:x 460 :y 220})))
+
+  (it "returns number of square clicked 3"
+    (should= 3 (clicked {:board (vec (range 1 17))} {:x 580 :y 220})))
+
+  (it "returns number of square clicked 4"
+    (should= 4 (clicked {:board (vec (range 1 17))} {:x 220 :y 340})))
+
+  (it "returns number of square clicked 5"
+    (should= 5 (clicked {:board (vec (range 1 17))} {:x 340 :y 340})))
+
+  (it "returns number of square clicked 6"
+    (should= 6 (clicked {:board (vec (range 1 17))} {:x 460 :y 340})))
+
+  (it "returns number of square clicked 7"
+    (should= 7 (clicked {:board (vec (range 1 17))} {:x 580 :y 340})))
+
+  (it "returns number of square clicked 8"
+    (should= 8 (clicked {:board (vec (range 1 17))} {:x 220 :y 460})))
+
+  (it "returns number of square clicked 9"
+    (should= 9 (clicked {:board (vec (range 1 17))} {:x 340 :y 460})))
+
+  (it "returns number of square clicked 10"
+    (should= 10 (clicked {:board (vec (range 1 17))} {:x 460 :y 460})))
+
+  (it "returns number of square clicked 11"
+    (should= 11 (clicked {:board (vec (range 1 17))} {:x 580 :y 460})))
+
+  (it "returns number of square clicked 12"
+    (should= 12 (clicked {:board (vec (range 1 17))} {:x 220 :y 580})))
+
+  (it "returns number of square clicked 13"
+    (should= 13 (clicked {:board (vec (range 1 17))} {:x 340 :y 580})))
+
+  (it "returns number of square clicked 14"
+    (should= 14 (clicked {:board (vec (range 1 17))} {:x 460 :y 580})))
+
+  (it "returns number of square clicked 15"
+    (should= 15 (clicked {:board (vec (range 1 17))} {:x 580 :y 580})))
+  )
+
+(context "handle click"
+  (redefs-around [play (stub :play {:return :play})
+                  mode-selection-screen (stub :mode-selection-screen {:return :mode-selection})])
+  (it "updates board with user move"
+    (should= (assoc in-progress-state :board [:x 2 3 4 5 6 7 8 9] :player :o :human? false)
+             (utils/handle-click in-progress-state {:x 250 :y 250})))
+
+  (it "updates game-state"
+    (should= (assoc in-progress-state :board [:x :x :x 4 5 6 7 8 9] :game-state "X wins!" :player :o :human? false)
+             (utils/handle-click (assoc in-progress-state :board [1 :x :x 4 5 6 7 8 9]) {:x 250 :y 250})))
+
+  (it "returns state if square clicked was unavailable"
+    (should= (assoc in-progress-state :board [:x 2 3 4 5 6 7 8 9])
+             (utils/handle-click (assoc in-progress-state :board [:x 2 3 4 5 6 7 8 9]) {:x 250 :y 250})))
+
+  (it "resets state if user chooses to play again"
+    (should= initial-state (utils/handle-click end-state {:x 400 :y 700})))
+
+  (it "returns state if click is outside of buttons"
+    (should= in-progress-state (utils/handle-click in-progress-state {:x 0 :y 0})))
+
+  ))
 
 

@@ -2,7 +2,7 @@
   (:require [quil.core :as q]
             [tic-tac-toe.gui.components :refer [text-button]]
             [tic-tac-toe.gui.utils :as utils]
-            [tic-tac-toe.ui.print-utils :as print]))
+            [tic-tac-toe.tui.print-utils :as print]))
 
 (defn second-level-selection-screen []
   (q/background 0 0 0)

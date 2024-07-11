@@ -1,4 +1,4 @@
-(ns tic-tac-toe.ui.print-utils)
+(ns tic-tac-toe.tui.print-utils)
 
 (defn display-invalid-move-error [] (println "Please choose an empty cell"))
 

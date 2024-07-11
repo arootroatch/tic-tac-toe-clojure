@@ -12,6 +12,7 @@
                   q/fill (stub :fill)
                   q/text-align (stub :text-align)
                   q/text (stub :text)
+                  q/text-size (stub :text-size)
                   q/mouse-x (stub :mouse-x {:return 400})
                   q/mouse-y (stub :mouse-y {:return 400})])
 
@@ -38,6 +39,10 @@
   (it "sets text align to center vertically and horizontally"
     (text-button "Test" 400 400 600 200)
     (should-have-invoked :text-align {:with [:center :center]}))
+
+  (it "set text-size to 30"
+    (text-button "Test" 400 400 600 200)
+    (should-have-invoked :text-size {:with [30]}))
 
   (it "displays given label"
     (text-button "Test" 400 400 600 200)

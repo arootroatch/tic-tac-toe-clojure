@@ -2,7 +2,7 @@
   (:require [tic-tac-toe.ai.easy-medium :as ai]
             [tic-tac-toe.ai.lookup-tables :refer :all]
             [tic-tac-toe.eval-board :refer [->paths evaluate-board]]
-            [tic-tac-toe.ui.print-utils :as print]))
+            [tic-tac-toe.tui.print-utils :as print]))
 
 (declare minimax)
 

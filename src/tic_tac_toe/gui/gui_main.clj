@@ -1,4 +1,4 @@
-(ns tic-tac-toe.gui.core
+(ns tic-tac-toe.gui.gui-main
   (:require [quil.core :as q]
             [quil.middleware :as m]
             [tic-tac-toe.eval-board :as eval]
@@ -9,7 +9,8 @@
             [tic-tac-toe.gui.second-level-selection :refer [second-level-selection-screen]]
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.gui.utils :refer [handle-click]]
-            [tic-tac-toe.player :as player]))
+            [tic-tac-toe.player :as player]
+            [tic-tac-toe.launch-user-interface :refer [launch-user-interface]]))
 
 (def window-size 800)
 
@@ -53,12 +54,15 @@
 (defn draw-state [state]
   (:current-screen state))
 
-(q/defsketch gui-TTT
-             :title "Tic-Tac-Toe"
-             :size [window-size window-size]
-             :setup setup
-             :draw draw-state
-             :mouse-clicked handle-click
-             :update update-state
-             :features [:keep-on-top]
-             :middleware [m/fun-mode])
+
+(defmethod launch-user-interface ["gui"] [_]
+  (q/defsketch gui-TTT
+               :title "Tic-Tac-Toe"
+               :size [window-size window-size]
+               :setup setup
+               :draw draw-state
+               :mouse-clicked handle-click
+               :update update-state
+               :features [:keep-on-top]
+               :middleware [m/fun-mode]))
+

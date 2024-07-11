@@ -1,4 +1,4 @@
-(ns tic-tac-toe.ui.get-user-input)
+(ns tic-tac-toe.tui.get-user-input)
 
 (defn read-user-input []
   (try

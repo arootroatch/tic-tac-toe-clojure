@@ -9,5 +9,6 @@
   (q/rect x y w h 10)
   (q/fill 255 255 255)
   (q/text-align :center :center)
+  (q/text-size 30)
   (q/text text x y))
 

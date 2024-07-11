@@ -1,7 +1,7 @@
 (ns tic-tac-toe.bot-moves-spec
   (:require [speclj.core :refer :all]
             [speclj.stub :as stub]
-            [tic-tac-toe.ui.print-utils :as print-utils]
+            [tic-tac-toe.tui.print-utils :as print-utils]
             [tic-tac-toe.ai.easy-medium :refer [find-medium-move find-easy-move]]
             [tic-tac-toe.ai.minimax :refer [find-best-move-memo]]
             [tic-tac-toe.bot-moves :refer :all]

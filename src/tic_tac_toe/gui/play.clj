@@ -14,6 +14,46 @@
 (def y-4 220)
 (def size-4 120)
 
+(defn create-square [x y size token game-state]
+  (if (and (= :in-progress game-state) (utils/mouse-over? x y size size))
+    (q/fill 255 255 255)
+    (q/fill 200 200 200))
+  (q/rect x y size size)
+  (when (keyword? token)
+    (q/fill 0 0 0)
+    (q/text-size size)
+    (q/text-align :center :center)
+    (q/text (if (= :o token) "O" "X") x y)))
+
+(defn three-board [x y size board game-state]
+  (doseq [row [0 1 2]
+          col [0 1 2]]
+    (create-square (+ x (* col size)) (+ y (* row size)) size (nth board (+ (* row 3) col)) game-state)))
+
+(defn four-board [x y size board game-state]
+  (doseq [row [0 1 2 3]
+          col [0 1 2 3]]
+    (create-square (+ x (* col size)) (+ y (* row size)) size (nth board (+ (* row 4) col)) game-state)))
+
+(defn- play-heading [player game-state human?]
+  (cond
+    (and (= game-state :in-progress) (not human?)) "Your opponent is thinking..."
+    (= game-state :in-progress) (str (.toUpperCase (name player)) "'s turn!")
+    :else game-state))
+
+(defn play [{:keys [board player game-state human?]}]
+  (q/background 0 0 0)
+  (q/text-size 30)
+  (q/fill 255 255 255)
+  (q/text (play-heading player game-state human?) 400 100)
+  (cond
+    (= 9 (count board)) (three-board x-3 y-3 size-3 board game-state)
+    (= 16 (count board)) (four-board x-4 y-4 size-4 board game-state))
+  (when (not= :in-progress game-state)
+    (text-button "Play again?" 400 700 600 60))
+  :play)
+
+
 (defmulti clicked (fn [state mouse-xy] (count (:board state))))
 
 (defmethod clicked 9 [{:keys [board]} mouse-xy]
@@ -36,20 +76,17 @@
           i
           (recur (inc i)))))))
 
-(declare play)
-
-(defn- get-user-click [state mouse-xy]
+(defn- get-user-move [state mouse-xy]
   (let [board (:board state)
         move (clicked state mouse-xy)
-        player (:player state)
-        new-board (assoc board move player)]
+        player (:player state)]
     (if (number? move)
       (assoc state
         :current-screen (play state)
-        :board new-board
+        :board (assoc board move player)
         :player (utils/switch-player player)
         :human? (if (not= 1 (:mode state)) false true)
-        :game-state (eval/score new-board))
+        :game-state (eval/score (assoc board move player)))
       state)))
 
 (defn- reset-state [state]
@@ -60,52 +97,11 @@
                :second-ai-level nil
                :player :x
                :human? nil
-               :game-state :not-started
+               :game-state :in-progress
                :gui true))
 
 (defmethod utils/handle-click :play [state mouse-xy]
   (cond
-    (= :in-progress (:game-state state)) (get-user-click state mouse-xy)
-    (and (= :not-started (:game-state state))
-         (utils/mouse-over? 400 700 600 60 mouse-xy)) (assoc state :game-state :in-progress)
+    (= :in-progress (:game-state state)) (get-user-move state mouse-xy)
     (utils/mouse-over? 400 700 600 60 mouse-xy) (reset-state state)
     :else state))
-
-(defn create-square [x y size token game-state]
-  (if (and (= :in-progress game-state) (utils/mouse-over? x y size size))
-    (q/fill 255 255 255)
-    (q/fill 200 200 200))
-  (q/rect x y size size)
-  (when (keyword? token)
-    (q/fill 0 0 0)
-    (q/text-size size)
-    (q/text-align :center :center)
-    (q/text (if (= :o token) "O" "X") x y)))
-
-(defn three-board [x y size board game-state]
-  (doseq [row [0 1 2]
-          col [0 1 2]]
-    (create-square (+ x (* col size)) (+ y (* row size)) size (nth board (+ (* row 3) col)) game-state)))
-
-(defn four-board [x y size board game-state]
-  (doseq [row [0 1 2 3]
-          col [0 1 2 3]]
-    (create-square (+ x (* col size)) (+ y (* row size)) size (nth board (+ (* row 4) col)) game-state)))
-
-(defn play-heading [player game-state human?]
-  (cond
-    (and (= game-state :in-progress) (not human?)) "Your opponent is thinking..."
-    (= game-state :in-progress) (str (.toUpperCase (name player)) "'s turn!")
-    :else game-state))
-
-(defn play [{:keys [board player game-state human?]}]
-  (q/background 0 0 0)
-  (q/text-size 30)
-  (q/fill 255 255 255)
-  (q/text (play-heading player game-state human?) 400 100)
-  (cond
-    (= 9 (count board)) (three-board x-3 y-3 size-3 board game-state)
-    (= 16 (count board)) (four-board x-4 y-4 size-4 board game-state))
-  (when (not= :in-progress game-state)
-    (q/text-size 30) (text-button "Play again?" 400 700 600 60))
-  :play)

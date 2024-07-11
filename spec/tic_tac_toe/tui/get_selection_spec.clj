@@ -1,7 +1,7 @@
-(ns tic-tac-toe.ui.get-selection-spec
+(ns tic-tac-toe.tui.get-selection-spec
   (:require [speclj.core :refer :all]
             [speclj.stub :as stub]
-            [tic-tac-toe.ui.get-selection :refer :all]))
+            [tic-tac-toe.tui.get-selection :refer :all]))
 
 
 (describe "get-selection"
