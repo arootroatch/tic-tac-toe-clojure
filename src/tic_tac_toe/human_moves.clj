@@ -1,7 +1,7 @@
 (ns tic-tac-toe.human-moves
   (:require [tic-tac-toe.player :as player]
-            [tic-tac-toe.ui.get-user-input :as get-user-input]
-            [tic-tac-toe.ui.print-utils :as print-utils]))
+            [tic-tac-toe.tui.get-user-input :as get-user-input]
+            [tic-tac-toe.tui.print-utils :as print-utils]))
 
 (defmethod player/take-turn :default [{:keys [board player mode]}]
   (print-utils/prompt-user-for-move player mode board)

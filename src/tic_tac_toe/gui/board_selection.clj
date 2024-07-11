@@ -1,8 +1,8 @@
 (ns tic-tac-toe.gui.board-selection
   (:require [quil.core :as q]
-            [tic-tac-toe.ui.print-utils :as print]
+            [tic-tac-toe.tui.print-utils :as print]
             [tic-tac-toe.gui.utils :as utils]
-            [tic-tac-toe.ui.get-selection :as selection]))
+            [tic-tac-toe.tui.get-selection :as selection]))
 
 (defn three-board-preview [x y square-size]
   (q/fill 255 255 255)

@@ -2,7 +2,7 @@
   (:require [speclj.core :refer :all]
             [tic-tac-toe.ai.minimax :refer :all]
             [tic-tac-toe.ai.minimax-test-fns :refer :all]
-            [tic-tac-toe.ui.print-utils :as print]))
+            [tic-tac-toe.tui.print-utils :as print]))
 
 (describe "computer opponent - is maximizer"
   (with-stubs)
