@@ -22,4 +22,6 @@
 (defn switch-player [player]
   (if (= :x player) :o :x))
 
+(defmulti update-state :current-screen)
+
 

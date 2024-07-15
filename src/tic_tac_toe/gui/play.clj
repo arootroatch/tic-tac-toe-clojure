@@ -3,9 +3,9 @@
             [tic-tac-toe.bot-moves]
             [tic-tac-toe.eval-board :as eval]
             [tic-tac-toe.gui.components :refer [text-button]]
-            [tic-tac-toe.gui.mode-selection :refer [mode-selection-screen]]
             [tic-tac-toe.gui.utils :as utils]
-            [tic-tac-toe.human-moves]))
+            [tic-tac-toe.human-moves]
+            [tic-tac-toe.player :as player]))
 
 (def x-3 250)
 (def y-3 250)
@@ -41,17 +41,31 @@
     (= game-state :in-progress) (str (.toUpperCase (name player)) "'s turn!")
     :else game-state))
 
-(defn play [{:keys [board player game-state human?]}]
-  (q/background 0 0 0)
-  (q/text-size 30)
-  (q/fill 255 255 255)
-  (q/text (play-heading player game-state human?) 400 100)
-  (cond
-    (= 9 (count board)) (three-board x-3 y-3 size-3 board game-state)
-    (= 16 (count board)) (four-board x-4 y-4 size-4 board game-state))
-  (when (not= :in-progress game-state)
-    (text-button "Play again?" 400 700 600 60))
-  :play)
+(defn ai-turn [state]
+  (prn state)
+  (let [{:keys [mode player]} state
+        new-board (player/take-turn state)]
+    (assoc state
+      :board new-board
+      :human? (if (not= 4 mode) true false)
+      :player (utils/switch-player player)
+      :game-state (eval/score new-board))))
+
+(defmethod utils/update-state :play [state]
+  (let [{:keys [board player game-state human?]} state]
+    (q/background 0 0 0)
+    (q/text-size 30)
+    (q/fill 255 255 255)
+    (q/text (play-heading player game-state human?) 400 100)
+    (cond
+      (= 9 (count board)) (three-board x-3 y-3 size-3 board game-state)
+      (= 16 (count board)) (four-board x-4 y-4 size-4 board game-state))
+    (when (not= :in-progress game-state)
+      (text-button "Play again?" 400 700 600 60))
+    (cond
+      (and (= :in-progress game-state) human?) state
+      (and (= :in-progress game-state) (not human?)) (ai-turn state)
+      :else state)))
 
 
 (defmulti clicked (fn [state mouse-xy] (count (:board state))))
@@ -82,7 +96,6 @@
         player (:player state)]
     (if (number? move)
       (assoc state
-        :current-screen (play state)
         :board (assoc board move player)
         :player (utils/switch-player player)
         :human? (if (not= 1 (:mode state)) false true)
@@ -90,7 +103,7 @@
       state)))
 
 (defn- reset-state [state]
-  (assoc state :current-screen (mode-selection-screen)
+  (assoc state :current-screen :mode-selection
                :mode nil
                :board nil
                :first-ai-level nil

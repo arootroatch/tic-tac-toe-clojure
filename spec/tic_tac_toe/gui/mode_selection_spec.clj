@@ -12,19 +12,19 @@
 
   (context "handle-click"
     (it "updates state with mode 1"
-      (should= {:current-screen :mode-selection, :mode 1 :human? true}
+      (should= {:current-screen :board-selection, :mode 1 :human? true}
                (utils/handle-click {:current-screen :mode-selection :mode nil} {:x 400 :y 250})))
 
     (it "updates state with mode 2"
-      (should= {:current-screen :mode-selection, :mode 2 :human? true}
+      (should= {:current-screen :board-selection, :mode 2 :human? true}
                (utils/handle-click {:current-screen :mode-selection :mode nil} {:x 400 :y 300})))
 
     (it "updates state with mode 3"
-      (should= {:current-screen :mode-selection, :mode 3 :human? false}
+      (should= {:current-screen :board-selection, :mode 3 :human? false}
                (utils/handle-click {:current-screen :mode-selection :mode nil} {:x 400 :y 410})))
 
     (it "updates state with mode 4"
-      (should= {:current-screen :mode-selection, :mode 4 :human? false}
+      (should= {:current-screen :board-selection, :mode 4 :human? false}
                (utils/handle-click {:current-screen :mode-selection :mode nil} {:x 400 :y 490})))
 
     (it "returns state if state is already set"
@@ -41,24 +41,21 @@
                     q/text (stub :text)
                     components/text-button (stub :text-button)])
     (it "resets background"
-      (mode-selection-screen) (should-have-invoked :background {:with [0 0 0]}))
+      (utils/update-state {:current-screen :mode-selection}) (should-have-invoked :background {:with [0 0 0]}))
 
     (it "sets text size to 30"
-      (mode-selection-screen) (should-have-invoked :text-size {:with [30]}))
+      (utils/update-state {:current-screen :mode-selection}) (should-have-invoked :text-size {:with [30]}))
 
     (it "displays mode heading"
-      (mode-selection-screen) (should-have-invoked :text {:with ["Please select game mode (X always plays first):" 400 100]}))
+      (utils/update-state {:current-screen :mode-selection}) (should-have-invoked :text {:with ["Please select game mode (X always plays first):" 400 100]}))
 
     (it "displays all mode buttons"
-      (mode-selection-screen)
+      (utils/update-state {:current-screen :mode-selection})
       (should= [["Human vs Human" 400 250 600 60]
                 ["Human vs Computer (Human plays first)" 400 330 600 60]
                 ["Computer vs Human (Computer plays first)" 400 410 600 60]
                 ["Computer vs Computer" 400 490 600 60]]
                (stub/invocations-of :text-button)))
-
-    (it "returns tells :current-screen which screen it is"
-      (should= :mode-selection (mode-selection-screen)))
     ))
 
 

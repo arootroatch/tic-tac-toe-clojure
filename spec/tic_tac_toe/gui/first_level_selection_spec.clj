@@ -21,42 +21,39 @@
 
   (context "first level selection"
     (it "resets background"
-      (first-level-selection-screen state)
+      (utils/update-state state)
       (should-have-invoked :background {:with [0 0 0]}))
 
     (it "sets text size to 30"
-      (first-level-selection-screen state)
+      (utils/update-state state)
       (should-have-invoked :text-size {:with [30]}))
 
     (it "prompts user to select difficulty"
-      (first-level-selection-screen state)
+      (utils/update-state state)
       (should-have-invoked :text {:with ["Please select level of difficulty:"  400 100]}))
 
     (it "specifies player X if mode 4"
-      (first-level-selection-screen state-4)
+      (utils/update-state state-4)
       (should-have-invoked :text {:with ["Please select level for player X:"  400 100]}))
 
     (it "displays all level selection buttons"
-      (first-level-selection-screen state)
+      (utils/update-state state)
       (should= [["Easy" 400 300 400 60] ["Medium" 400 380 400 60] ["Unbeatable" 400 460 400 60]]
                (stub/invocations-of :text-button)))
-
-    (it "returns name of screen for :current-screen"
-      (should= :first-level-selection (first-level-selection-screen state)))
     )
 
   (context "handle-click"
     (it "sets state to level 1"
-      (should= {:current-screen :first-level-selection :mode 2 :first-ai-level 1}
+      (should= {:current-screen :play :mode 2 :first-ai-level 1}
                (utils/handle-click state {:x 400 :y 300})))
 
     (it "sets state to level 2"
-      (should= {:current-screen :first-level-selection :mode 2 :first-ai-level 2}
+      (should= {:current-screen :play :mode 2 :first-ai-level 2}
                (utils/handle-click state {:x 400 :y 380})))
 
     (it "sets state to level 3"
-      (should= {:current-screen :first-level-selection :mode 2 :first-ai-level 3}
-               (utils/handle-click state {:x 400 :y 460})))
+      (should= {:current-screen :second-level-selection :mode 4 :first-ai-level 3}
+               (utils/handle-click state-4 {:x 400 :y 460})))
 
     (it "returns state if state is already set"
       (should= 2 (utils/handle-click {:current-screen :first-level-selection :first-ai-level 2} {:x 400 :y 300})))

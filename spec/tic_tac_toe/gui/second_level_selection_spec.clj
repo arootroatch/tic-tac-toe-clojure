@@ -19,24 +19,21 @@
 
   (context "first level selection"
     (it "resets background"
-      (second-level-selection-screen)
+      (utils/update-state state)
       (should-have-invoked :background {:with [0 0 0]}))
 
     (it "sets text size to 30"
-      (second-level-selection-screen)
+      (utils/update-state state)
       (should-have-invoked :text-size {:with [30]}))
 
     (it "prompts user to select difficulty for player 0"
-      (second-level-selection-screen)
+      (utils/update-state state)
       (should-have-invoked :text {:with ["Please select level for player O:"  400 100]}))
 
     (it "displays all level selection buttons"
-      (second-level-selection-screen)
+      (utils/update-state state)
       (should= [["Easy" 400 300 400 60] ["Medium" 400 380 400 60] ["Unbeatable" 400 460 400 60]]
                (stub/invocations-of :text-button)))
-
-    (it "returns name of screen for :current-screen"
-      (should= :second-level-selection (second-level-selection-screen)))
     )
 
   (context "handle-click"

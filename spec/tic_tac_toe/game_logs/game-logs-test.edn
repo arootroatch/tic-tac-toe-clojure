@@ -1,0 +1,8 @@
+{:game-id    1
+ :moves      []
+ :game-state :in-progress
+ :ui         :gui}
+{:game-id    2
+ :moves      []
+ :game-state :in-progress
+ :ui         :tui}
