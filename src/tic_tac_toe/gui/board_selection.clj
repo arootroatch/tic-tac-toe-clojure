@@ -40,19 +40,20 @@
   (q/text "4 x 4" (- x 120) (+ y 10))
   (four-board-preview (+ x 50) (- y 60) 40))
 
-(defn board-selection-screen []
+(defmethod utils/update-state :board-selection [state]
   (q/background 0 0 0)
   (q/text-size 30)
   (q/text (first print/board-prompt) 400 100)
   (three-by-three-container 400 280)
   (four-by-four-container 400 530)
-  :board-selection)
+  state)
+
+(defn- set-screen [state]
+  (if (= 1 (:mode state)) :play :first-level-selection))
 
 (defmethod utils/handle-click :board-selection [state mouse-xy]
   (cond
     (:board state) (:board state)
-    (utils/mouse-over? 400 280 600 200 mouse-xy) (assoc state :board selection/initial-3x3-board)
-    (utils/mouse-over? 400 530 600 200 mouse-xy) (assoc state :board selection/initial-4x4-board)
+    (utils/mouse-over? 400 280 600 200 mouse-xy) (assoc state :board selection/initial-3x3-board :current-screen (set-screen state))
+    (utils/mouse-over? 400 530 600 200 mouse-xy) (assoc state :board selection/initial-4x4-board :current-screen (set-screen state))
     :else state))
-
-

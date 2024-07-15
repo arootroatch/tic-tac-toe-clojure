@@ -138,34 +138,31 @@
                     q/mouse-x (stub :mouse-x {:return 400})
                     q/mouse-y (stub :mouse-y {:return 530})])
     (it "resets background"
-      (board-selection-screen) (should-have-invoked :background {:with [0 0 0]}))
+      (utils/update-state {:current-screen :board-selection}) (should-have-invoked :background {:with [0 0 0]}))
 
     (it "sets text-size to 30"
-      (board-selection-screen) (should-have-invoked :text-size {:with [30]}))
+      (utils/update-state {:current-screen :board-selection}) (should-have-invoked :text-size {:with [30]}))
 
     (it "prompts user to select board"
-      (board-selection-screen)
+      (utils/update-state {:current-screen :board-selection})
       (should-have-invoked :text {:with ["Please select board:" 400 100]}))
 
     (it "displays 3x3 container"
-      (board-selection-screen)
+      (utils/update-state {:current-screen :board-selection})
       (should-have-invoked :three-container {:with [400 280]}))
 
     (it "displays 4x4 container"
-      (board-selection-screen)
+      (utils/update-state {:current-screen :board-selection})
       (should-have-invoked :four-container {:with [400 530]}))
-
-    (it "returns name of screen for :current-screen"
-      (should= :board-selection (board-selection-screen)))
     )
 
   (context "handle-click"
     (it "updates state with 3x3 board"
-      (should= {:current-screen :board-selection, :mode 1 :human? true :board [1 2 3 4 5 6 7 8 9]}
+      (should= {:current-screen :play, :mode 1 :human? true :board [1 2 3 4 5 6 7 8 9]}
                (utils/handle-click {:current-screen :board-selection :mode 1 :human? true :board nil} {:x 400 :y 280})))
 
     (it "updates state with 4x4 board"
-      (should= {:current-screen :board-selection, :mode 2 :human? true :board (vec (range 1 17))}
+      (should= {:current-screen :first-level-selection, :mode 2 :human? true :board (vec (range 1 17))}
                (utils/handle-click {:current-screen :board-selection :mode 2 :human? true} {:x 400 :y 530})))
 
     (it "returns state if state is already set"

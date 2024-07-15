@@ -4,14 +4,14 @@
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.tui.print-utils :as print]))
 
-(defn second-level-selection-screen []
+(defmethod utils/update-state :second-level-selection [state]
   (q/background 0 0 0)
   (q/text-size 30)
   (q/text (nth print/level-prompt 1) 400 100)
   (text-button (nth print/level-prompt 3) 400 300 400 60)
   (text-button (nth print/level-prompt 4) 400 380 400 60)
   (text-button (nth print/level-prompt 6) 400 460 400 60)
-  :second-level-selection)
+  state)
 
 (defmethod utils/handle-click :second-level-selection [state mouse-xy]
   (cond
