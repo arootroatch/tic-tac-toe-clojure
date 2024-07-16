@@ -49,7 +49,7 @@
 
     (it "displays bot-move to user"
       (with-redefs [print-utils/display-bot-move-message (stub :display-bot-move-message)]
-        (play-bot-move 5 [1 2 3 4 5 6 7 8 9] 2 :o false)
+        (play-bot-move 5 [1 2 3 4 5 6 7 8 9] 2 :o :tui)
         (should-have-invoked :display-bot-move-message {:with [5 2 :o]})))
     ))
 

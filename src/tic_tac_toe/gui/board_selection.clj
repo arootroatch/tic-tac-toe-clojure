@@ -1,5 +1,6 @@
 (ns tic-tac-toe.gui.board-selection
   (:require [quil.core :as q]
+            [tic-tac-toe.game_logs.game-log :as game-log]
             [tic-tac-toe.tui.print-utils :as print]
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.tui.get-selection :as selection]))
@@ -51,12 +52,17 @@
   (board-selection-screen)
   state)
 
-(defn- set-screen [state]
-  (if (= 1 (:mode state)) :play :first-level-selection))
+(defn- set-board [board-selection state]
+  (if (= 1 (:mode state))
+    (let [new-state (assoc state :board board-selection :current-screen :play)]
+      (game-log/create-in-progress-game-file (:filepath state) new-state)
+      (game-log/log-game-id game-log/game-id-path (:game-id state))
+      new-state)
+    (assoc state :board board-selection :current-screen :first-level-selection)))
 
 (defmethod utils/handle-click :board-selection [state mouse-xy]
   (cond
     (:board state) (:board state)
-    (utils/mouse-over? 400 280 600 200 mouse-xy) (assoc state :board selection/initial-3x3-board :current-screen (set-screen state))
-    (utils/mouse-over? 400 530 600 200 mouse-xy) (assoc state :board selection/initial-4x4-board :current-screen (set-screen state))
+    (utils/mouse-over? 400 280 600 200 mouse-xy) (set-board selection/initial-3x3-board state)
+    (utils/mouse-over? 400 530 600 200 mouse-xy) (set-board selection/initial-4x4-board state)
     :else state))

@@ -78,6 +78,21 @@
   (println (str "3 - " (nth mode-prompt 3)))
   (println (str "4 - " (nth mode-prompt 4))))
 
+(defn print-resume-selection [input]
+  (case input
+    1 (println "Game resumed!\n")
+    2 (println "Game history deleted.\n")))
+
+(def resume-prompt ["There's and unfinished game! Would you like resume?"
+                  "Yes"
+                  "No (deletes game history)"])
+
+(defn prompt-user-to-resume []
+  (println (first resume-prompt))
+  (println (str "1 - " (nth resume-prompt 1)))
+  (println (str "2 - " (nth resume-prompt 2))))
+
+
 (def purple "\u001b[35m")
 (def reset "\u001b[0m")
 

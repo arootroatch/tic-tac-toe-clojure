@@ -2,6 +2,7 @@
   (:require [quil.core :as q]
             [speclj.core :refer :all]
             [speclj.stub :as stub]
+            [tic-tac-toe.game_logs.game-log :as game-log]
             [tic-tac-toe.gui.components :as components]
             [tic-tac-toe.gui.first-level-selection :refer :all]
             [tic-tac-toe.gui.utils :as utils]))
@@ -43,6 +44,9 @@
     )
 
   (context "handle-click"
+    (redefs-around [game-log/create-in-progress-game-file (stub :game-file)
+                    game-log/log-game-id (stub :log-id)])
+
     (it "sets state to level 1"
       (should= {:current-screen :play :mode 2 :first-ai-level 1}
                (utils/handle-click state {:x 400 :y 300})))
@@ -54,6 +58,14 @@
     (it "sets state to level 3"
       (should= {:current-screen :second-level-selection :mode 4 :first-ai-level 3}
                (utils/handle-click state-4 {:x 400 :y 460})))
+
+    (it "creates new game log file if screen is set to :play"
+      (utils/handle-click (assoc state :filepath "test.path") {:x 400 :y 280})
+      (should-have-invoked :game-file {:with ["test.path" {:current-screen :play, :mode 2, :filepath "test.path", :first-ai-level 1}]}))
+
+    (it "logs game id if screen is set to :play"
+      (utils/handle-click (assoc state :game-id 5) {:x 400 :y 280})
+      (should-have-invoked :log-id {:with [game-log/game-id-path 5]}))
 
     (it "returns state if state is already set"
       (should= 2 (utils/handle-click {:current-screen :first-level-selection :first-ai-level 2} {:x 400 :y 300})))

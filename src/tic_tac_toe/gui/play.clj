@@ -2,6 +2,7 @@
   (:require [quil.core :as q]
             [tic-tac-toe.bot-moves]
             [tic-tac-toe.eval-board :as eval]
+            [tic-tac-toe.game_logs.game-log :as game-log]
             [tic-tac-toe.gui.components :refer [text-button]]
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.human-moves]
@@ -42,9 +43,9 @@
     :else game-state))
 
 (defn ai-turn [state]
-  (prn state)
   (let [{:keys [mode player]} state
         new-board (player/take-turn state)]
+    (game-log/log-move (:filepath state) new-board)
     (assoc state
       :board new-board
       :human? (if (not= 4 mode) true false)
@@ -68,7 +69,7 @@
     (cond
       (and (= :in-progress game-state) human?) state
       (and (= :in-progress game-state) (not human?)) (ai-turn state)
-      :else state)))
+      :else (do (game-log/log-completed-game (:filepath state) game-log/logs-path) state))))
 
 
 (defmulti clicked (fn [state mouse-xy] (count (:board state))))
@@ -98,11 +99,13 @@
         move (clicked state mouse-xy)
         player (:player state)]
     (if (number? move)
-      (assoc state
-        :board (assoc board move player)
-        :player (utils/switch-player player)
-        :human? (if (not= 1 (:mode state)) false true)
-        :game-state (eval/score (assoc board move player)))
+      (do
+        (game-log/log-move (:filepath state) (assoc board move player))
+        (assoc state
+          :board (assoc board move player)
+          :player (utils/switch-player player)
+          :human? (if (not= 1 (:mode state)) false true)
+          :game-state (eval/score (assoc board move player))))
       state)))
 
 (defn- reset-state [state]

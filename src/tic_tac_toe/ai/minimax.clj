@@ -2,16 +2,14 @@
   (:require [tic-tac-toe.ai.easy-medium :as ai]
             [tic-tac-toe.ai.lookup-tables :refer :all]
             [tic-tac-toe.eval-board :refer [->paths evaluate-board]]
+            [tic-tac-toe.player :as player]
             [tic-tac-toe.tui.print-utils :as print]))
 
 (declare minimax)
 
-(defn- switch-player [player]
-  (if (= player :x) :o :x))
-
 (defn get-player-paths [board player]
   (let [paths (->paths board)]
-    (filter #(and (not (contains? (set %) (switch-player player))) (some #{player} %)) paths)))
+    (filter #(and (not (contains? (set %) (player/switch-player player))) (some #{player} %)) paths)))
 
 (defn get-player-moves [board player]
   (->> (get-player-paths board player)
@@ -20,7 +18,7 @@
 
 (defn get-relevant-moves [board player]
   (let [available (filter number? board)
-        opponent-moves (get-player-moves board (switch-player player))
+        opponent-moves (get-player-moves board (player/switch-player player))
         player-moves (get-player-moves board player)
         overlap (filter (set player-moves) (set opponent-moves))]
     (cond
@@ -38,7 +36,7 @@
       best-score
       (let [move (first available)
             new-board (assoc board (dec move) player)
-            score (minimax new-board (not max?) (inc depth) (switch-player player) new-alpha new-beta)]
+            score (minimax new-board (not max?) (inc depth) (player/switch-player player) new-alpha new-beta)]
         (if max?
           (recur (rest available) (max best-score score) (max alpha score) beta)
           (recur (rest available) (min best-score score) alpha (min beta score)))))))
@@ -46,7 +44,7 @@
 (def minimax-move-memo (memoize minimax-move))
 
 (defn- minimax [board max? depth player alpha beta]
-  (let [maximizer (if max? player (switch-player player))
+  (let [maximizer (if max? player (player/switch-player player))
         game-state (evaluate-board board depth maximizer)]
     (cond (not= :in-progress game-state) game-state
           (> depth 4) 0
@@ -61,7 +59,7 @@
       best-move
       (let [move (first available)
             new-board (assoc board (dec move) player)
-            score (minimax new-board false 0 (switch-player player) -1000 1000)]
+            score (minimax new-board false 0 (player/switch-player player) -1000 1000)]
         (recur (rest available) (if (> score best-score) move best-move) (max score best-score))))))
 
 (def search-with-minimax-memo (memoize search-with-minimax))
@@ -69,7 +67,7 @@
 (defn- find-best-move [board player gui]
   (let [available (filter number? board)
         winning-move (ai/get-winning-move board player)
-        blocking-move (ai/get-winning-move board (switch-player player))
+        blocking-move (ai/get-winning-move board (player/switch-player player))
         move-table (if (= player :x) move-table-x move-table-o)]
     (cond (every? number? board) (if (= 27 (count board)) 14 1)
           (some? winning-move) winning-move
