@@ -4,14 +4,17 @@
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.tui.print-utils :as print]))
 
-(defmethod utils/update-state :mode-selection [state]
+(defn- mode-selection-screen []
   (q/background 0 0 0)
   (q/text-size 30)
   (q/text (first print/mode-prompt) 400 100)
   (text-button (nth print/mode-prompt 1) 400 250 600 60)
   (text-button (nth print/mode-prompt 2) 400 330 600 60)
   (text-button (nth print/mode-prompt 3) 400 410 600 60)
-  (text-button (nth print/mode-prompt 4) 400 490 600 60)
+  (text-button (nth print/mode-prompt 4) 400 490 600 60))
+
+(defmethod utils/update-state :mode-selection [state]
+  (mode-selection-screen)
   state)
 
 (defmethod utils/handle-click :mode-selection [state mouse-xy]

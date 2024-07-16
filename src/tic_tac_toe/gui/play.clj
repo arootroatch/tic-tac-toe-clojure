@@ -51,17 +51,20 @@
       :player (utils/switch-player player)
       :game-state (eval/score new-board))))
 
+(defn- play-screen [board player game-state human?]
+  (q/background 0 0 0)
+  (q/text-size 30)
+  (q/fill 255 255 255)
+  (q/text (play-heading player game-state human?) 400 100)
+  (cond
+    (= 9 (count board)) (three-board x-3 y-3 size-3 board game-state)
+    (= 16 (count board)) (four-board x-4 y-4 size-4 board game-state))
+  (when (not= :in-progress game-state)
+    (text-button "Play again?" 400 700 600 60)))
+
 (defmethod utils/update-state :play [state]
   (let [{:keys [board player game-state human?]} state]
-    (q/background 0 0 0)
-    (q/text-size 30)
-    (q/fill 255 255 255)
-    (q/text (play-heading player game-state human?) 400 100)
-    (cond
-      (= 9 (count board)) (three-board x-3 y-3 size-3 board game-state)
-      (= 16 (count board)) (four-board x-4 y-4 size-4 board game-state))
-    (when (not= :in-progress game-state)
-      (text-button "Play again?" 400 700 600 60))
+    (play-screen board player game-state human?)
     (cond
       (and (= :in-progress game-state) human?) state
       (and (= :in-progress game-state) (not human?)) (ai-turn state)

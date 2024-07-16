@@ -40,12 +40,15 @@
   (q/text "4 x 4" (- x 120) (+ y 10))
   (four-board-preview (+ x 50) (- y 60) 40))
 
-(defmethod utils/update-state :board-selection [state]
+(defn- board-selection-screen []
   (q/background 0 0 0)
   (q/text-size 30)
   (q/text (first print/board-prompt) 400 100)
   (three-by-three-container 400 280)
-  (four-by-four-container 400 530)
+  (four-by-four-container 400 530))
+
+(defmethod utils/update-state :board-selection [state]
+  (board-selection-screen)
   state)
 
 (defn- set-screen [state]
