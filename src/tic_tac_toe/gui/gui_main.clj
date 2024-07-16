@@ -29,7 +29,6 @@
    :gui             true})
 
 (defn draw-state [state]
-  (prn state)
   (:current-screen state))
 
 (defmethod launch-user-interface ["gui"] [_]

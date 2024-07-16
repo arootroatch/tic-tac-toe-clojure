@@ -4,7 +4,7 @@
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.tui.print-utils :as print]))
 
-(defmethod utils/update-state :first-level-selection [state]
+(defn first-level-selection-screen [state]
   (q/background 0 0 0)
   (q/text-size 30)
   (if (= 4 (:mode state))
@@ -12,7 +12,10 @@
     (q/text (nth print/level-prompt 2) 400 100))
   (text-button (nth print/level-prompt 3) 400 300 400 60)
   (text-button (nth print/level-prompt 4) 400 380 400 60)
-  (text-button (nth print/level-prompt 6) 400 460 400 60)
+  (text-button (nth print/level-prompt 6) 400 460 400 60))
+
+(defmethod utils/update-state :first-level-selection [state]
+  (first-level-selection-screen state)
   state)
 
 (defn- set-screen [state]
