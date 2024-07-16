@@ -13,7 +13,9 @@
   (text-button (nth print/resume-prompt 2) 400 330 600 60))
 
 (defmethod utils/update-state :resume-selection [state]
-  (let [old-game (game-log/get-last-in-progress-game game-log/in-progress-dir-path-gui)]
+  (resume-selection-screen)
+  state
+  #_(let [old-game (game-log/get-last-in-progress-game game-log/in-progress-dir-path-gui)]
     (if (some? old-game)
       (do
         (resume-selection-screen)
@@ -32,5 +34,5 @@
   (cond
     (:mode state) (:mode state)
     (utils/mouse-over? 400 250 600 60 mouse-xy) (handle-resume 1 state)
-    (utils/mouse-over? 400 300 600 60 mouse-xy) (handle-resume 2 state)
+    (utils/mouse-over? 400 330 600 60 mouse-xy) (handle-resume 2 state)
     :else state))

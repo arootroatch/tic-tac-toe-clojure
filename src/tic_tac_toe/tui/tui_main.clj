@@ -27,6 +27,18 @@
 (defn- set-filepath [path game-options]
   (if (some? path) path (game-log/create-new-filepath game-log/in-progress-dir-path-tui (:game-id game-options))))
 
+(defn- play-loop [game-options filepath]
+  (loop [game-options game-options]
+    (let [{:keys [board player]} game-options]
+      (print-utils/print-board board)
+      (if (not= (score board) :in-progress)
+        (do
+          (game-log/log-completed-game filepath game-log/logs-path)
+          (println (score board)))
+        (let [new-board (take-turn game-options)]
+          (game-log/log-move filepath new-board)
+          (recur (assoc game-options :board new-board :player (switch-player player))))))))
+
 (defmethod launch-user-interface :default [_]
   (let [old-game (game-log/get-last-in-progress-game game-log/in-progress-dir-path-tui)
         resume-selection (if (some? old-game) (get-selection {:option :resume :filepath old-game}) nil)
@@ -35,13 +47,4 @@
     (when (not= 1 resume-selection)
       (game-log/create-in-progress-game-file filepath game-options)
       (game-log/log-game-id game-log/game-id-path (:game-id game-options)))
-    (loop [game-options game-options]
-      (let [{:keys [board player]} game-options]
-        (print-utils/print-board board)
-        (if (not= (score board) :in-progress)
-          (do
-            (game-log/log-completed-game filepath game-log/logs-path)
-            (println (score board)))
-          (let [new-board (take-turn game-options)]
-            (game-log/log-move filepath new-board)
-            (recur (assoc game-options :board new-board :player (switch-player player)))))))))
+    (play-loop game-options filepath)))
