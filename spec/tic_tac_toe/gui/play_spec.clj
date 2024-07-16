@@ -2,6 +2,7 @@
   (:require [quil.core :as q]
             [speclj.core :refer :all]
             [speclj.stub :as stub]
+            [tic-tac-toe.game_logs.game-log :as game-log]
             [tic-tac-toe.gui.components :as components]
             [tic-tac-toe.gui.play :refer :all]
             [tic-tac-toe.gui.utils :as utils]
@@ -38,10 +39,16 @@
                   q/text-align (stub :text-align)])
 
   (context "ai turn"
+    (redefs-around [game-log/log-move (stub :log-move)])
     (it "plays AI move to board"
       (with-redefs [player/take-turn (stub :take-turn {:return [1 2 3 4 :o 6 7 8 9]})]
         (should= {:current-screen :play :board [1 2 3 4 :o 6 7 8 9] :human? true :player :x :game-state :in-progress}
                  (ai-turn {:current-screen :play :board [1 2 3 4 5 6 7 8 9] :human? false :player :o :game-state :in-progress}))))
+
+    (it "logs move to temp file"
+      (with-redefs [player/take-turn (stub :take-turn {:return [1 2 3 4 :o 6 7 8 9]})]
+        (ai-turn {:current-screen :play :board [1 2 3 4 5 6 7 8 9] :human? false :player :o :game-state :in-progress})
+        (should-have-invoked :log-move {:with [nil [1 2 3 4 :o 6 7 8 9]]})))
 
     (it "updates game state if terminal"
       (with-redefs [player/take-turn (stub :take-turn {:return [:o :o :o :x 5 6 :x 8 9]})]
@@ -108,7 +115,10 @@
     (redefs-around [q/background (stub :background)
                     three-board (stub :three-board)
                     four-board (stub :four-board)
-                    components/text-button (stub :text-button)])
+                    components/text-button (stub :text-button)
+                    game-log/log-completed-game (stub :log-completed)
+                    ai-turn (stub :ai-turn)])
+
     (it "resets background"
       (utils/update-state in-progress-state) (should-have-invoked :background {:with [0 0 0]}))
 
@@ -129,6 +139,10 @@
     (it "signals when Os turn"
       (utils/update-state (assoc in-progress-state :player :o))
       (should-have-invoked :text {:with ["O's turn!" 400 100]}))
+
+    (it "logs completed game"
+      (utils/update-state end-state)
+      (should-have-invoked :log-completed {:with [nil "src/tic_tac_toe/game_logs/game-logs.edn"]}))
 
     (it "displays X wins"
       (utils/update-state end-state)
@@ -248,10 +262,16 @@
     )
 
   (context "handle click"
-    (redefs-around [utils/update-state (stub :play {:return :play})])
+    (redefs-around [utils/update-state (stub :play {:return :play})
+                    game-log/log-move (stub :log-move)])
+
     (it "updates board with user move"
       (should= (assoc in-progress-state :board [:x 2 3 4 5 6 7 8 9] :player :o :human? false)
                (utils/handle-click in-progress-state {:x 250 :y 250})))
+
+    (it "logs move to temp file"
+      (utils/handle-click in-progress-state {:x 250 :y 250})
+      (should-have-invoked :log-move {:with [nil [:x 2 3 4 5 6 7 8 9]]}))
 
     (it "updates game-state"
       (should= (assoc in-progress-state :board [:x :x :x 4 5 6 7 8 9] :game-state "X wins!" :player :o :human? false)

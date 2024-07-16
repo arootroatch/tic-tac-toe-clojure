@@ -7,7 +7,7 @@
 (describe "get-selection"
   (with-stubs)
   (redefs-around [println (stub :println)
-                 load-file (stub :load-file)])
+                  load-file (stub :load-file)])
 
   (context "board-selection"
     (it "asks user to select board and confirms 3x3"
@@ -57,7 +57,7 @@
                (stub/invocations-of :println)))
 
     (it "says 'hard' instead of 'unbeatable' if 3d and user goes first"
-              (with-in-str "3" (get-selection {:option :level :ai 1 :mode 2 :board 3}))
+      (with-in-str "3" (get-selection {:option :level :ai 1 :mode 2 :board 3}))
       (should= [["Please select level of difficulty:"] ["1 - Easy"] ["2 - Medium"] ["3 - Hard"]
                 ["Hard mode activated!\n"]]
                (stub/invocations-of :println)))
@@ -129,4 +129,28 @@
       (should= 3 (with-in-str "3" (get-selection {:option :mode})))
       (should= 4 (with-in-str "4" (get-selection {:option :mode})))
       )
+    )
+
+  (context "get-resume-selection"
+    (redefs-around [clojure.java.io/delete-file (stub :delete-file)])
+
+    (it "asks user to resume unfinished game and confirms yes"
+      (with-in-str "1" (get-selection {:option :resume}))
+      (should= [["There's and unfinished game! Would you like resume?"]
+                ["1 - Yes"]
+                ["2 - No (deletes game history)"]
+                ["Game resumed!\n"]]
+               (stub/invocations-of :println)))
+
+    (it "asks user to resume unfinished game and confirms no"
+      (with-in-str "2" (get-selection {:option :resume}))
+      (should= [["There's and unfinished game! Would you like resume?"]
+                ["1 - Yes"]
+                ["2 - No (deletes game history)"]
+                ["Game history deleted.\n"]]
+               (stub/invocations-of :println)))
+
+    (it "deletes file if not resumed"
+      (with-in-str "2" (get-selection {:option :resume :filepath "test.path"}))
+      (should-have-invoked :delete-file {:with ["test.path" true]}))
     ))

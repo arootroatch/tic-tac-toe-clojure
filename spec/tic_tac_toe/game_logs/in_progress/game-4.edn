@@ -5,8 +5,8 @@
  :board [1 2 3 4 5 6 7 8 9]
  :first-ai-level 3
  :second-ai-level nil
- :player :o
- :human? false}
+ :player :x
+ :human? true}
 
 [1 2 3 4 5 6 7 8 9]
 [1 2 3 4 :x 6 7 8 9]

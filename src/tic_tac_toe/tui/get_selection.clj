@@ -22,3 +22,11 @@
   (print/prompt-user-for-mode)
   (let [input (get-input-in-range 5)]
     (do (print/print-mode-selection input)) input))
+
+(defmethod get-selection :resume [{:keys [filepath]}]
+  (print/prompt-user-to-resume)
+  (let [input (get-input-in-range 3)]
+    (if (= 2 input)
+      (do (clojure.java.io/delete-file filepath true)
+          (print/print-resume-selection input))
+      (do (print/print-resume-selection input) input))))

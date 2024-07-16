@@ -16,13 +16,25 @@
         board (case board-selection 1 initial-3x3-board 2 initial-4x4-board 3 initial-3x3x3-board)
         player :x
         game-id (game-log/get-new-game-id game-log/game-id-path)]
-    {:mode mode :first-ai-level first-ai-level :second-ai-level second-ai-level :board board :player player :game-id game-id}))
+    {:mode mode :first-ai-level first-ai-level :second-ai-level second-ai-level :board board :player player :game-id game-id :ui :tui}))
+
+(defn- handle-resume [n path]
+  (cond
+    (= 1 n) (game-log/get-resumed-game-state path)
+    (= 2 n) (do (clojure.java.io/delete-file path true) (get-options))
+    :else (get-options)))
+
+(defn- set-filepath [path game-options]
+  (if (some? path) path (game-log/create-new-filepath game-log/in-progress-dir-path-tui (:game-id game-options))))
 
 (defmethod launch-user-interface :default [_]
-  (let [game-options (get-options)
-        filepath (game-log/create-new-filepath game-log/in-progress-dir-path (:game-id game-options))]
-    (game-log/create-in-progress-game-file filepath game-options)
-    (game-log/log-game-id game-log/game-id-path (:game-id game-options))
+  (let [old-game (game-log/get-last-in-progress-game game-log/in-progress-dir-path-tui)
+        resume-selection (if (some? old-game) (get-selection {:option :resume :filepath old-game}) nil)
+        game-options (handle-resume resume-selection old-game)
+        filepath (set-filepath old-game game-options)]
+    (when (not= 1 resume-selection)
+      (game-log/create-in-progress-game-file filepath game-options)
+      (game-log/log-game-id game-log/game-id-path (:game-id game-options)))
     (loop [game-options game-options]
       (let [{:keys [board player]} game-options]
         (print-utils/print-board board)
@@ -31,6 +43,5 @@
             (game-log/log-completed-game filepath game-log/logs-path)
             (println (score board)))
           (let [new-board (take-turn game-options)]
-            (prn filepath new-board)
             (game-log/log-move filepath new-board)
             (recur (assoc game-options :board new-board :player (switch-player player)))))))))

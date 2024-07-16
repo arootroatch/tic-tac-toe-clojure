@@ -13,13 +13,5 @@
 
     (it "returns false if mouse is outside of given coordinates"
       (should= false (mouse-over? 0 0 50 50)))
-    )
-
-  (context "switch-player"
-    (it "returns :o if player is :x"
-      (should= :o (switch-player :x)))
-
-    (it "returns :x if player is :o"
-      (should= :x (switch-player :o)))
     ))
 

@@ -1,16 +1,33 @@
 (ns tic-tac-toe.gui.gui-main
   (:require [quil.core :as q]
             [quil.middleware :as m]
+            [tic-tac-toe.game_logs.game-log :as game-log]
+            [tic-tac-toe.gui.board-selection]
+            [tic-tac-toe.gui.first-level-selection]
+            [tic-tac-toe.gui.mode-selection]
             [tic-tac-toe.gui.play]
+            [tic-tac-toe.gui.second-level-selection]
+            [tic-tac-toe.gui.resume-selection]
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.gui.utils :refer [handle-click]]
-            [tic-tac-toe.launch-user-interface :refer [launch-user-interface]]
-            [tic-tac-toe.gui.mode-selection]
-            [tic-tac-toe.gui.first-level-selection]
-            [tic-tac-toe.gui.second-level-selection]
-            [tic-tac-toe.gui.board-selection]))
+            [tic-tac-toe.launch-user-interface :refer [launch-user-interface]]))
 
 (def window-size 800)
+
+(def game-id (game-log/get-new-game-id game-log/game-id-path))
+(def filepath (game-log/create-new-filepath game-log/in-progress-dir-path-gui game-id))
+
+(def state {:current-screen  :resume-selection
+            :mode            nil
+            :board           nil
+            :first-ai-level  nil
+            :second-ai-level nil
+            :player          :x
+            :human?          nil
+            :game-state      :in-progress
+            :ui              :gui
+            :game-id         game-id
+            :filepath        filepath})
 
 (defn setup []
   (q/frame-rate 30)
@@ -18,15 +35,7 @@
   (q/rect-mode :center)
   (q/text-align :center)
   (q/color-mode :rgb)
-  {:current-screen  :mode-selection
-   :mode            nil
-   :board           nil
-   :first-ai-level  nil
-   :second-ai-level nil
-   :player          :x
-   :human?          nil
-   :game-state      :in-progress
-   :gui             true})
+  state)
 
 (defn draw-state [state]
   (:current-screen state))
