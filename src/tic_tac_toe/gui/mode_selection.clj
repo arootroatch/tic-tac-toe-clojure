@@ -21,7 +21,7 @@
   (cond
     (:mode state) (:mode state)
     (utils/mouse-over? 400 250 600 60 mouse-xy) (assoc state :mode 1 :human? true :current-screen :board-selection)
-    (utils/mouse-over? 400 300 600 60 mouse-xy) (assoc state :mode 2 :human? true :current-screen :board-selection)
+    (utils/mouse-over? 400 330 600 60 mouse-xy) (assoc state :mode 2 :human? true :current-screen :board-selection)
     (utils/mouse-over? 400 410 600 60 mouse-xy) (assoc state :mode 3 :human? false :current-screen :board-selection)
     (utils/mouse-over? 400 490 600 60 mouse-xy) (assoc state :mode 4 :human? false :current-screen :board-selection)
     :else state))

@@ -10,9 +10,6 @@
     (clojure.edn/read-string (str \[ (slurp path) \]))
     (catch Exception _)))
 
-(defn get-last-completed-game [path]
-  (last (read-edn-file path)))
-
 (defn get-paths-in-dir [path]
   (->> (file-seq (clojure.java.io/file path))
        (map #(.getPath %))
@@ -45,12 +42,6 @@
         player (get-current-player board)
         mode (:mode state)]
     (assoc state :board board :player player :human? (set-human mode player))))
-
-(defn get-last-in-progress-game-id [path]
-  (let [last-game (get-last-in-progress-game path)
-        data (when (some? last-game) (read-edn-file last-game))]
-    (prn path last-game)
-    (when (some? data) (:game-id (first data)))))
 
 (defn get-new-game-id [path]
   (let [last-id (last (read-edn-file path))]
