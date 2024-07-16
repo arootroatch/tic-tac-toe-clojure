@@ -3,6 +3,7 @@
             [tic-tac-toe.game_logs.game-log :refer :all]))
 
 (def test-path "spec/tic_tac_toe/game_logs/game-logs-test.edn")
+(def game-ids-test-path "spec/tic_tac_toe/game_logs/game-ids.edn")
 (def empty-test-path "spec/tic_tac_toe/game_logs/game-logs-empty-test.edn")
 
 (describe "logging games"
@@ -37,31 +38,34 @@
     (with-redefs [get-last-in-progress-game (stub :last-game {:return nil})]
       (should= nil (get-last-in-progress-game-id "spec/tic_tac_toe/game_logs/in_progress"))))
 
-  (it "gets last game id"
-    (with-redefs [get-last-in-progress-game-id (stub :get-last-in-progress-game-id {:return nil})]
-      (should= 2 (get-last-game-id test-path "spec/tic_tac_toe/game_logs/in_progress"))))
-
-  (it "includes in progress games when finding last game id"
-      (should= 4 (get-last-game-id test-path "spec/tic_tac_toe/game_logs/in_progress")))
-
   (it "gets new game id"
-    (should= 5 (get-new-game-id test-path "spec/tic_tac_toe/game_logs/in_progress")))
+    (should= 5 (get-new-game-id game-ids-test-path)))
 
   (it "returns 1 if no previous games"
-    (with-redefs [get-last-in-progress-game-id (stub :get-last-in-progress-game-id {:return nil})]
-      (should= 1 (get-new-game-id empty-test-path "spec/tic_tac_toe/game_logs/in_progress"))))
+      (should= 1 (get-new-game-id empty-test-path)))
+
+  (it "adds game id to game id file"
+    (with-redefs [spit (stub :spit)]
+      (log-game-id game-ids-test-path 5)
+      (should-have-invoked :spit {:with ["spec/tic_tac_toe/game_logs/game-ids.edn" "5\n" :append true]})))
 
   (it "gets paths in given directory"
     (should= ["spec/tic_tac_toe/game_logs/game-logs-empty-test.edn"
               "spec/tic_tac_toe/game_logs/in_progress"
               "spec/tic_tac_toe/game_logs/in_progress/game-4.edn"
+              "spec/tic_tac_toe/game_logs/in_progress_empty"
               "spec/tic_tac_toe/game_logs/game-logs-test.edn"
-              "spec/tic_tac_toe/game_logs/game_log_spec.clj"]
+              "spec/tic_tac_toe/game_logs/game_log_spec.clj"
+              "spec/tic_tac_toe/game_logs/game-ids.edn"]
              (get-paths-in-dir "spec/tic_tac_toe/game_logs")))
+
+  (it "creates new filename and path for in progress game"
+    (should= "spec/tic_tac_toe/game_logs/in_progress/game-5.edn"
+             (create-new-filepath "spec/tic_tac_toe/game_logs/in_progress" 5)))
 
   (it "creates in progress game file with game data"
     (with-redefs [spit (stub :spit)]
-      (create-in-progress-game-file test-path "spec/tic_tac_toe/game_logs/in_progress" {:game-state :in-progress})
+      (create-in-progress-game-file "spec/tic_tac_toe/game_logs/in_progress/game-5.edn" {:game-state :in-progress :game-id 5})
       (should-have-invoked :spit {:with ["spec/tic_tac_toe/game_logs/in_progress/game-5.edn"
                                          {:game-state :in-progress :game-id 5}]})))
 
@@ -83,18 +87,8 @@
     (with-redefs [spit (stub :spit)
                   clojure.java.io/delete-file (stub :delete-file)]
       (log-completed-game "spec/tic_tac_toe/game_logs/in_progress/game-4.edn" test-path)
-      (should-have-invoked :spit {:with [test-path
-                                         {:game-id 4
-                                          :game-state :in-progress
-                                          :ui :gui
-                                          :mode 2
-                                          :board [1 2 3 4 5 6 7 8 9]
-                                          :first-ai-level 3
-                                          :second-ai-level nil
-                                          :player :o
-                                          :human? false
-                                          :moves [[1 2 3 4 5 6 7 8 9]
-                                                  [1 2 3 4 :x 6 7 8 9]]}
+      (should-have-invoked :spit {:with ["spec/tic_tac_toe/game_logs/game-logs-test.edn"
+                                         "{:game-id 4, :moves ([1 2 3 4 5 6 7 8 9] [1 2 3 4 :x 6 7 8 9]), :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state :in-progress, :human? false, :ui :gui, :player :o, :board [1 2 3 4 5 6 7 8 9]}\n"
                                          :append true]})))
 
   (it "deletes temp file after logging"

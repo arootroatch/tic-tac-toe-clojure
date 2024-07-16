@@ -1,6 +1,7 @@
 (ns tic-tac-toe.game_logs.game-log)
 
 (def logs-path "src/tic_tac_toe/game_logs/game-logs.edn")
+(def game-id-path "src/tic_tac_toe/game_logs/game-ids.edn")
 (def in-progress-dir-path "src/tic_tac_toe/game_logs/in_progress")
 
 (defn read-edn-file [path]
@@ -25,25 +26,22 @@
 (defn get-last-in-progress-game-id [path]
   (let [last-game (get-last-in-progress-game path)
         data (when (some? last-game) (read-edn-file last-game))]
+    (prn path last-game)
     (when (some? data) (:game-id (first data)))))
 
-(defn get-last-game-id [path in-progress-dir]
-  (let [last-in-progress-game-id (get-last-in-progress-game-id in-progress-dir)
-        last-completed-game (get-last-completed-game path)
-        last-completed-game-id (:game-id last-completed-game)]
-    (if (some? last-in-progress-game-id)
-      (max last-in-progress-game-id last-completed-game-id)
-      last-completed-game-id)))
-
-(defn get-new-game-id [path in-progress-dir]
-  (let [last-id (get-last-game-id path in-progress-dir)]
+(defn get-new-game-id [path]
+  (let [last-id (last (read-edn-file path))]
     (if (some? last-id) (inc last-id) 1)))
 
-(defn create-in-progress-game-file [path in-progress-dir state]
-  (let [game-id (get-new-game-id path in-progress-dir)
-        filename (str in-progress-dir "/game-" game-id ".edn")
-        data (assoc state :game-id game-id)]
-    (spit filename data)))
+(defn log-game-id [path id]
+  (spit path (str id "\n") :append true))
+
+(defn create-new-filepath [in-progress-dir game-id]
+  (let [filename (str in-progress-dir "/game-" game-id ".edn")]
+    filename))
+
+(defn create-in-progress-game-file [temp-file state]
+    (spit temp-file state))
 
 (defn log-move [temp-file move]
   (spit temp-file move :append true))
@@ -56,7 +54,7 @@
 
 (defn log-completed-game [temp-file log-file]
   (let [data (format-in-progress-data temp-file)]
-    (spit log-file data :append true)
+    (spit log-file (str data "\n") :append true)
     (clojure.java.io/delete-file temp-file)))
 
 
