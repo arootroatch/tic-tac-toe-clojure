@@ -13,9 +13,7 @@
   (text-button (nth print/resume-prompt 2) 400 330 600 60))
 
 (defmethod utils/update-state :resume-selection [state]
-  (resume-selection-screen)
-  state
-  #_(let [old-game (game-log/get-last-in-progress-game game-log/in-progress-dir-path-gui)]
+  (let [old-game (game-log/get-last-in-progress-game game-log/in-progress-dir-path-gui)]
     (if (some? old-game)
       (do
         (resume-selection-screen)

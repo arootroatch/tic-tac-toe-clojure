@@ -17,7 +17,7 @@
 
     (it "updates state with mode 2"
       (should= {:current-screen :board-selection, :mode 2 :human? true}
-               (utils/handle-click {:current-screen :mode-selection :mode nil} {:x 400 :y 300})))
+               (utils/handle-click {:current-screen :mode-selection :mode nil} {:x 400 :y 330})))
 
     (it "updates state with mode 3"
       (should= {:current-screen :board-selection, :mode 3 :human? false}

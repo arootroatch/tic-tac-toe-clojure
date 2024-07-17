@@ -30,10 +30,10 @@
 
     (it "updates to mode-selection"
       (should= {:current-screen :mode-selection}
-               (utils/handle-click {:current-screen :resume-selection} {:x 400 :y 300})))
+               (utils/handle-click {:current-screen :resume-selection} {:x 400 :y 330})))
 
     (it "deletes temp file"
-      (utils/handle-click {:current-screen :resume-selection} {:x 400 :y 300})
+      (utils/handle-click {:current-screen :resume-selection} {:x 400 :y 330})
       (should-have-invoked :delete-file))
     )
 
