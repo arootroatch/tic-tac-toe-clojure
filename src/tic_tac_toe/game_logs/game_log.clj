@@ -1,4 +1,5 @@
-(ns tic-tac-toe.game_logs.game-log)
+(ns tic-tac-toe.game_logs.game-log
+  (:require [tic-tac-toe.tui.print-utils :as print-utils]))
 
 (def logs-path "src/tic_tac_toe/game_logs/game-logs.edn")
 (def game-id-path "src/tic_tac_toe/game_logs/game-ids.edn")
@@ -62,7 +63,7 @@
 
 (defn format-in-progress-data [path]
   (let [data (read-edn-file path)
-        moves (rest data)
+        moves (vec (rest data))
         state (first data)]
     (when data (assoc state :moves moves))))
 
@@ -72,4 +73,17 @@
       (spit log-file (str data "\n") :append true)
       (clojure.java.io/delete-file temp-file))))
 
+(defn get-game-log [id path]
+  (let [logs (read-edn-file path)]
+    (first (filter #(= (:game-id %) id) logs))))
 
+(defn get-game-moves [id path]
+  (let [game (get-game-log id path)]
+    (:moves game)))
+
+(defmulti play-logged-game :ui)
+
+(defmethod play-logged-game :tui [{:keys [moves]}]
+  (if (empty? moves)
+    (print-utils/print-no-moves-error)
+    (run! print-utils/print-board moves)))

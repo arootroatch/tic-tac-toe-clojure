@@ -30,6 +30,8 @@
                     :game-state      :in-progress
                     :gui             true})
 
+(def replay-state {:replay? true :game-id 5, :filepath "src/tic_tac_toe/game_logs/in_progress/gui/game-5.edn", :current-screen :replay, :moves '([1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x :x 7 8 9] [:o 2 3 :o :x :x 7 8 9] [:o 2 :x :o :x :x 7 8 9] [:o 2 :x :o :x :x :o 8 9]), :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state :in-progress, :human? true, :ui :gui, :player :x, :board [1 2 3 4 5 6 7 8 9]})
+
 (describe "play screen"
   (with-stubs)
   (redefs-around [q/rect (stub :rect)
@@ -179,6 +181,31 @@
     (it "displays play screen in terminal state"
       (should= (assoc in-progress-state :game-state "X wins!")
                (utils/update-state (assoc in-progress-state :game-state "X wins!"))))
+    )
+
+  (context "replay"
+    (redefs-around [q/background (stub :background)
+                    three-board (stub :three-board)
+                    four-board (stub :four-board)
+                    components/text-button (stub :text-button)])
+    (it "displays start new game button if replaying logged game"
+      (utils/update-state (assoc replay-state :game-state "X wins!"))
+      (should-have-invoked :text-button {:with ["Start new game?" 400 700 600 60]}))
+
+    (it "plays moves to board"
+      (let [result (utils/update-state replay-state)]
+        (should= [1 2 3 4 :x 6 7 8 9] (:board result))
+        (should= [[:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x :x 7 8 9] [:o 2 3 :o :x :x 7 8 9]
+                  [:o 2 :x :o :x :x 7 8 9] [:o 2 :x :o :x :x :o 8 9]]
+                 (:moves result))
+        (should= :in-progress (:game-state result))
+        (should= :o (:player result))))
+
+    (it "updates game state when game ends"
+      (let [result (utils/update-state (assoc replay-state :moves [[:o 2 :x :o :x :x :o 8 9]]))]
+        (should= [:o 2 :x :o :x :x :o 8 9] (:board result))
+        (should= [] (:moves result))
+        (should= "O wins!" (:game-state result))))
     )
 
 
