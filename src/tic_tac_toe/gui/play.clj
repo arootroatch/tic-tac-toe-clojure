@@ -52,7 +52,7 @@
       :player (utils/switch-player player)
       :game-state (eval/score new-board))))
 
-(defn- play-screen [board player game-state human?]
+(defn- play-screen [{:keys [board player game-state human? replay?]}]
   (q/background 0 0 0)
   (q/text-size 30)
   (q/fill 255 255 255)
@@ -61,15 +61,22 @@
     (= 9 (count board)) (three-board x-3 y-3 size-3 board game-state)
     (= 16 (count board)) (four-board x-4 y-4 size-4 board game-state))
   (when (not= :in-progress game-state)
-    (text-button "Play again?" 400 700 600 60)))
+    (text-button (if replay? "Start new game?" "Play again?") 400 700 600 60)))
 
 (defmethod utils/update-state :play [state]
-  (let [{:keys [board player game-state human?]} state]
-    (play-screen board player game-state human?)
+  (let [{:keys [game-state human?]} state]
+    (play-screen state)
     (cond
       (and (= :in-progress game-state) human?) state
       (and (= :in-progress game-state) (not human?)) (ai-turn state)
       :else (do (game-log/log-completed-game (:filepath state) game-log/logs-path) state))))
+
+(defmethod utils/update-state :replay [state]
+  (play-screen state)
+  (let [{:keys [game-state player moves]} state]
+    (if (= :in-progress game-state)
+      (assoc state :player (player/switch-player player) :board (first moves) :moves (rest moves) :game-state (eval/score (first moves)))
+      (do (q/frame-rate 30) state))))
 
 
 (defmulti clicked (fn [state mouse-xy] (count (:board state))))
@@ -124,3 +131,6 @@
     (= :in-progress (:game-state state)) (get-user-move state mouse-xy)
     (utils/mouse-over? 400 700 600 60 mouse-xy) (reset-state state)
     :else state))
+
+(defmethod utils/handle-click :replay [state mouse-xy]
+  (if (utils/mouse-over? 400 700 600 60 mouse-xy) (do (reset-state state)) state))

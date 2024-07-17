@@ -48,3 +48,8 @@
       (game-log/create-in-progress-game-file filepath game-options)
       (game-log/log-game-id game-log/game-id-path (:game-id game-options)))
     (play-loop game-options filepath)))
+
+(defmethod launch-user-interface "--game" [args]
+  (let [game-id (Integer/parseInt (last args))
+        moves (game-log/get-game-moves game-id game-log/logs-path)]
+    (game-log/play-logged-game {:ui :tui :moves moves})))

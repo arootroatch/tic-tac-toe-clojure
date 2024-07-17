@@ -37,6 +37,14 @@
   (q/color-mode :rgb)
   state)
 
+(defn replay-setup [state]
+  (q/frame-rate 1)
+  (q/background 0 0 0)
+  (q/rect-mode :center)
+  (q/text-align :center)
+  (q/color-mode :rgb)
+  state)
+
 (defn draw-state [state]
   (:current-screen state))
 
@@ -50,4 +58,18 @@
                :update utils/update-state
                :features [:keep-on-top]
                :middleware [m/fun-mode]))
+
+(defmethod launch-user-interface ["gui" "--game"] [args]
+  (let [game-id (Integer/parseInt (last args))
+        game-log (game-log/get-game-log game-id game-log/logs-path)
+        state (assoc game-log :replay? true :current-screen :replay)]
+    (q/defsketch gui-replay
+                 :title "Tic-Tac-Toe"
+                 :size [window-size window-size]
+                 :setup (partial replay-setup state)
+                 :draw draw-state
+                 :mouse-clicked handle-click
+                 :update utils/update-state
+                 :features [:keep-on-top]
+                 :middleware [m/fun-mode])))
 

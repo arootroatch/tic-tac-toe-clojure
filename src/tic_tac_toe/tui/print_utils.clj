@@ -124,6 +124,8 @@
     (print-board middle-board)
     (print-board bottom-board)))
 
+(defn print-no-moves-error []
+  (println "There are no moves to show for this game."))
 
 
 

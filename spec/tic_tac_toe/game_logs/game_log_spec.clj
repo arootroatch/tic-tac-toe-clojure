@@ -1,6 +1,8 @@
 (ns tic-tac-toe.game-logs.game-log-spec
   (:require [speclj.core :refer :all]
-            [tic-tac-toe.game_logs.game-log :refer :all]))
+            [speclj.stub :as stub]
+            [tic-tac-toe.game_logs.game-log :refer :all]
+            [tic-tac-toe.tui.print-utils :as print-utils]))
 
 (def test-path "spec/tic_tac_toe/game_logs/game-logs-test.edn")
 (def game-ids-test-path "spec/tic_tac_toe/game_logs/game-ids.edn")
@@ -9,14 +11,12 @@
 (describe "logging games"
   (with-stubs)
   (it "gets all game-logs"
-    (should= [{:game-id    1
-               :moves      []
-               :game-state :in-progress
-               :ui         :gui}
-              {:game-id    2
-               :moves      []
-               :game-state :in-progress
-               :ui         :tui}]
+    (should= [
+              {:game-id 1, :moves [], :game-state :in-progress, :ui :gui}
+              {:game-id 2, :moves [], :game-state :in-progress, :ui :tui}
+              {:game-id 5, :filepath "src/tic_tac_toe/game_logs/in_progress/gui/game-5.edn", :current-screen :play, :moves '([1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x :x 7 8 9] [:o 2 3 :o :x :x 7 8 9] [:o 2 :x :o :x :x 7 8 9] [:o 2 :x :o :x :x :o 8 9]), :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state :in-progress, :human? true, :ui :gui, :player :x, :board [1 2 3 4 5 6 7 8 9]}
+              {:mode 2, :first-ai-level 3, :second-ai-level nil, :board [1 2 3 4 5 6 7 8 9], :player :x, :game-id 6, :ui :tui, :moves '([1 :x 3 4 5 6 7 8 9] [:o :x 3 4 5 6 7 8 9] [:o :x 3 :x 5 6 7 8 9] [:o :x 3 :x :o 6 7 8 9] [:o :x 3 :x :o 6 :x 8 9] [:o :x 3 :x :o 6 :x 8 :o])}
+              ]
              (read-edn-file test-path)))
 
   (it "gets last in progress game"
@@ -105,7 +105,7 @@
                     clojure.java.io/delete-file (stub :delete-file)]
         (log-completed-game "spec/tic_tac_toe/game_logs/in_progress/game-4.edn" test-path)
         (should-have-invoked :spit {:with ["spec/tic_tac_toe/game_logs/game-logs-test.edn"
-                                           "{:game-id 4, :moves ([1 2 3 4 5 6 7 8 9] [1 2 3 4 :x 6 7 8 9]), :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state :in-progress, :human? true, :ui :gui, :player :x, :board [1 2 3 4 5 6 7 8 9]}\n"
+                                           "{:game-id 4, :moves [[1 2 3 4 5 6 7 8 9] [1 2 3 4 :x 6 7 8 9]], :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state :in-progress, :human? true, :ui :gui, :player :x, :board [1 2 3 4 5 6 7 8 9]}\n"
                                            :append true]})))
 
     (it "deletes temp file after logging"
@@ -122,4 +122,38 @@
         (should-not-have-invoked :delete-file)))
     )
 
+  (context "get-game-log"
+    (it "gets game log for given game id"
+      (should= {:game-id 1, :moves [], :game-state :in-progress, :ui :gui} (get-game-log 1 test-path))
+      (should= {:game-id 5, :filepath "src/tic_tac_toe/game_logs/in_progress/gui/game-5.edn", :current-screen :play, :moves '([1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x :x 7 8 9] [:o 2 3 :o :x :x 7 8 9] [:o 2 :x :o :x :x 7 8 9] [:o 2 :x :o :x :x :o 8 9]), :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state :in-progress, :human? true, :ui :gui, :player :x, :board [1 2 3 4 5 6 7 8 9]}
+               (get-game-log 5 test-path)))
+
+    (it "returns nil if game id does not exist"
+      (should= nil (get-game-log 10 test-path)))
+    )
+
+  (context "get-game-moves"
+    (it "gets moves from given game"
+      (should= [] (get-game-moves 1 test-path))
+      (should= '([1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x :x 7 8 9] [:o 2 3 :o :x :x 7 8 9] [:o 2 :x :o :x :x 7 8 9] [:o 2 :x :o :x :x :o 8 9])
+               (get-game-moves 5 test-path)))
+
+    (it "returns nil if game id does not exist"
+      (should= nil (get-game-moves 10 test-path)))
+    )
+
+  (context "play-logged-game"
+    (it "prints error message if there are no moves"
+      (should= "There are no moves to show for this game.\n"
+               (with-out-str (play-logged-game {:ui :tui :moves []})))
+      (should= "There are no moves to show for this game.\n"
+               (with-out-str (play-logged-game {:ui :tui :moves nil}))))
+
+    (it "prints each move to the console in order"
+      (with-redefs [print-utils/print-board (stub :print-board)]
+        (play-logged-game {:ui :tui :moves '([1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x :x 7 8 9] [:o 2 3 :o :x :x 7 8 9] [:o 2 :x :o :x :x 7 8 9] [:o 2 :x :o :x :x :o 8 9])})
+        (should= [[[1 2 3 4 :x 6 7 8 9]] [[:o 2 3 4 :x 6 7 8 9]] [[:o 2 3 4 :x :x 7 8 9]]
+                  [[:o 2 3 :o :x :x 7 8 9]] [[:o 2 :x :o :x :x 7 8 9]] [[:o 2 :x :o :x :x :o 8 9]]]
+                 (stub/invocations-of :print-board))))
+    )
   )
