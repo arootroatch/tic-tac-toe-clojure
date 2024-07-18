@@ -29,16 +29,8 @@
             :game-id         game-id
             :filepath        filepath})
 
-(defn setup []
+(defn setup [state]
   (q/frame-rate 30)
-  (q/background 0 0 0)
-  (q/rect-mode :center)
-  (q/text-align :center)
-  (q/color-mode :rgb)
-  state)
-
-(defn replay-setup [state]
-  (q/frame-rate 1)
   (q/background 0 0 0)
   (q/rect-mode :center)
   (q/text-align :center)
@@ -52,7 +44,7 @@
   (q/defsketch gui-TTT
                :title "Tic-Tac-Toe"
                :size [window-size window-size]
-               :setup setup
+               :setup (partial setup state)
                :draw draw-state
                :mouse-clicked handle-click
                :update utils/update-state
@@ -66,7 +58,7 @@
     (q/defsketch gui-replay
                  :title "Tic-Tac-Toe"
                  :size [window-size window-size]
-                 :setup (partial replay-setup state)
+                 :setup (partial setup state)
                  :draw draw-state
                  :mouse-clicked handle-click
                  :update utils/update-state
