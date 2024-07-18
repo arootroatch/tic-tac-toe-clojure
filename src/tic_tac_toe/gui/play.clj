@@ -73,6 +73,7 @@
 
 (defmethod utils/update-state :replay [state]
   (play-screen state)
+  (q/frame-rate 1)
   (let [{:keys [game-state player moves]} state]
     (if (= :in-progress game-state)
       (assoc state :player (player/switch-player player) :board (first moves) :moves (rest moves) :game-state (eval/score (first moves)))
