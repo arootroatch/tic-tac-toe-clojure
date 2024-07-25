@@ -187,7 +187,8 @@
     (redefs-around [q/background (stub :background)
                     three-board (stub :three-board)
                     four-board (stub :four-board)
-                    components/text-button (stub :text-button)])
+                    components/text-button (stub :text-button)
+                    q/frame-rate (stub :frame-rate)])
     (it "displays start new game button if replaying logged game"
       (utils/update-state (assoc replay-state :game-state "X wins!"))
       (should-have-invoked :text-button {:with ["Start new game?" 400 700 600 60]}))
@@ -201,11 +202,19 @@
         (should= :in-progress (:game-state result))
         (should= :o (:player result))))
 
+    (it "drops frame-rate for playback"
+      (utils/update-state replay-state)
+      (should-have-invoked :frame-rate {:with [1]}))
+
     (it "updates game state when game ends"
       (let [result (utils/update-state (assoc replay-state :moves [[:o 2 :x :o :x :x :o 8 9]]))]
         (should= [:o 2 :x :o :x :x :o 8 9] (:board result))
         (should= [] (:moves result))
         (should= "O wins!" (:game-state result))))
+
+    (it "increases frame rate after replay completes"
+      (utils/update-state (assoc replay-state :game-state "O wins!"))
+      (should-have-invoked :frame-rate {:with [30]}))
     )
 
 
