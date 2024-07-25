@@ -1,9 +1,7 @@
-(ns tic-tac-toe.gui.core-spec
+(ns tic-tac-toe.gui.main-spec
   (:require [speclj.core :refer :all]
             [tic-tac-toe.gui.gui-main :refer :all]
-            [tic-tac-toe.gui.play]
-            [tic-tac-toe.gui.utils :as utils]
-            [tic-tac-toe.player :as player]))
+            [tic-tac-toe.gui.play]))
 
 (def initial-state {:current-screen  :mode-selection
                     :mode            nil

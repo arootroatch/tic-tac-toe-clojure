@@ -76,7 +76,10 @@
   (q/frame-rate 1)
   (let [{:keys [game-state player moves]} state]
     (if (= :in-progress game-state)
-      (assoc state :player (player/switch-player player) :board (first moves) :moves (rest moves) :game-state (eval/score (first moves)))
+      (assoc state :player (player/switch-player player)
+                   :board (first moves)
+                   :moves (rest moves)
+                   :game-state (eval/score (first moves)))
       (do (q/frame-rate 30) state))))
 
 
@@ -91,6 +94,8 @@
                  (number? (nth board i)))
           i
           (recur (inc i)))))))
+
+:board [1 2 3 4 5 6 7 8 9]
 
 (defmethod clicked 16 [{:keys [board]} mouse-xy]
   (loop [i 0]
