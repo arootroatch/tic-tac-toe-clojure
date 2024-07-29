@@ -2,7 +2,7 @@
   (:require [quil.core :as q]
             [tic-tac-toe.bot-moves]
             [tic-tac-toe.eval-board :as eval]
-            [tic-tac-toe.game_logs.game-log :as game-log]
+            [tic-tac-toe.game_logs.edn :as game-log]
             [tic-tac-toe.gui.components :refer [text-button]]
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.human-moves]

@@ -1,7 +1,7 @@
 (ns tic-tac-toe.gui.gui-main
   (:require [quil.core :as q]
             [quil.middleware :as m]
-            [tic-tac-toe.game_logs.game-log :as game-log]
+            [tic-tac-toe.game_logs.edn :as edn]
             [tic-tac-toe.gui.board-selection]
             [tic-tac-toe.gui.first-level-selection]
             [tic-tac-toe.gui.mode-selection]
@@ -14,8 +14,8 @@
 
 (def window-size 800)
 
-(def game-id (game-log/get-new-game-id game-log/game-id-path))
-(def filepath (game-log/create-new-filepath game-log/in-progress-dir-path-gui game-id))
+(def game-id (edn/get-new-game-id edn/game-id-path))
+(def filepath (edn/create-new-filepath edn/in-progress-dir-path-gui game-id))
 
 (def state {:current-screen  :resume-selection
             :mode            nil
@@ -25,9 +25,7 @@
             :player          :x
             :human?          nil
             :game-state      :in-progress
-            :ui              :gui
-            :game-id         game-id
-            :filepath        filepath})
+            :ui              :gui})
 
 (defn setup [state]
   (q/frame-rate 30)
@@ -40,28 +38,27 @@
 (defn draw-state [state]
   (:current-screen state))
 
-(defmethod launch-user-interface ["gui"] [_]
+(defn launch-quil [new-state]
   (q/defsketch gui-TTT
                :title "Tic-Tac-Toe"
                :size [window-size window-size]
-               :setup (partial setup state)
+               :setup (partial setup new-state)
                :draw draw-state
                :mouse-clicked handle-click
                :update utils/update-state
                :features [:keep-on-top]
                :middleware [m/fun-mode]))
 
-(defmethod launch-user-interface ["gui" "--game"] [args]
+(defmethod launch-user-interface ["gui" "--edndb"] [_]
+  (let [game-id (edn/get-new-game-id edn/game-id-path)
+        filepath (edn/create-new-filepath edn/in-progress-dir-path-gui game-id)
+        new-state (assoc state :game-id game-id :filepath filepath)]
+    (launch-quil new-state)))
+
+(defmethod launch-user-interface ["gui" "--edndb" "--game"] [args]
   (let [game-id (Integer/parseInt (last args))
-        game-log (game-log/get-game-log game-id game-log/logs-path)
-        state (assoc game-log :replay? true :current-screen :replay)]
-    (q/defsketch gui-replay
-                 :title "Tic-Tac-Toe"
-                 :size [window-size window-size]
-                 :setup (partial setup state)
-                 :draw draw-state
-                 :mouse-clicked handle-click
-                 :update utils/update-state
-                 :features [:keep-on-top]
-                 :middleware [m/fun-mode])))
+        game-log (edn/get-game-log game-id edn/logs-path)
+        new-state (assoc game-log :replay? true :current-screen :replay)]
+    (launch-quil new-state)))
+
 

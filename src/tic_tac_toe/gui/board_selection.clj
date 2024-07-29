@@ -1,6 +1,6 @@
 (ns tic-tac-toe.gui.board-selection
   (:require [quil.core :as q]
-            [tic-tac-toe.game_logs.game-log :as game-log]
+            [tic-tac-toe.game_logs.edn :as game-log]
             [tic-tac-toe.tui.print-utils :as print]
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.tui.get-selection :as selection]))

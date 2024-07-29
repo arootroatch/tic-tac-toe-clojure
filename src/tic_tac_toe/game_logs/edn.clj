@@ -1,4 +1,4 @@
-(ns tic-tac-toe.game_logs.game-log
+(ns tic-tac-toe.game_logs.edn
   (:require [tic-tac-toe.tui.print-utils :as print-utils]))
 
 (def logs-path "src/tic_tac_toe/game_logs/game-logs.edn")
