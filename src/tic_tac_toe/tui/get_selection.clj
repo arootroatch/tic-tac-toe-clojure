@@ -1,5 +1,6 @@
 (ns tic-tac-toe.tui.get-selection
-  (:require [tic-tac-toe.tui.get-user-input :refer [get-input-in-range]]
+  (:require [tic-tac-toe.game-logs.sql :as sql]
+            [tic-tac-toe.tui.get-user-input :refer [get-input-in-range]]
             [tic-tac-toe.tui.print-utils :as print]))
 
 (def initial-3x3-board [1 2 3 4 5 6 7 8 9])
@@ -23,10 +24,18 @@
   (let [input (get-input-in-range 5)]
     (do (print/print-mode-selection input)) input))
 
-(defmethod get-selection :resume [{:keys [filepath]}]
+(defmethod get-selection :resume-edn [{:keys [filepath]}]
   (print/prompt-user-to-resume)
   (let [input (get-input-in-range 3)]
     (if (= 2 input)
       (do (clojure.java.io/delete-file filepath true)
+          (print/print-resume-selection input))
+      (do (print/print-resume-selection input) input))))
+
+(defmethod get-selection :resume-sql [{:keys [game-id]}]
+  (print/prompt-user-to-resume)
+  (let [input (get-input-in-range 3)]
+    (if (= 2 input)
+      (do (sql/set-abandoned-game-state sql/ds game-id)
           (print/print-resume-selection input))
       (do (print/print-resume-selection input) input))))

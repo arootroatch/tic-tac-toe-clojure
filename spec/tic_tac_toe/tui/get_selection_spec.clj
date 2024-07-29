@@ -135,7 +135,7 @@
     (redefs-around [clojure.java.io/delete-file (stub :delete-file)])
 
     (it "asks user to resume unfinished game and confirms yes"
-      (with-in-str "1" (get-selection {:option :resume}))
+      (with-in-str "1" (get-selection {:option :resume-edn}))
       (should= [["There's and unfinished game! Would you like resume?"]
                 ["1 - Yes"]
                 ["2 - No (deletes game history)"]
@@ -143,7 +143,7 @@
                (stub/invocations-of :println)))
 
     (it "asks user to resume unfinished game and confirms no"
-      (with-in-str "2" (get-selection {:option :resume}))
+      (with-in-str "2" (get-selection {:option :resume-edn}))
       (should= [["There's and unfinished game! Would you like resume?"]
                 ["1 - Yes"]
                 ["2 - No (deletes game history)"]
@@ -151,6 +151,6 @@
                (stub/invocations-of :println)))
 
     (it "deletes file if not resumed"
-      (with-in-str "2" (get-selection {:option :resume :filepath "test.path"}))
+      (with-in-str "2" (get-selection {:option :resume-edn :filepath "test.path"}))
       (should-have-invoked :delete-file {:with ["test.path" true]}))
     ))

@@ -1,7 +1,7 @@
-(ns tic-tac-toe.game-logs.game-log-spec
+(ns tic-tac-toe.game-logs.edn-spec
   (:require [speclj.core :refer :all]
             [speclj.stub :as stub]
-            [tic-tac-toe.game_logs.game-log :refer :all]
+            [tic-tac-toe.game_logs.edn :refer :all]
             [tic-tac-toe.tui.print-utils :as print-utils]))
 
 (def test-path "spec/tic_tac_toe/game_logs/game-logs-test.edn")
@@ -44,12 +44,12 @@
 
   (it "gets paths in given directory"
     (should= ["spec/tic_tac_toe/game_logs/game-logs-empty-test.edn"
+              "spec/tic_tac_toe/game_logs/edn_spec.clj"
               "spec/tic_tac_toe/game_logs/in_progress"
               "spec/tic_tac_toe/game_logs/in_progress/game-4.edn"
               "spec/tic_tac_toe/game_logs/in_progress_empty"
               "spec/tic_tac_toe/game_logs/game-logs-test.edn"
               "spec/tic_tac_toe/game_logs/sql_spec.clj"
-              "spec/tic_tac_toe/game_logs/game_log_spec.clj"
               "spec/tic_tac_toe/game_logs/game-ids.edn"]
              (get-paths-in-dir "spec/tic_tac_toe/game_logs")))
 
