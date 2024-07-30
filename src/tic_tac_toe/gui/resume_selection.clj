@@ -1,6 +1,6 @@
 (ns tic-tac-toe.gui.resume-selection
   (:require [quil.core :as q]
-            [tic-tac-toe.game_logs.edn :as game-log]
+            [tic-tac-toe.game_logs.edn-logs :as edn]
             [tic-tac-toe.gui.components :refer [text-button]]
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.tui.print-utils :as print]))
@@ -13,7 +13,7 @@
   (text-button (nth print/resume-prompt 2) 400 330 600 60))
 
 (defmethod utils/update-state :resume-selection [state]
-  (let [old-game (game-log/get-last-in-progress-game game-log/in-progress-dir-path-gui)]
+  (let [old-game (edn/get-last-in-progress-game edn/in-progress-dir-path-gui)]
     (if (some? old-game)
       (do
         (resume-selection-screen)
@@ -22,7 +22,7 @@
 
 (defn- handle-resume [n state]
   (cond
-    (= n 1) (game-log/get-resumed-game-state (:filepath state))
+    (= n 1) (edn/get-resumed-game-state (:filepath state))
     (= n 2) (do (clojure.java.io/delete-file (:filepath state) true)
                 (assoc state :current-screen :mode-selection))
     :else (assoc state :current-screen :mode-selection)

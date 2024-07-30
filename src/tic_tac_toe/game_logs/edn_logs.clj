@@ -1,5 +1,6 @@
-(ns tic-tac-toe.game_logs.edn
-  (:require [tic-tac-toe.tui.print-utils :as print-utils]))
+(ns tic-tac-toe.game_logs.edn-logs
+  (:require [tic-tac-toe.tui.print-utils :as print-utils]
+            [tic-tac-toe.game-logs.game-logs :as game-logs]))
 
 (def logs-path "src/tic_tac_toe/game_logs/game-logs.edn")
 (def game-id-path "src/tic_tac_toe/game_logs/game-ids.edn")
@@ -44,7 +45,7 @@
         mode (:mode state)]
     (assoc state :board board :player player :human? (set-human mode player))))
 
-(defn get-new-game-id [path]
+(defmethod game-logs/get-new-game-id :edn [{:keys [path]}]
   (let [last-id (last (read-edn-file path))]
     (if (some? last-id) (inc last-id) 1)))
 
@@ -58,8 +59,8 @@
 (defn create-in-progress-game-file [temp-file state]
   (spit temp-file (str state "\n")))
 
-(defn log-move [temp-file move]
-  (spit temp-file (str move "\n") :append true))
+(defmethod game-logs/log-move :edn [{:keys [temp-file state]}]
+  (spit temp-file (str (:board state) "\n") :append true))
 
 (defn format-in-progress-data [path]
   (let [data (read-edn-file path)
@@ -67,7 +68,7 @@
         state (first data)]
     (when data (assoc state :moves moves))))
 
-(defn log-completed-game [temp-file log-file]
+(defmethod game-logs/log-completed-game :edn [{:keys [temp-file log-file]}]
   (let [data (format-in-progress-data temp-file)]
     (when data
       (spit log-file (str data "\n") :append true)

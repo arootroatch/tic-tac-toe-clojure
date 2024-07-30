@@ -1,7 +1,8 @@
-(ns tic-tac-toe.game-logs.edn-spec
+(ns tic-tac-toe.game-logs.edn-logs-spec
   (:require [speclj.core :refer :all]
             [speclj.stub :as stub]
-            [tic-tac-toe.game_logs.edn :refer :all]
+            [tic-tac-toe.game-logs.game-logs :as game-logs]
+            [tic-tac-toe.game_logs.edn-logs :refer :all]
             [tic-tac-toe.tui.print-utils :as print-utils]))
 
 (def test-path "spec/tic_tac_toe/game_logs/game-logs-test.edn")
@@ -44,13 +45,13 @@
 
   (it "gets paths in given directory"
     (should= ["spec/tic_tac_toe/game_logs/game-logs-empty-test.edn"
-              "spec/tic_tac_toe/game_logs/edn_spec.clj"
               "spec/tic_tac_toe/game_logs/in_progress"
               "spec/tic_tac_toe/game_logs/in_progress/game-4.edn"
               "spec/tic_tac_toe/game_logs/in_progress_empty"
               "spec/tic_tac_toe/game_logs/game-logs-test.edn"
               "spec/tic_tac_toe/game_logs/sql_spec.clj"
-              "spec/tic_tac_toe/game_logs/game-ids.edn"]
+              "spec/tic_tac_toe/game_logs/game-ids.edn"
+              "spec/tic_tac_toe/game_logs/edn_logs_spec.clj"]
              (get-paths-in-dir "spec/tic_tac_toe/game_logs")))
 
   (it "creates new filename and path for in progress game"
@@ -65,7 +66,7 @@
 
   (it "logs move to temp-file"
     (with-redefs [spit (stub :spit)]
-      (log-move "spec/tic_tac_toe/game_logs/in_progress/game-4.edn" [:x 2 3 4 5 6 7 8 9])
+      (game-logs/log-move {:db :edn :temp-file "spec/tic_tac_toe/game_logs/in_progress/game-4.edn" :state {:board [:x 2 3 4 5 6 7 8 9]}})
       (should-have-invoked :spit {:with ["spec/tic_tac_toe/game_logs/in_progress/game-4.edn"
                                          "[:x 2 3 4 5 6 7 8 9]\n"
                                          :append true]})))
@@ -73,10 +74,10 @@
 
   (context "get-new-game-id"
     (it "gets new game id"
-      (should= 5 (get-new-game-id game-ids-test-path)))
+      (should= 5 (game-logs/get-new-game-id {:db :edn :path game-ids-test-path})))
 
     (it "returns 1 if no previous games"
-      (should= 1 (get-new-game-id empty-test-path)))
+      (should= 1 (game-logs/get-new-game-id {:db :edn :path empty-test-path})))
     )
 
 
@@ -104,7 +105,9 @@
     (it "writes completed game to game log"
       (with-redefs [spit (stub :spit)
                     clojure.java.io/delete-file (stub :delete-file)]
-        (log-completed-game "spec/tic_tac_toe/game_logs/in_progress/game-4.edn" test-path)
+        (game-logs/log-completed-game {:db :edn
+                                       :temp-file "spec/tic_tac_toe/game_logs/in_progress/game-4.edn"
+                                       :log-file test-path})
         (should-have-invoked :spit {:with ["spec/tic_tac_toe/game_logs/game-logs-test.edn"
                                            "{:game-id 4, :moves [[1 2 3 4 5 6 7 8 9] [1 2 3 4 :x 6 7 8 9]], :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state :in-progress, :human? true, :ui :gui, :player :x, :board [1 2 3 4 5 6 7 8 9]}\n"
                                            :append true]})))
@@ -112,13 +115,17 @@
     (it "deletes temp file after logging"
       (with-redefs [spit (stub :spit)
                     clojure.java.io/delete-file (stub :delete-file)]
-        (log-completed-game "spec/tic_tac_toe/game_logs/in_progress/game-4.edn" test-path)
+        (game-logs/log-completed-game {:db :edn
+                                       :temp-file "spec/tic_tac_toe/game_logs/in_progress/game-4.edn"
+                                       :log-file test-path})
         (should-have-invoked :delete-file {:with ["spec/tic_tac_toe/game_logs/in_progress/game-4.edn"]})))
 
     (it "doesn't run if temp-file does not exist"
       (with-redefs [spit (stub :spit)
                     clojure.java.io/delete-file (stub :delete-file)]
-        (log-completed-game "spec/tic_tac_toe/game_logs/in_progress/game-5.edn" test-path)
+        (game-logs/log-completed-game {:db :edn
+                                       :temp-file "spec/tic_tac_toe/game_logs/in_progress/game-5.edn"
+                                       :log-file test-path})
         (should-not-have-invoked :spit)
         (should-not-have-invoked :delete-file)))
     )

@@ -2,7 +2,7 @@
   (:require [quil.core :as q]
             [speclj.core :refer :all]
             [speclj.stub :as stub]
-            [tic-tac-toe.game_logs.edn :as game-log]
+            [tic-tac-toe.game_logs.edn-logs :as game-log]
             [tic-tac-toe.gui.components :as components]
             [tic-tac-toe.gui.second-level-selection :refer :all]
             [tic-tac-toe.gui.utils :as utils]))

@@ -1,21 +1,20 @@
 (ns tic-tac-toe.gui.gui-main
   (:require [quil.core :as q]
             [quil.middleware :as m]
-            [tic-tac-toe.game_logs.edn :as edn]
+            [tic-tac-toe.game-logs.game-logs :as game-logs]
+            [tic-tac-toe.game-logs.sql :as sql]
+            [tic-tac-toe.game_logs.edn-logs :as edn]
             [tic-tac-toe.gui.board-selection]
             [tic-tac-toe.gui.first-level-selection]
             [tic-tac-toe.gui.mode-selection]
             [tic-tac-toe.gui.play]
-            [tic-tac-toe.gui.second-level-selection]
             [tic-tac-toe.gui.resume-selection]
+            [tic-tac-toe.gui.second-level-selection]
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.gui.utils :refer [handle-click]]
             [tic-tac-toe.launch-user-interface :refer [launch-user-interface]]))
 
 (def window-size 800)
-
-(def game-id (edn/get-new-game-id edn/game-id-path))
-(def filepath (edn/create-new-filepath edn/in-progress-dir-path-gui game-id))
 
 (def state {:current-screen  :resume-selection
             :mode            nil
@@ -50,15 +49,32 @@
                :middleware [m/fun-mode]))
 
 (defmethod launch-user-interface ["gui" "--edndb"] [_]
-  (let [game-id (edn/get-new-game-id edn/game-id-path)
+  (let [game-id (game-logs/get-new-game-id {:db :edn :path edn/game-id-path})
         filepath (edn/create-new-filepath edn/in-progress-dir-path-gui game-id)
-        new-state (assoc state :game-id game-id :filepath filepath)]
+        new-state (assoc state :game-id game-id :filepath filepath :db :edn)]
+    (launch-quil new-state)))
+
+(defmethod launch-user-interface ["gui" "--psqldb"] [_]
+  (let [game-id (game-logs/get-new-game-id {:db :sql :ds sql/ds})
+        new-state (assoc state :game-id game-id :db :sql)]
     (launch-quil new-state)))
 
 (defmethod launch-user-interface ["gui" "--edndb" "--game"] [args]
   (let [game-id (Integer/parseInt (last args))
         game-log (edn/get-game-log game-id edn/logs-path)
-        new-state (assoc game-log :replay? true :current-screen :replay)]
+        new-state (assoc game-log :replay? true :current-screen :replay :db :edn)]
+    (launch-quil new-state)))
+
+(defmethod launch-user-interface ["gui" "--psqldb" "--game"] [args]
+  (let [game-id (Integer/parseInt (last args))
+        game-log (sql/get-game-log sql/ds game-id)
+        new-state (assoc game-log
+                    :replay? true
+                    :current-screen :replay
+                    :game-state :in-progress
+                    :human? true
+                    :player :x
+                    :db :sql)]
     (launch-quil new-state)))
 
 
