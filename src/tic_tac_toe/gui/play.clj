@@ -2,7 +2,8 @@
   (:require [quil.core :as q]
             [tic-tac-toe.bot-moves]
             [tic-tac-toe.eval-board :as eval]
-            [tic-tac-toe.game_logs.edn :as game-log]
+            [tic-tac-toe.game-logs.game-logs :as game-logs]
+            [tic-tac-toe.game_logs.edn-logs :as edn]
             [tic-tac-toe.gui.components :refer [text-button]]
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.human-moves]
@@ -43,14 +44,15 @@
     :else game-state))
 
 (defn ai-turn [state]
-  (let [{:keys [mode player]} state
-        new-board (player/take-turn state)]
-    (game-log/log-move (:filepath state) new-board)
-    (assoc state
-      :board new-board
-      :human? (if (not= 4 mode) true false)
-      :player (utils/switch-player player)
-      :game-state (eval/score new-board))))
+  (let [{:keys [mode player db filepath]} state
+        new-board (player/take-turn state)
+        new-state (assoc state
+                    :board new-board
+                    :human? (if (not= 4 mode) true false)
+                    :player (utils/switch-player player)
+                    :game-state (eval/score new-board))]
+    (game-logs/log-move {:db db :filepath filepath :state new-state})
+    new-state))
 
 (defn- play-screen [{:keys [board player game-state human? replay?]}]
   (q/background 0 0 0)
@@ -64,12 +66,12 @@
     (text-button (if replay? "Start new game?" "Play again?") 400 700 600 60)))
 
 (defmethod utils/update-state :play [state]
-  (let [{:keys [game-state human?]} state]
+  (let [{:keys [game-state human? db]} state]
     (play-screen state)
     (cond
       (and (= :in-progress game-state) human?) state
       (and (= :in-progress game-state) (not human?)) (ai-turn state)
-      :else (do (game-log/log-completed-game (:filepath state) game-log/logs-path) state))))
+      :else (do (game-logs/log-completed-game {:db db :temp-file (:filepath state) :log-file edn/logs-path}) state))))
 
 (defmethod utils/update-state :replay [state]
   (play-screen state)
@@ -83,7 +85,7 @@
       (do (q/frame-rate 30) state))))
 
 
-(defmulti clicked (fn [state mouse-xy] (count (:board state))))
+(defmulti clicked (fn [state _] (count (:board state))))
 
 (defmethod clicked 9 [{:keys [board]} mouse-xy]
   (loop [i 0]
@@ -108,17 +110,16 @@
           (recur (inc i)))))))
 
 (defn- get-user-move [state mouse-xy]
-  (let [board (:board state)
-        move (clicked state mouse-xy)
-        player (:player state)]
+  (let [{:keys [board player filepath db]} state
+        move (clicked state mouse-xy)]
     (if (number? move)
-      (do
-        (game-log/log-move (:filepath state) (assoc board move player))
-        (assoc state
-          :board (assoc board move player)
-          :player (utils/switch-player player)
-          :human? (if (not= 1 (:mode state)) false true)
-          :game-state (eval/score (assoc board move player))))
+      (let [new-state (assoc state
+                            :board (assoc board move player)
+                            :player (utils/switch-player player)
+                            :human? (if (not= 1 (:mode state)) false true)
+                            :game-state (eval/score (assoc board move player)))]
+            (game-logs/log-move {:db db :filepath filepath :state new-state})
+            new-state)
       state)))
 
 (defn- reset-state [state]
