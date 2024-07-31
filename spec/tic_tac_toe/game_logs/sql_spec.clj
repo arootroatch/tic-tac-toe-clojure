@@ -114,5 +114,5 @@
   (it "gets game log"
     (should= (assoc in-progress-formatted :board [1 2 3 4 5 6 7 8 9]
                                           :moves [[1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9]])
-             (get-game-log ds-test 8))))
+             (game-logs/get-game-log {:ds ds-test :id 8 :db :sql}))))
 

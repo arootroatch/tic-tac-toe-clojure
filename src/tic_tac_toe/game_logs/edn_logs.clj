@@ -1,6 +1,5 @@
 (ns tic-tac-toe.game_logs.edn-logs
-  (:require [tic-tac-toe.tui.print-utils :as print-utils]
-            [tic-tac-toe.game-logs.game-logs :as game-logs]))
+  (:require [tic-tac-toe.game-logs.game-logs :as game-logs]))
 
 (def logs-path "src/tic_tac_toe/game_logs/game-logs.edn")
 (def game-id-path "src/tic_tac_toe/game_logs/game-ids.edn")
@@ -58,8 +57,7 @@
   (spit path (str id "\n") :append true))
 
 (defn create-new-filepath [in-progress-dir game-id]
-  (let [filename (str in-progress-dir "/game-" game-id ".edn")]
-    filename))
+  (str in-progress-dir "/game-" game-id ".edn"))
 
 (defn create-in-progress-game-file [temp-file state]
   (spit temp-file (str state "\n")))
@@ -81,10 +79,6 @@
       (spit log-file (str (assoc data :game-state game-state) "\n") :append true)
       (clojure.java.io/delete-file temp-file))))
 
-(defn get-game-log [id path]
-  (let [logs (read-edn-file path)]
+(defmethod game-logs/get-game-log :edn [{:keys [id filepath]}]
+  (let [logs (read-edn-file filepath)]
     (first (filter #(= (:game-id %) id) logs))))
-
-(defn get-game-moves [id path]
-  (let [game (get-game-log id path)]
-    (:moves game)))
