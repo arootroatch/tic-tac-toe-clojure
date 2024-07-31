@@ -1,6 +1,7 @@
 (ns tic-tac-toe.gui.first-level-selection
   (:require [quil.core :as q]
-            [tic-tac-toe.game_logs.edn-logs :as game-log]
+            [tic-tac-toe.game-logs.sql :as sql]
+            [tic-tac-toe.game_logs.edn-logs :as edn]
             [tic-tac-toe.gui.components :refer [text-button]]
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.tui.print-utils :as print]))
@@ -19,18 +20,27 @@
   (first-level-selection-screen state)
   state)
 
-(defn- set-level [n state]
+(defmulti set-next-screen :db)
+
+(defmethod set-next-screen :edn [state]
   (if (= 4 (:mode state))
-    (assoc state :first-ai-level n :current-screen :second-level-selection)
-    (let [new-state (assoc state :first-ai-level n :current-screen :play)]
-      (game-log/create-in-progress-game-file (:filepath state) new-state)
-      (game-log/log-game-id game-log/game-id-path (:game-id state))
+    (assoc state :current-screen :second-level-selection)
+    (let [new-state (assoc state :current-screen :play)]
+      (edn/create-in-progress-game-file (:filepath state) new-state)
+      (edn/log-game-id edn/game-id-path (:game-id state))
+      new-state)))
+
+(defmethod set-next-screen :sql [state]
+  (if (= 4 (:mode state))
+    (assoc state :current-screen :second-level-selection)
+    (let [new-state (assoc state :current-screen :play)]
+      (sql/log-game-state sql/ds new-state)
       new-state)))
 
 (defmethod utils/handle-click :first-level-selection [state mouse-xy]
   (cond
     (:first-ai-level state) (:first-ai-level state)
-    (utils/mouse-over? 400 300 400 60 mouse-xy) (set-level 1 state)
-    (utils/mouse-over? 400 380 600 60 mouse-xy) (set-level 2 state)
-    (utils/mouse-over? 400 460 600 60 mouse-xy) (set-level 3 state)
+    (utils/mouse-over? 400 300 400 60 mouse-xy) (set-next-screen (assoc state :first-ai-level 1))
+    (utils/mouse-over? 400 380 600 60 mouse-xy) (set-next-screen (assoc state :first-ai-level 2))
+    (utils/mouse-over? 400 460 600 60 mouse-xy) (set-next-screen (assoc state :first-ai-level 3))
     :else state))

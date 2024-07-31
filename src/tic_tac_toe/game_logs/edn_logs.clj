@@ -17,8 +17,8 @@
        (map #(.getPath %))
        (filter #(not= path %))))
 
-(defn get-last-in-progress-game [path]
-  (let [in-progress-games (get-paths-in-dir path)]
+(defmethod game-logs/get-last-in-progress-game :edn [{:keys [dir-path]}]
+  (let [in-progress-games (get-paths-in-dir dir-path)]
     (if (empty? in-progress-games)
       nil
       (->> in-progress-games
@@ -36,6 +36,11 @@
     (and (= 2 mode) (= :x player)) true
     (and (= 3 mode) (= :o player)) true
     :else false))
+
+(defn get-resumed-game-board [path]
+  (let [data (read-edn-file path)
+        state (first data)]
+    (:board state)))
 
 (defn get-resumed-game-state [path]
   (let [data (read-edn-file path)
@@ -59,8 +64,8 @@
 (defn create-in-progress-game-file [temp-file state]
   (spit temp-file (str state "\n")))
 
-(defmethod game-logs/log-move :edn [{:keys [temp-file state]}]
-  (spit temp-file (str (:board state) "\n") :append true))
+(defmethod game-logs/log-move :edn [{:keys [state]}]
+  (spit (:filepath state) (str (:board state) "\n") :append true))
 
 (defn format-in-progress-data [path]
   (let [data (read-edn-file path)
@@ -68,8 +73,9 @@
         state (first data)]
     (when data (assoc state :moves moves))))
 
-(defmethod game-logs/log-completed-game :edn [{:keys [temp-file log-file]}]
-  (let [data (format-in-progress-data temp-file)]
+(defmethod game-logs/log-completed-game :edn [{:keys [state log-file]}]
+  (let [temp-file (:filepath state)
+        data (format-in-progress-data temp-file)]
     (when data
       (spit log-file (str data "\n") :append true)
       (clojure.java.io/delete-file temp-file))))
@@ -81,10 +87,3 @@
 (defn get-game-moves [id path]
   (let [game (get-game-log id path)]
     (:moves game)))
-
-(defmulti play-logged-game :ui)
-
-(defmethod play-logged-game :tui [{:keys [moves]}]
-  (if (empty? moves)
-    (print-utils/print-no-moves-error)
-    (run! print-utils/print-board moves)))

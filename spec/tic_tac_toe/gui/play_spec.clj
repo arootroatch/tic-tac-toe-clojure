@@ -3,6 +3,7 @@
             [speclj.core :refer :all]
             [speclj.stub :as stub]
             [tic-tac-toe.game-logs.game-logs :as game-logs]
+            [tic-tac-toe.game-logs.sql :as sql]
             [tic-tac-toe.gui.components :as components]
             [tic-tac-toe.gui.play :refer :all]
             [tic-tac-toe.gui.utils :as utils]
@@ -54,10 +55,10 @@
     (it "logs move to temp file"
       (with-redefs [player/take-turn (stub :take-turn {:return [1 2 3 4 :o 6 7 8 9]})]
         (ai-turn in-progress2)
-        (should-have-invoked :log-move {:with [{:db :sql :filepath nil :state (assoc in-progress2
-                                                                                :board [1 2 3 4 :o 6 7 8 9]
-                                                                                :human? true
-                                                                                :player :x)}]})))
+        (should-have-invoked :log-move {:with [{:ds sql/ds :state (assoc in-progress2
+                                                                    :board [1 2 3 4 :o 6 7 8 9]
+                                                                    :human? true
+                                                                    :player :x)}]})))
 
     (it "updates game state if terminal"
       (with-redefs [player/take-turn (stub :take-turn {:return [:o :o :o :x 5 6 :x 8 9]})]
@@ -151,7 +152,7 @@
 
     (it "logs completed game"
       (utils/update-state end-state)
-      (should-have-invoked :log-completed {:with [{:db :edn :temp-file nil :log-file "src/tic_tac_toe/game_logs/game-logs.edn"}]}))
+      (should-have-invoked :log-completed {:with [{:ds sql/ds :log-file "src/tic_tac_toe/game_logs/game-logs.edn" :state end-state}]}))
 
     (it "displays X wins"
       (utils/update-state end-state)
@@ -314,10 +315,10 @@
 
     (it "logs move to temp file"
       (utils/handle-click in-progress-state {:x 250 :y 250})
-      (should-have-invoked :log-move {:with [{:db :sql :filepath nil :state (assoc in-progress-state
-                                                                              :board [:x 2 3 4 5 6 7 8 9]
-                                                                              :player :o
-                                                                              :human? false)}]}))
+      (should-have-invoked :log-move {:with [{:ds sql/ds :state (assoc in-progress-state
+                                                                  :board [:x 2 3 4 5 6 7 8 9]
+                                                                  :player :o
+                                                                  :human? false)}]}))
 
     (it "updates game-state"
       (should= (assoc in-progress-state :board [:x :x :x 4 5 6 7 8 9] :game-state "X wins!" :player :o :human? false)

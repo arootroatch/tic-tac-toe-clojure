@@ -12,7 +12,8 @@
             [tic-tac-toe.gui.second-level-selection]
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.gui.utils :refer [handle-click]]
-            [tic-tac-toe.launch-user-interface :refer [launch-user-interface]]))
+            [tic-tac-toe.launch-user-interface :refer [launch-user-interface]]
+            [tic-tac-toe.tui.print-utils :as print-utils]))
 
 (def window-size 800)
 
@@ -68,6 +69,8 @@
 (defmethod launch-user-interface ["gui" "--psqldb" "--game"] [args]
   (let [game-id (Integer/parseInt (last args))
         game-log (sql/get-game-log sql/ds game-id)
+        old-board (:board game-log)
+        old-state (str (:game-state game-log))
         new-state (assoc game-log
                     :replay? true
                     :current-screen :replay
@@ -75,6 +78,6 @@
                     :human? true
                     :player :x
                     :db :sql)]
-    (launch-quil new-state)))
-
-
+    (cond (> (count old-board) 16) (println "3x3x3 games cannot be replayed in the GUI.")
+          (= "abandoned" old-state) (print-utils/display-unfinished-game-error)
+          :else (launch-quil new-state))))

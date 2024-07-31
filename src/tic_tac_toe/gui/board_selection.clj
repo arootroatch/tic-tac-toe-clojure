@@ -1,6 +1,7 @@
 (ns tic-tac-toe.gui.board-selection
   (:require [quil.core :as q]
-            [tic-tac-toe.game_logs.edn-logs :as game-log]
+            [tic-tac-toe.game-logs.sql :as sql]
+            [tic-tac-toe.game_logs.edn-logs :as edn]
             [tic-tac-toe.tui.print-utils :as print]
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.tui.get-selection :as selection]))
@@ -52,17 +53,26 @@
   (board-selection-screen)
   state)
 
-(defn- set-board [board-selection state]
+(defmulti set-next-screen :db)
+
+(defmethod set-next-screen :edn [state]
   (if (= 1 (:mode state))
-    (let [new-state (assoc state :board board-selection :current-screen :play)]
-      (game-log/create-in-progress-game-file (:filepath state) new-state)
-      (game-log/log-game-id game-log/game-id-path (:game-id state))
+    (let [new-state (assoc state :current-screen :play)]
+      (edn/create-in-progress-game-file (:filepath state) new-state)
+      (edn/log-game-id edn/game-id-path (:game-id state))
       new-state)
-    (assoc state :board board-selection :current-screen :first-level-selection)))
+    (assoc state :current-screen :first-level-selection)))
+
+(defmethod set-next-screen :sql [state]
+  (if (= 1 (:mode state))
+    (let [new-state (assoc state :current-screen :play)]
+      (sql/log-game-state sql/ds new-state)
+      new-state)
+    (assoc state :current-screen :first-level-selection)))
 
 (defmethod utils/handle-click :board-selection [state mouse-xy]
   (cond
     (:board state) (:board state)
-    (utils/mouse-over? 400 280 600 200 mouse-xy) (set-board selection/initial-3x3-board state)
-    (utils/mouse-over? 400 530 600 200 mouse-xy) (set-board selection/initial-4x4-board state)
+    (utils/mouse-over? 400 280 600 200 mouse-xy) (set-next-screen (assoc state :board selection/initial-3x3-board))
+    (utils/mouse-over? 400 530 600 200 mouse-xy) (set-next-screen (assoc state :board selection/initial-4x4-board))
     :else state))
