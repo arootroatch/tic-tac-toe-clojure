@@ -1,9 +1,7 @@
 (ns tic-tac-toe.game-logs.edn-logs-spec
   (:require [speclj.core :refer :all]
-            [speclj.stub :as stub]
             [tic-tac-toe.game-logs.game-logs :as game-logs]
-            [tic-tac-toe.game_logs.edn-logs :refer :all]
-            [tic-tac-toe.tui.print-utils :as print-utils]))
+            [tic-tac-toe.game_logs.edn-logs :refer :all]))
 
 (def test-path "spec/tic_tac_toe/game_logs/game-logs-test.edn")
 (def game-ids-test-path "spec/tic_tac_toe/game_logs/game-ids.edn")
