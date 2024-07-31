@@ -25,6 +25,9 @@
 (defn- set-filepath [path game-options]
   (if (some? path) path (edn/create-new-filepath edn/in-progress-dir-path-tui (:game-id game-options))))
 
+(defn- set-state [state new-board player human?]
+  (assoc state :board new-board :player (switch-player player) :human? (not human?) :game-state (score new-board)))
+
 (defn- play-loop [state]
   (loop [state state]
     (let [{:keys [board player human? game-state]} state]
@@ -33,10 +36,7 @@
         (do (game-logs/log-completed-game {:ds sql/ds :log-file edn/logs-path :state state})
             (println game-state))
         (let [new-board (take-turn state)
-              new-state (assoc state :board new-board
-                                     :player (switch-player player)
-                                     :human? (not human?)
-                                     :game-state (score new-board))]
+              new-state (set-state state new-board player human?)]
           (game-logs/log-move {:ds sql/ds :state new-state})
           (recur new-state))))))
 
@@ -58,16 +58,14 @@
     (when (not= 1 resume-selection) (sql/log-game-state sql/ds game-options))
     (play-loop (assoc game-options :db :sql))))
 
+(defn- replay [game-id db]
+  (let [game-log (game-logs/get-game-log {:db db :filepath edn/logs-path :ds sql/ds :id game-id})]
+    (cond (nil? (:game-id game-log)) (print-utils/display-invalid-game-id-error game-id)
+          (= "abandoned" (:game-state game-log)) (print-utils/display-unfinished-game-error)
+          :else (print-utils/play-logged-game (:moves game-log) (:game-state game-log)))))
+
 (defmethod launch-user-interface ["--edndb" "--game"] [args]
-  (let [game-id (Integer/parseInt (last args))
-        game-log (edn/get-game-log game-id edn/logs-path)]
-    (if (nil? game-log)
-      (print-utils/display-invalid-game-id-error game-id)
-      (print-utils/play-logged-game (:moves game-log) (:game-state game-log)))))
+  (replay (Integer/parseInt (last args)) :edn))
 
 (defmethod launch-user-interface ["--psqldb" "--game"] [args]
-  (let [game-id (Integer/parseInt (last args))
-        game-log (sql/get-game-log sql/ds game-id)]
-    (if (= "abandoned" (:game-state game-log))
-      (print-utils/display-unfinished-game-error)
-      (print-utils/play-logged-game (:moves game-log) (:game-state game-log)))))
+  (replay (Integer/parseInt (last args)) :sql))

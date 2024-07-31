@@ -60,28 +60,22 @@
         new-state (assoc state :game-id game-id :db :sql)]
     (launch-quil new-state)))
 
-(defmethod launch-user-interface ["gui" "--edndb" "--game"] [args]
-  (let [game-id (Integer/parseInt (last args))
-        game-log (edn/get-game-log game-id edn/logs-path)
-        new-state (assoc game-log :replay? true :current-screen :replay :db :edn)]
-    (cond (nil? game-log) (print-utils/display-invalid-game-id-error game-id)
-          (nil? (:moves game-log)) (print-utils/display-no-moves-error)
-          :else (launch-quil new-state))))
+(defn- set-replay-state [game-log db]
+  (assoc game-log :replay? true :current-screen :replay :game-state :in-progress :human? true :player :x :db db))
 
-(defmethod launch-user-interface ["gui" "--psqldb" "--game"] [args]
-  (let [game-id (Integer/parseInt (last args))
-        game-log (sql/get-game-log sql/ds game-id)
+(defn- replay [game-id db]
+  (let [game-log (game-logs/get-game-log {:db db :filepath edn/logs-path :ds sql/ds :id game-id})
         old-board (when game-log (:board game-log))
         old-state (when game-log (str (:game-state game-log)))
-        new-state (assoc game-log
-                    :replay? true
-                    :current-screen :replay
-                    :game-state :in-progress
-                    :human? true
-                    :player :x
-                    :db :sql)]
+        new-state (set-replay-state game-log db)]
     (cond (nil? (:game-id game-log)) (print-utils/display-invalid-game-id-error game-id)
-          (nil? (:moves game-log)) (print-utils/display-no-moves-error)
+          (empty? (:moves game-log)) (print-utils/display-no-moves-error)
           (> (count old-board) 16) (println "3x3x3 games cannot be replayed in the GUI.")
           (= "abandoned" old-state) (print-utils/display-unfinished-game-error)
           :else (launch-quil new-state))))
+
+(defmethod launch-user-interface ["gui" "--edndb" "--game"] [args]
+  (replay (Integer/parseInt (last args)) :edn))
+
+(defmethod launch-user-interface ["gui" "--psqldb" "--game"] [args]
+  (replay (Integer/parseInt (last args)) :sql))

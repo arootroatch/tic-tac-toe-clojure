@@ -7,3 +7,5 @@
 (defmulti log-move (fn [x] (:db (:state x))))
 
 (defmulti get-last-in-progress-game :db)
+
+(defmulti get-game-log :db)

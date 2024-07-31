@@ -58,7 +58,7 @@
   (when (not-empty board) (last (read-string (str \[ board \])))))
 
 (defn- parse-state [state]
-  (let [parsed (read-string state)]
+  (let [parsed (when (some? state) (read-string state))]
     (if (= :in-progress parsed) parsed state)))
 
 (defn format-game-state [state replay?]
@@ -73,7 +73,7 @@
    :ui              (parse-value (:games/ui state)),
    :player          (parse-value (:games/player state))})
 
-(defn get-game-log [ds id]
+(defmethod game-logs/get-game-log :sql [{:keys [ds id]}]
   (let [game-log (jdbc/execute! ds [(str "SELECT * FROM games WHERE id = " id)])
         formatted (format-game-state (first game-log) true)
         moves (read-string (str \[ (:games/moves (first game-log)) \]))]
