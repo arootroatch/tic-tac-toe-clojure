@@ -2,6 +2,8 @@
 
 (defmulti get-new-game-id :db)
 
-(defmulti log-completed-game :db)
+(defmulti log-completed-game (fn [x] (:db (:state x))))
 
-(defmulti log-move :db)
+(defmulti log-move (fn [x] (:db (:state x))))
+
+(defmulti get-last-in-progress-game :db)

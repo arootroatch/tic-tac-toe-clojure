@@ -81,11 +81,11 @@
 (defn print-resume-selection [input]
   (case input
     1 (println "Game resumed!\n")
-    2 (println "Game history deleted.\n")))
+    2 (println "New game started!\n")))
 
-(def resume-prompt ["There's and unfinished game! Would you like resume?"
+(def resume-prompt ["There's an unfinished game! Would you like resume?"
                   "Yes"
-                  "No (deletes game history)"])
+                  "No"])
 
 (defn prompt-user-to-resume []
   (println (first resume-prompt))
@@ -124,8 +124,16 @@
     (print-board middle-board)
     (print-board bottom-board)))
 
-(defn print-no-moves-error []
+(defn- print-no-moves-error []
   (println "There are no moves to show for this game."))
+
+(defn play-logged-game [moves]
+  (if (empty? moves)
+    (print-no-moves-error)
+    (run! print-board moves)))
+
+(defn display-unfinished-game-error []
+  (println "The requested game is unfinished. Please choose a completed game to replay."))
 
 
 

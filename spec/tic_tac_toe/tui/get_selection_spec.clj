@@ -136,18 +136,18 @@
 
     (it "asks user to resume unfinished game and confirms yes"
       (with-in-str "1" (get-selection {:option :resume-edn}))
-      (should= [["There's and unfinished game! Would you like resume?"]
+      (should= [["There's an unfinished game! Would you like resume?"]
                 ["1 - Yes"]
-                ["2 - No (deletes game history)"]
+                ["2 - No"]
                 ["Game resumed!\n"]]
                (stub/invocations-of :println)))
 
     (it "asks user to resume unfinished game and confirms no"
       (with-in-str "2" (get-selection {:option :resume-edn}))
-      (should= [["There's and unfinished game! Would you like resume?"]
+      (should= [["There's an unfinished game! Would you like resume?"]
                 ["1 - Yes"]
-                ["2 - No (deletes game history)"]
-                ["Game history deleted.\n"]]
+                ["2 - No"]
+                ["New game started!\n"]]
                (stub/invocations-of :println)))
 
     (it "deletes file if not resumed"

@@ -24,7 +24,10 @@
     (with-redefs [get-paths-in-dir (stub :get-paths {:return ["spec/tic_tac_toe/game_logs/in_progress/game-5.edn"
                                                               "spec/tic_tac_toe/game_logs/in_progress/game-4.edn"]})]
       (should= "spec/tic_tac_toe/game_logs/in_progress/game-5.edn"
-               (get-last-in-progress-game "spec/tic_tac_toe/game_logs/in_progress"))))
+               (game-logs/get-last-in-progress-game {:db :edn :dir-path "spec/tic_tac_toe/game_logs/in_progress"}))))
+
+  (it "gets resumed game's board"
+    (should= [1 2 3 4 5 6 7 8 9] (get-resumed-game-board "spec/tic_tac_toe/game_logs/in_progress/game-4.edn")))
 
   (it "gets game state for resumed game"
     (should= {:game-id         4
@@ -66,7 +69,7 @@
 
   (it "logs move to temp-file"
     (with-redefs [spit (stub :spit)]
-      (game-logs/log-move {:db :edn :temp-file "spec/tic_tac_toe/game_logs/in_progress/game-4.edn" :state {:board [:x 2 3 4 5 6 7 8 9]}})
+      (game-logs/log-move {:state {:db :edn :filepath "spec/tic_tac_toe/game_logs/in_progress/game-4.edn" :board [:x 2 3 4 5 6 7 8 9]}})
       (should-have-invoked :spit {:with ["spec/tic_tac_toe/game_logs/in_progress/game-4.edn"
                                          "[:x 2 3 4 5 6 7 8 9]\n"
                                          :append true]})))
@@ -105,8 +108,7 @@
     (it "writes completed game to game log"
       (with-redefs [spit (stub :spit)
                     clojure.java.io/delete-file (stub :delete-file)]
-        (game-logs/log-completed-game {:db :edn
-                                       :temp-file "spec/tic_tac_toe/game_logs/in_progress/game-4.edn"
+        (game-logs/log-completed-game {:state {:filepath "spec/tic_tac_toe/game_logs/in_progress/game-4.edn" :db :edn}
                                        :log-file test-path})
         (should-have-invoked :spit {:with ["spec/tic_tac_toe/game_logs/game-logs-test.edn"
                                            "{:game-id 4, :moves [[1 2 3 4 5 6 7 8 9] [1 2 3 4 :x 6 7 8 9]], :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state :in-progress, :human? true, :ui :gui, :player :x, :board [1 2 3 4 5 6 7 8 9]}\n"
@@ -115,16 +117,14 @@
     (it "deletes temp file after logging"
       (with-redefs [spit (stub :spit)
                     clojure.java.io/delete-file (stub :delete-file)]
-        (game-logs/log-completed-game {:db :edn
-                                       :temp-file "spec/tic_tac_toe/game_logs/in_progress/game-4.edn"
+        (game-logs/log-completed-game {:state {:filepath "spec/tic_tac_toe/game_logs/in_progress/game-4.edn" :db :edn}
                                        :log-file test-path})
         (should-have-invoked :delete-file {:with ["spec/tic_tac_toe/game_logs/in_progress/game-4.edn"]})))
 
     (it "doesn't run if temp-file does not exist"
       (with-redefs [spit (stub :spit)
                     clojure.java.io/delete-file (stub :delete-file)]
-        (game-logs/log-completed-game {:db :edn
-                                       :temp-file "spec/tic_tac_toe/game_logs/in_progress/game-5.edn"
+        (game-logs/log-completed-game {:state {:filepath "spec/tic_tac_toe/game_logs/in_progress/game-5.edn" :db :edn}
                                        :log-file test-path})
         (should-not-have-invoked :spit)
         (should-not-have-invoked :delete-file)))
@@ -148,20 +148,5 @@
 
     (it "returns nil if game id does not exist"
       (should= nil (get-game-moves 10 test-path)))
-    )
-
-  (context "play-logged-game"
-    (it "prints error message if there are no moves"
-      (should= "There are no moves to show for this game.\n"
-               (with-out-str (play-logged-game {:ui :tui :moves []})))
-      (should= "There are no moves to show for this game.\n"
-               (with-out-str (play-logged-game {:ui :tui :moves nil}))))
-
-    (it "prints each move to the console in order"
-      (with-redefs [print-utils/print-board (stub :print-board)]
-        (play-logged-game {:ui :tui :moves '([1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x :x 7 8 9] [:o 2 3 :o :x :x 7 8 9] [:o 2 :x :o :x :x 7 8 9] [:o 2 :x :o :x :x :o 8 9])})
-        (should= [[[1 2 3 4 :x 6 7 8 9]] [[:o 2 3 4 :x 6 7 8 9]] [[:o 2 3 4 :x :x 7 8 9]]
-                  [[:o 2 3 :o :x :x 7 8 9]] [[:o 2 :x :o :x :x 7 8 9]] [[:o 2 :x :o :x :x :o 8 9]]]
-                 (stub/invocations-of :print-board))))
     )
   )

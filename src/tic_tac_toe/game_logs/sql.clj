@@ -40,7 +40,7 @@
         last-id (->> ids sort last)]
     last-id))
 
-(defn get-last-in-progress-game [ds]
+(defmethod game-logs/get-last-in-progress-game :sql [{:keys [ds]}]
   (let [last-id (get-last-id ds)
         last-game (if (some? last-id) (first (jdbc/execute! ds [(str "SELECT * FROM games WHERE id = " last-id)])))]
     (when (= ":in-progress" (:games/game_state last-game)) last-game)))
@@ -75,3 +75,9 @@
         formatted (format-game-state (first game-log) true)
         moves (read-string (str \[ (:games/moves (first game-log)) \]))]
     (assoc formatted :moves moves)))
+
+(defn get-game-state [ds id]
+  (let [game-log (first (jdbc/execute! ds [(str "SELECT * FROM games WHERE id = " id)]))
+        game-state (:games/game_state game-log)]
+    game-state))
+

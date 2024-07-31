@@ -2,7 +2,8 @@
   (:require [quil.core :as q]
             [speclj.core :refer :all]
             [speclj.stub :as stub]
-            [tic-tac-toe.game_logs.edn-logs :as game-log]
+            [tic-tac-toe.game-logs.sql :as sql]
+            [tic-tac-toe.game_logs.edn-logs :as edn]
             [tic-tac-toe.gui.board-selection :refer :all]
             [tic-tac-toe.gui.utils :as utils]))
 
@@ -157,30 +158,72 @@
       (should-have-invoked :four-container {:with [400 530]}))
     )
 
-  (context "handle-click"
-    (redefs-around [game-log/create-in-progress-game-file (stub :game-file)
-                    game-log/log-game-id (stub :log-id)])
+  (context "handle-click edn"
+    (redefs-around [edn/create-in-progress-game-file (stub :game-file)
+                    edn/log-game-id (stub :log-id)])
 
     (it "updates state with 3x3 board"
-      (should= {:current-screen :play, :mode 1 :human? true :board [1 2 3 4 5 6 7 8 9]}
-               (utils/handle-click {:current-screen :board-selection :mode 1 :human? true :board nil} {:x 400 :y 280})))
+      (should= {:current-screen :play, :mode 1 :human? true :board [1 2 3 4 5 6 7 8 9] :db :edn}
+               (utils/handle-click {:current-screen :board-selection :mode 1 :human? true :board nil :db :edn}
+                                   {:x 400 :y 280})))
 
     (it "creates new game log file if screen is set to :play"
-      (utils/handle-click {:current-screen :board-selection :mode 1 :human? true :board nil :filepath "test.path"} {:x 400 :y 280})
-      (should-have-invoked :game-file {:with ["test.path" {:current-screen :play, :mode 1, :human? true, :board [1 2 3 4 5 6 7 8 9], :filepath "test.path"}]}))
+      (utils/handle-click {:current-screen :board-selection :mode 1 :human? true :board nil :filepath "test.path" :db :edn}
+                          {:x 400 :y 280})
+      (should-have-invoked :game-file {:with ["test.path" {:current-screen :play,
+                                                           :mode           1,
+                                                           :human?         true,
+                                                           :board          [1 2 3 4 5 6 7 8 9],
+                                                           :filepath       "test.path"
+                                                           :db             :edn}]}))
 
     (it "logs game id if screen is set to :play"
-      (utils/handle-click {:current-screen :board-selection :mode 1 :human? true :board nil :game-id 5} {:x 400 :y 280})
-      (should-have-invoked :log-id {:with [game-log/game-id-path 5]}))
+      (utils/handle-click {:current-screen :board-selection :mode 1 :human? true :board nil :game-id 5 :db :edn}
+                          {:x 400 :y 280})
+      (should-have-invoked :log-id {:with [edn/game-id-path 5]}))
 
     (it "updates state with 4x4 board"
-      (should= {:current-screen :first-level-selection, :mode 2 :human? true :board (vec (range 1 17))}
-               (utils/handle-click {:current-screen :board-selection :mode 2 :human? true} {:x 400 :y 530})))
+      (should= {:current-screen :first-level-selection, :mode 2 :human? true :board (vec (range 1 17)) :db :edn}
+               (utils/handle-click {:current-screen :board-selection :mode 2 :human? true :db :edn} {:x 400 :y 530})))
 
     (it "returns state if state is already set"
-      (should= (vec (range 1 10)) (utils/handle-click {:current-screen :board-selection :board (vec (range 1 10))} {:x 400 :y 530})))
+      (should= (vec (range 1 10))
+               (utils/handle-click {:current-screen :board-selection :board (vec (range 1 10)) :db :edn} {:x 400 :y 530})))
 
     (it "returns state if clicked outside of buttons"
-      (should= {:current-screen :board-selection :board nil} (utils/handle-click {:current-screen :board-selection :board nil} {:x 0 :y 0})))
+      (should= {:current-screen :board-selection :board nil :db :edn}
+               (utils/handle-click {:current-screen :board-selection :board nil :db :edn} {:x 0 :y 0})))
+
+    )
+
+  (context "handle-click sql"
+    (redefs-around [sql/log-game-state (stub :game-state)])
+
+    (it "updates state with 3x3 board"
+      (should= {:current-screen :play, :mode 1 :human? true :board [1 2 3 4 5 6 7 8 9] :db :sql}
+               (utils/handle-click {:current-screen :board-selection :mode 1 :human? true :board nil :db :sql}
+                                   {:x 400 :y 280})))
+
+    (it "creates new game log if screen is set to :play"
+      (utils/handle-click {:current-screen :board-selection :mode 1 :human? true :board nil :db :sql}
+                          {:x 400 :y 280})
+      (should-have-invoked :game-state {:with [sql/ds {:current-screen :play,
+                                                       :mode           1,
+                                                       :human?         true,
+                                                       :board          [1 2 3 4 5 6 7 8 9],
+                                                       :db             :sql}]}))
+
+
+    (it "updates state with 4x4 board"
+      (should= {:current-screen :first-level-selection, :mode 2 :human? true :board (vec (range 1 17)) :db :sql}
+               (utils/handle-click {:current-screen :board-selection :mode 2 :human? true :db :sql} {:x 400 :y 530})))
+
+    (it "returns state if state is already set"
+      (should= (vec (range 1 10))
+               (utils/handle-click {:current-screen :board-selection :board (vec (range 1 10)) :db :sql} {:x 400 :y 530})))
+
+    (it "returns state if clicked outside of buttons"
+      (should= {:current-screen :board-selection :board nil :db :sql}
+               (utils/handle-click {:current-screen :board-selection :board nil :db :sql} {:x 0 :y 0})))
 
     ))
