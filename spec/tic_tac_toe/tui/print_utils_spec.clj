@@ -93,13 +93,13 @@
 
     (it "prints error message if there are no moves"
       (should= "There are no moves to show for this game.\n"
-               (with-out-str (play-logged-game [])))
+               (with-out-str (play-logged-game [] nil)))
       (should= "There are no moves to show for this game.\n"
-               (with-out-str (play-logged-game nil))))
+               (with-out-str (play-logged-game nil nil))))
 
-    (it "prints each move to the console in order"
+    (it "prints each move to the console in order followed by winner"
       (with-redefs [print-board (stub :print-board)]
-        (play-logged-game '([1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x :x 7 8 9] [:o 2 3 :o :x :x 7 8 9] [:o 2 :x :o :x :x 7 8 9] [:o 2 :x :o :x :x :o 8 9]))
+        (play-logged-game '([1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x :x 7 8 9] [:o 2 3 :o :x :x 7 8 9] [:o 2 :x :o :x :x 7 8 9] [:o 2 :x :o :x :x :o 8 9]) "O wins!")
         (should= [[[1 2 3 4 :x 6 7 8 9]] [[:o 2 3 4 :x 6 7 8 9]] [[:o 2 3 4 :x :x 7 8 9]]
                   [[:o 2 3 :o :x :x 7 8 9]] [[:o 2 :x :o :x :x 7 8 9]] [[:o 2 :x :o :x :x :o 8 9]]]
                  (stub/invocations-of :print-board))))
@@ -107,4 +107,7 @@
 
   (it "shows error message when psql game is incomplete and can't be replayed"
     (should= "The requested game is unfinished. Please choose a completed game to replay.\n"
-             (with-out-str (display-unfinished-game-error)))))
+             (with-out-str (display-unfinished-game-error))))
+
+  (it "shows error message when game id is invalid"
+    (should= "There is no game with ID 20\n" (with-out-str (display-invalid-game-id-error 20)))))

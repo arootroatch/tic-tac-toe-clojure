@@ -52,32 +52,30 @@
     WHERE id = " id)]))
 
 (defn- parse-value [v]
-  (when (not-empty v) (last (read-string (str \[ v \])))))
+  (when (not-empty v) (read-string (str v))))
+
+(defn- parse-board [board]
+  (when (not-empty board) (last (read-string (str \[ board \])))))
+
+(defn- parse-state [state]
+  (let [parsed (read-string state)]
+    (if (= :in-progress parsed) parsed state)))
 
 (defn format-game-state [state replay?]
   {:current-screen  (parse-value (:games/current_screen state)),
-   :game-state      (parse-value (:games/game_state state)),
+   :game-state      (parse-state (:games/game_state state)),
    :human?          (:games/human state),
    :mode            (:games/mode state),
    :first-ai-level  (:games/first_ai_level state),
    :second-ai-level (:games/second_ai_level state),
-   :board           (if replay? (parse-value (:games/board state)) (parse-value (:games/moves state))),
+   :board           (if replay? (parse-board (:games/board state)) (parse-board (:games/moves state))),
    :game-id         (:games/id state),
    :ui              (parse-value (:games/ui state)),
    :player          (parse-value (:games/player state))})
-
-(defn get-game-moves [ds id]
-  (let [moves (first (jdbc/execute! ds [(str "SELECT moves FROM games WHERE id = " id)]))]
-    (read-string (str \[ (:games/moves moves) \]))))
 
 (defn get-game-log [ds id]
   (let [game-log (jdbc/execute! ds [(str "SELECT * FROM games WHERE id = " id)])
         formatted (format-game-state (first game-log) true)
         moves (read-string (str \[ (:games/moves (first game-log)) \]))]
     (assoc formatted :moves moves)))
-
-(defn get-game-state [ds id]
-  (let [game-log (first (jdbc/execute! ds [(str "SELECT * FROM games WHERE id = " id)]))
-        game-state (:games/game_state game-log)]
-    game-state))
 

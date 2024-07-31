@@ -49,6 +49,7 @@
   (it "gets paths in given directory"
     (should= ["spec/tic_tac_toe/game_logs/game-logs-empty-test.edn"
               "spec/tic_tac_toe/game_logs/in_progress"
+              "spec/tic_tac_toe/game_logs/in_progress/completed-game.edn"
               "spec/tic_tac_toe/game_logs/in_progress/game-4.edn"
               "spec/tic_tac_toe/game_logs/in_progress_empty"
               "spec/tic_tac_toe/game_logs/game-logs-test.edn"
@@ -108,10 +109,10 @@
     (it "writes completed game to game log"
       (with-redefs [spit (stub :spit)
                     clojure.java.io/delete-file (stub :delete-file)]
-        (game-logs/log-completed-game {:state {:filepath "spec/tic_tac_toe/game_logs/in_progress/game-4.edn" :db :edn}
+        (game-logs/log-completed-game {:state {:filepath "spec/tic_tac_toe/game_logs/in_progress/completed-game.edn" :db :edn :game-state "O wins!"}
                                        :log-file test-path})
         (should-have-invoked :spit {:with ["spec/tic_tac_toe/game_logs/game-logs-test.edn"
-                                           "{:game-id 4, :moves [[1 2 3 4 5 6 7 8 9] [1 2 3 4 :x 6 7 8 9]], :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state :in-progress, :human? true, :ui :gui, :player :x, :board [1 2 3 4 5 6 7 8 9]}\n"
+                                           "{:game-id 5, :moves [[1 2 3 4 5 6 7 8 9] [1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x :x 7 8 9] [:o 2 3 :o :x :x 7 8 9] [:o :x 3 :o :x :x 7 8 9] [:o :x 3 :o :x :x :o 8 9]], :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state \"O wins!\", :human? true, :ui :gui, :player :x, :board [1 2 3 4 5 6 7 8 9]}\n"
                                            :append true]})))
 
     (it "deletes temp file after logging"

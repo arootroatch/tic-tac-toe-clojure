@@ -60,13 +60,16 @@
 
 (defmethod launch-user-interface ["--edndb" "--game"] [args]
   (let [game-id (Integer/parseInt (last args))
-        moves (edn/get-game-moves game-id edn/logs-path)]
-    (print-utils/play-logged-game moves)))
+        game-log (edn/get-game-log game-id edn/logs-path)]
+    (prn game-log)
+    (if (nil? game-log)
+      (print-utils/display-invalid-game-id-error game-id)
+      (print-utils/play-logged-game (:moves game-log) (:game-state game-log)))))
 
 (defmethod launch-user-interface ["--psqldb" "--game"] [args]
   (let [game-id (Integer/parseInt (last args))
-        game-state (sql/get-game-state sql/ds game-id)
-        moves (sql/get-game-moves sql/ds game-id)]
-    (if (= "abandoned" game-state)
+        game-log (sql/get-game-log sql/ds game-id)]
+    (prn game-log)
+    (if (= "abandoned" (:game-state game-log))
       (print-utils/display-unfinished-game-error)
-      (print-utils/play-logged-game moves))))
+      (print-utils/play-logged-game (:moves game-log) (:game-state game-log)))))

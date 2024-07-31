@@ -124,16 +124,17 @@
     (print-board middle-board)
     (print-board bottom-board)))
 
-(defn- print-no-moves-error []
+(defn display-no-moves-error []
   (println "There are no moves to show for this game."))
 
-(defn play-logged-game [moves]
+(defn play-logged-game [moves winner]
   (if (empty? moves)
-    (print-no-moves-error)
-    (run! print-board moves)))
+    (display-no-moves-error)
+    (do (run! print-board moves) (println winner))))
 
 (defn display-unfinished-game-error []
   (println "The requested game is unfinished. Please choose a completed game to replay."))
 
-
+(defn display-invalid-game-id-error [id]
+  (println (str "There is no game with ID " id)))
 

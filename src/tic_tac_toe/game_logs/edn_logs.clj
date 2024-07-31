@@ -75,9 +75,10 @@
 
 (defmethod game-logs/log-completed-game :edn [{:keys [state log-file]}]
   (let [temp-file (:filepath state)
+        game-state (:game-state state)
         data (format-in-progress-data temp-file)]
     (when data
-      (spit log-file (str data "\n") :append true)
+      (spit log-file (str (assoc data :game-state game-state) "\n") :append true)
       (clojure.java.io/delete-file temp-file))))
 
 (defn get-game-log [id path]
