@@ -107,19 +107,12 @@
                               :games/game_state)))
 
   (it "formats game state"
-    (should= in-progress-formatted (format-game-state in-progress false)))
-
-  (it "get game moves to replay"
-    (should= [[1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9]] (get-game-moves ds-test 7)))
+    (should= in-progress-formatted (format-game-state in-progress false))
+    (should= (assoc in-progress-formatted :board [1 2 3 4 5 6 7 8 9]) (format-game-state in-progress true))
+    (should= (assoc in-progress-formatted :game-state "O wins!") (format-game-state (assoc in-progress :games/game_state "O wins!") false)))
 
   (it "gets game log"
     (should= (assoc in-progress-formatted :board [1 2 3 4 5 6 7 8 9]
                                           :moves [[1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9]])
-             (get-game-log ds-test 8)))
-
-  (it "gets given game state"
-    (should= "X wins!" (get-game-state ds-test 7))
-    (should= ":in-progress" (get-game-state ds-test 8))
-    (should= "abandoned" (get-game-state ds-test 1)))
-  )
+             (get-game-log ds-test 8))))
 

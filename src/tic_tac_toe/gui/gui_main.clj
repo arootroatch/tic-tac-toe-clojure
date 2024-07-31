@@ -64,13 +64,15 @@
   (let [game-id (Integer/parseInt (last args))
         game-log (edn/get-game-log game-id edn/logs-path)
         new-state (assoc game-log :replay? true :current-screen :replay :db :edn)]
-    (launch-quil new-state)))
+    (cond (nil? game-log) (print-utils/display-invalid-game-id-error game-id)
+          (nil? (:moves game-log)) (print-utils/display-no-moves-error)
+          :else (launch-quil new-state))))
 
 (defmethod launch-user-interface ["gui" "--psqldb" "--game"] [args]
   (let [game-id (Integer/parseInt (last args))
         game-log (sql/get-game-log sql/ds game-id)
-        old-board (:board game-log)
-        old-state (str (:game-state game-log))
+        old-board (when game-log (:board game-log))
+        old-state (when game-log (str (:game-state game-log)))
         new-state (assoc game-log
                     :replay? true
                     :current-screen :replay
@@ -78,6 +80,8 @@
                     :human? true
                     :player :x
                     :db :sql)]
-    (cond (> (count old-board) 16) (println "3x3x3 games cannot be replayed in the GUI.")
+    (cond (nil? (:game-id game-log)) (print-utils/display-invalid-game-id-error game-id)
+          (nil? (:moves game-log)) (print-utils/display-no-moves-error)
+          (> (count old-board) 16) (println "3x3x3 games cannot be replayed in the GUI.")
           (= "abandoned" old-state) (print-utils/display-unfinished-game-error)
           :else (launch-quil new-state))))
