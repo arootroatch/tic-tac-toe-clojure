@@ -28,7 +28,7 @@
 (defn- set-state [state new-board player human?]
   (assoc state :board new-board :player (switch-player player) :human? (not human?) :game-state (score new-board)))
 
-(defn- play-loop [state]
+(defn play-loop [state]
   (loop [state state]
     (let [{:keys [board player human? game-state]} state]
       (print-utils/print-board board)

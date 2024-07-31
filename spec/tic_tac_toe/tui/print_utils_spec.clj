@@ -98,11 +98,14 @@
                (with-out-str (play-logged-game nil nil))))
 
     (it "prints each move to the console in order followed by winner"
-      (with-redefs [print-board (stub :print-board)]
-        (play-logged-game '([1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x :x 7 8 9] [:o 2 3 :o :x :x 7 8 9] [:o 2 :x :o :x :x 7 8 9] [:o 2 :x :o :x :x :o 8 9]) "O wins!")
+      (with-redefs [print-board (stub :print-board)
+                    println (stub :println)]
+        (play-logged-game '([1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x :x 7 8 9] [:o 2 3 :o :x :x 7 8 9]
+                            [:o 2 :x :o :x :x 7 8 9] [:o 2 :x :o :x :x :o 8 9]) "O wins!")
         (should= [[[1 2 3 4 :x 6 7 8 9]] [[:o 2 3 4 :x 6 7 8 9]] [[:o 2 3 4 :x :x 7 8 9]]
                   [[:o 2 3 :o :x :x 7 8 9]] [[:o 2 :x :o :x :x 7 8 9]] [[:o 2 :x :o :x :x :o 8 9]]]
-                 (stub/invocations-of :print-board))))
+                 (stub/invocations-of :print-board))
+        (should-have-invoked :println {:with ["O wins!"]})))
     )
 
   (it "shows error message when psql game is incomplete and can't be replayed"
