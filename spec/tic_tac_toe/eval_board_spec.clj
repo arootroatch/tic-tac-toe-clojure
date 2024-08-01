@@ -80,6 +80,6 @@
       (should= "X wins!" (score (concat [:x] (range 2 14) [:x] (range 15 27) [:x]))))
 
     (it "is a tie if board is full and has no winner"
-      (should= "It's a tie!" (score [:x :o :x :x :x :o :o :x :o]))
-      (should= "It's a tie!" (score [:x :o :x :x :x :o :o :x :o :x :o :x :o :x :x :o])))
+      (should= "It is a tie!" (score [:x :o :x :x :x :o :o :x :o]))
+      (should= "It is a tie!" (score [:x :o :x :x :x :o :o :x :o :x :o :x :o :x :x :o])))
     ))

@@ -23,7 +23,8 @@
                 :game-state     "X wins!"
                 :player         :x
                 :human?         true
-                :db             :edn})
+                :db             :edn
+                :game-id        13})
 
 (def initial-state {:current-screen  :mode-selection
                     :mode            nil
@@ -329,7 +330,7 @@
                (utils/handle-click (assoc in-progress-state :board [:x 2 3 4 5 6 7 8 9]) {:x 250 :y 250})))
 
     (it "resets state if user chooses to play again"
-      (should= (assoc initial-state :db :edn) (utils/handle-click end-state {:x 400 :y 700})))
+      (should= (assoc initial-state :db :edn :game-id 14) (utils/handle-click end-state {:x 400 :y 700})))
 
     (it "returns state if click is outside of buttons"
       (should= in-progress-state (utils/handle-click in-progress-state {:x 0 :y 0})))))

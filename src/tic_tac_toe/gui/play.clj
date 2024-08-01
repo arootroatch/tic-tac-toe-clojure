@@ -133,7 +133,8 @@
                :player :x
                :human? nil
                :game-state :in-progress
-               :gui true))
+               :gui true
+               :game-id (inc (:game-id state))))
 
 (defmethod utils/handle-click :play [state mouse-xy]
   (cond

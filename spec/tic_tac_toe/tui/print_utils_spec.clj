@@ -5,6 +5,8 @@
 
 
 (describe "utility functions"
+  (with-stubs)
+
   (let [empty-3x3 [1 2 3 4 5 6 7 8 9]
         empty-4x4 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]]
 
@@ -89,8 +91,6 @@
       ))
 
   (context "play-logged-game"
-    (with-stubs)
-
     (it "prints error message if there are no moves"
       (should= "There are no moves to show for this game.\n"
                (with-out-str (play-logged-game [] nil)))
@@ -113,4 +113,16 @@
              (with-out-str (display-unfinished-game-error))))
 
   (it "shows error message when game id is invalid"
-    (should= "There is no game with ID 20\n" (with-out-str (display-invalid-game-id-error 20)))))
+    (should= "There is no game with ID 20\n" (with-out-str (display-invalid-game-id-error 20))))
+
+  (it "displays command options to user"
+    (with-redefs [println (stub :println)]
+      (display-command-options)
+      (should= [["Please enter your preferences:"]
+                ["Format: 'lein run <ui> <db> <game id>"]
+                ["<db> is the only required field\n"]
+                ["--psqldb         Run with PostgreSQL"]
+                ["--edndb         Run with EDN Database"]
+                ["gui             Run GUI"]
+                ["--game <id>     Run GUI"]]
+              (stub/invocations-of :println)))))

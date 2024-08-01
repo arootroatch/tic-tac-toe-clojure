@@ -35,10 +35,8 @@
       ds [(str "UPDATE games SET game_state = '" game-state "' WHERE id = " game-id)])))
 
 (defn- get-last-id [ds]
-  (let [query (jdbc/execute! ds ["SELECT id FROM games"])
-        ids (map #(:games/id %) query)
-        last-id (->> ids sort last)]
-    last-id))
+  (let [query (jdbc/execute! ds ["SELECT id FROM games ORDER BY id DESC LIMIT 1"])]
+    (-> query first :games/id)))
 
 (defmethod game-logs/get-last-in-progress-game :sql [{:keys [ds]}]
   (let [last-id (get-last-id ds)

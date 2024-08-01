@@ -41,8 +41,9 @@
     :else (assoc state :current-screen :mode-selection)))
 
 (defmethod handle-resume :sql [{:keys [n state]}]
+  (prn (assoc (sql/format-game-state (:game-log state) false) :db :sql))
   (cond
-    (= n 1) (assoc (sql/format-game-state (:game-log state) false) :db :sql)
+    (= n 1) (assoc (sql/format-game-state (:game-log state) false) :db :sql :current-screen :play)
     (= n 2) (do (sql/set-abandoned-game-state sql/ds (:games/id (:game-log state)))
                 (assoc state :current-screen :mode-selection))
     :else (assoc state :current-screen :mode-selection)))
