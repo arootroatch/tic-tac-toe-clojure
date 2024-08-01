@@ -39,7 +39,7 @@
     (cond
       (some #(every? #{:x} %) paths) "X wins!"
       (some #(every? #{:o} %) paths) "O wins!"
-      (every? #{:x :o} board) "It's a tie!"
+      (every? #{:x :o} board) "It is a tie!"
       :else :in-progress)))
 
 (defn evaluate-board [board depth maximizer]

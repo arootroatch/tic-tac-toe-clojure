@@ -47,6 +47,11 @@
       (should= (assoc test-state :db :sql)
                (utils/handle-click {:current-screen :resume-selection :db :sql} {:x 400 :y 250})))
 
+    (it "updates state with previous game state"
+              (with-redefs [sql/format-game-state (stub :resumed-state {:return (dissoc test-state :current-screen)})]
+                (should= (assoc test-state :db :sql)
+                         (utils/handle-click {:current-screen :resume-selection :db :sql} {:x 400 :y 250}))))
+
     (it "updates to mode-selection"
       (should= {:current-screen :mode-selection :db :sql}
                (utils/handle-click {:current-screen :resume-selection :db :sql} {:x 400 :y 330})))

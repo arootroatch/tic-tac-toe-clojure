@@ -138,3 +138,12 @@
 (defn display-invalid-game-id-error [id]
   (println (str "There is no game with ID " id)))
 
+(defn display-command-options []
+  (println "Please enter your preferences:")
+  (println "Format: 'lein run <ui> <db> <game id>")
+  (println "<db> is the only required field\n")
+  (println "--psqldb         Run with PostgreSQL")
+  (println "--edndb         Run with EDN Database")
+  (println "gui             Run GUI")
+  (println "--game <id>     Run GUI"))
+
