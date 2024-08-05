@@ -10,20 +10,19 @@
             [tic-tac-toe.tui.get-selection :refer [get-selection initial-3x3-board initial-3x3x3-board initial-4x4-board]]
             [tic-tac-toe.tui.print-utils :as print-utils]))
 
-(defn- get-options [db]
+(defn get-options [db]
   (let [mode (get-selection {:option :mode})
         human? (if (or (= mode 3) (= mode 4)) false true)
         board-selection (get-selection {:option :board})
         first-ai-level (if (= 1 mode) nil (get-selection {:option :level :ai 1 :mode mode :board board-selection}))
         second-ai-level (if (= 4 mode) (get-selection {:option :level :ai 2 :mode mode}) nil)
         board (case board-selection 1 initial-3x3-board 2 initial-4x4-board 3 initial-3x3x3-board)
-        player :x
         game-id (game-logs/get-new-game-id {:db db :path edn/game-id-path :ds sql/ds})]
-    {:mode   mode :first-ai-level first-ai-level :second-ai-level second-ai-level :board board :player player :ui :tui
-     :human? human? :game-state :in-progress :game-id game-id}))
+    {:mode   mode :first-ai-level first-ai-level :second-ai-level second-ai-level :board board :player :x :ui :tui
+     :human? human? :game-state :in-progress :game-id game-id :db db}))
 
-(defn- set-filepath [path game-options]
-  (if (some? path) path (edn/create-new-filepath edn/in-progress-dir-path-tui (:game-id game-options))))
+(defn- set-filepath [path game-options resume-selection]
+  (if (= 1 resume-selection) path (edn/create-new-filepath edn/in-progress-dir-path (:game-id game-options))))
 
 (defn- set-state [state new-board player human?]
   (assoc state :board new-board :player (switch-player player) :human? (not human?) :game-state (score new-board)))
@@ -41,14 +40,14 @@
           (recur new-state))))))
 
 (defmethod launch-user-interface ["--edndb"] [_]
-  (let [old-game (game-logs/get-last-in-progress-game {:db :edn :dir-path edn/in-progress-dir-path-tui})
+  (let [old-game (game-logs/get-last-in-progress-game {:db :edn :dir-path edn/in-progress-dir-path})
         resume-selection (if (some? old-game) (get-selection {:option :resume-edn :filepath old-game}) nil)
         game-options (if (= 1 resume-selection) (edn/get-resumed-game-state old-game) (get-options :edn))
-        filepath (set-filepath old-game game-options)]
+        filepath (set-filepath old-game game-options resume-selection)]
     (when (not= 1 resume-selection)
       (edn/create-in-progress-game-file filepath game-options)
       (edn/log-game-id edn/game-id-path (:game-id game-options)))
-    (play-loop (assoc game-options :filepath filepath :db :edn))))
+    (play-loop (assoc game-options :filepath filepath :ui :tui))))
 
 (defmethod launch-user-interface ["--psqldb"] [_]
   (let [old-game (game-logs/get-last-in-progress-game {:db :sql :ds sql/ds})
@@ -56,7 +55,7 @@
         resume-selection (if (some? old-game) (get-selection {:option :resume-sql :game-id game-id}) nil)
         game-options (if (= 1 resume-selection) (sql/format-game-state old-game false) (get-options :sql))]
     (when (not= 1 resume-selection) (sql/log-game-state sql/ds game-options))
-    (play-loop (assoc game-options :db :sql))))
+    (play-loop (assoc game-options :ui :tui))))
 
 (defn- replay [game-id db]
   (let [game-log (game-logs/get-game-log {:db db :filepath edn/logs-path :ds sql/ds :id game-id})]

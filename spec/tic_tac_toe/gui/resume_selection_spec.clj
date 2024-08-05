@@ -17,18 +17,32 @@
                  :player          :x
                  :human?          false
                  :game-state      :in-progress
-                 :gui             true})
+                 :ui              :tui})
+
+(def edn-result-state (assoc test-state
+                        :player :o
+                        :board [1 2 3 4 :x 6 7 8 9]
+                        :game-id 4
+                        :db :edn
+                        :filepath "spec/tic_tac_toe/game_logs/in_progress/game-4.edn"
+                        :ui :gui))
+
+(def edn-test-state {:current-screen :resume-selection
+                     :db             :edn
+                     :filepath       "spec/tic_tac_toe/game_logs/in_progress/game-4.edn"})
 
 (describe "resume-selection"
   (with-stubs)
 
   (context "handle-click edn"
-    (redefs-around [edn/get-resumed-game-state (stub :resumed-state {:return test-state})
-                    clojure.java.io/delete-file (stub :delete-file)])
+    (redefs-around [clojure.java.io/delete-file (stub :delete-file)])
 
     (it "updates state with previous game state"
-      (should= (assoc test-state :db :edn)
-               (utils/handle-click {:current-screen :resume-selection :db :edn} {:x 400 :y 250})))
+      (should= edn-result-state (utils/handle-click edn-test-state {:x 400 :y 250})))
+
+    (it "updates ui in state to gui if tui"
+      (with-redefs [edn/get-resumed-game-state (stub :get-resumed {:return (assoc edn-result-state :ui :tui)})]
+        (should= edn-result-state (utils/handle-click edn-test-state {:x 400 :y 250}))))
 
     (it "updates to mode-selection"
       (should= {:current-screen :mode-selection :db :edn}
@@ -40,17 +54,17 @@
     )
 
   (context "handle-click sql"
-    (redefs-around [sql/format-game-state (stub :resumed-state {:return test-state})
+    (redefs-around [sql/format-game-state (stub :resumed-state {:return (assoc test-state :db :sql)})
                     sql/set-abandoned-game-state (stub :abandon)])
 
     (it "updates state with previous game state"
-      (should= (assoc test-state :db :sql)
+      (should= (assoc test-state :db :sql :ui :gui)
                (utils/handle-click {:current-screen :resume-selection :db :sql} {:x 400 :y 250})))
 
-    (it "updates state with previous game state"
-              (with-redefs [sql/format-game-state (stub :resumed-state {:return (dissoc test-state :current-screen)})]
-                (should= (assoc test-state :db :sql)
-                         (utils/handle-click {:current-screen :resume-selection :db :sql} {:x 400 :y 250}))))
+    (it "adds current screen :play to previous game state if missing"
+      (with-redefs [sql/format-game-state (stub :resumed-state {:return (assoc test-state :current-screen nil :db :sql)})]
+        (should= (assoc test-state :db :sql :ui :gui)
+                 (utils/handle-click {:current-screen :resume-selection :db :sql} {:x 400 :y 250}))))
 
     (it "updates to mode-selection"
       (should= {:current-screen :mode-selection :db :sql}
@@ -93,7 +107,7 @@
     (it "gets last in-progress game"
       (with-redefs [game-logs/get-last-in-progress-game (stub :last-game)]
         (utils/update-state {:current-screen :resume-selection :db :edn})
-        (should-have-invoked :last-game {:with [{:db :edn :dir-path edn/in-progress-dir-path-gui :ds sql/ds}]})))
+        (should-have-invoked :last-game {:with [{:db :edn :dir-path edn/in-progress-dir-path :ds sql/ds}]})))
 
     (it "doesn't allow continuation of 3x3x3 games"
       (with-redefs [game-logs/get-last-in-progress-game (stub :last-game {:return {:games/board (str (range 1 28))}})]

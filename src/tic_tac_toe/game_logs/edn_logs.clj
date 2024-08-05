@@ -3,8 +3,7 @@
 
 (def logs-path "src/tic_tac_toe/game_logs/game-logs.edn")
 (def game-id-path "src/tic_tac_toe/game_logs/game-ids.edn")
-(def in-progress-dir-path-gui "src/tic_tac_toe/game_logs/in_progress/gui")
-(def in-progress-dir-path-tui "src/tic_tac_toe/game_logs/in_progress/tui")
+(def in-progress-dir-path "src/tic_tac_toe/game_logs/in_progress")
 
 (defn read-edn-file [path]
   (try
@@ -47,7 +46,7 @@
         board (last data)
         player (get-current-player board)
         mode (:mode state)]
-    (assoc state :board board :player player :human? (set-human mode player))))
+    (assoc state :board board :player player :human? (set-human mode player) :filepath path :db :edn)))
 
 (defmethod game-logs/get-new-game-id :edn [{:keys [path]}]
   (let [last-id (last (read-edn-file path))]
