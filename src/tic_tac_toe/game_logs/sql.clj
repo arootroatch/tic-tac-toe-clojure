@@ -69,7 +69,8 @@
    :board           (if replay? (parse-board (:games/board state)) (parse-board (:games/moves state))),
    :game-id         (:games/id state),
    :ui              (parse-value (:games/ui state)),
-   :player          (parse-value (:games/player state))})
+   :player          (parse-value (:games/player state))
+   :db              :sql})
 
 (defmethod game-logs/get-game-log :sql [{:keys [ds id]}]
   (let [game-log (jdbc/execute! ds [(str "SELECT * FROM games WHERE id = " id)])

@@ -22,7 +22,7 @@
 
 (defmethod utils/update-state :resume-selection [state]
   (let [old-game (game-logs/get-last-in-progress-game
-                   {:db (:db state) :dir-path edn/in-progress-dir-path-gui :ds sql/ds})
+                   {:db (:db state) :dir-path edn/in-progress-dir-path :ds sql/ds})
         old-board (get-resumed-game-board (:db state) old-game)]
     (if (and (some? old-game) (< (count old-board) 17))
       (do (resume-selection-screen)
@@ -35,15 +35,14 @@
 
 (defmethod handle-resume :edn [{:keys [n state]}]
   (cond
-    (= n 1) (assoc (edn/get-resumed-game-state (:filepath state)) :db :edn)
+    (= n 1) (assoc (edn/get-resumed-game-state (:filepath state)) :current-screen :play :ui :gui)
     (= n 2) (do (clojure.java.io/delete-file (:filepath state) true)
                 (assoc state :current-screen :mode-selection))
     :else (assoc state :current-screen :mode-selection)))
 
 (defmethod handle-resume :sql [{:keys [n state]}]
-  (prn (assoc (sql/format-game-state (:game-log state) false) :db :sql))
   (cond
-    (= n 1) (assoc (sql/format-game-state (:game-log state) false) :db :sql :current-screen :play)
+    (= n 1) (assoc (sql/format-game-state (:game-log state) false) :current-screen :play :ui :gui)
     (= n 2) (do (sql/set-abandoned-game-state sql/ds (:games/id (:game-log state)))
                 (assoc state :current-screen :mode-selection))
     :else (assoc state :current-screen :mode-selection)))

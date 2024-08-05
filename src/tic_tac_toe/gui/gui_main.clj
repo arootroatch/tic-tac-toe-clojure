@@ -51,7 +51,7 @@
 
 (defmethod launch-user-interface ["gui" "--edndb"] [_]
   (let [game-id (game-logs/get-new-game-id {:db :edn :path edn/game-id-path})
-        filepath (edn/create-new-filepath edn/in-progress-dir-path-gui game-id)
+        filepath (edn/create-new-filepath edn/in-progress-dir-path game-id)
         new-state (assoc state :game-id game-id :filepath filepath :db :edn)]
     (launch-quil new-state)))
 

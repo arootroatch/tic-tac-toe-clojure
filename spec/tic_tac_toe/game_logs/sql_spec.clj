@@ -50,7 +50,12 @@
                             :board           [:o 2 3 4 :x 6 7 8 9],
                             :game-id         8,
                             :ui              :tui,
-                            :player          :o,})
+                            :player          :o,
+                            :db              :sql})
+
+(def game-log-formatted (assoc in-progress-formatted
+                          :board [1 2 3 4 5 6 7 8 9]
+                          :moves [[1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9]]))
 
 (def db-test {:dbtype "postgres" :dbname "ttt-test"})
 (def ds-test (jdbc/get-datasource db-test))
@@ -109,10 +114,10 @@
   (it "formats game state"
     (should= in-progress-formatted (format-game-state in-progress false))
     (should= (assoc in-progress-formatted :board [1 2 3 4 5 6 7 8 9]) (format-game-state in-progress true))
-    (should= (assoc in-progress-formatted :game-state "O wins!") (format-game-state (assoc in-progress :games/game_state "O wins!") false)))
+    (should= (assoc in-progress-formatted :game-state "O wins!")
+             (format-game-state (assoc in-progress :games/game_state "O wins!") false)))
 
   (it "gets game log"
-    (should= (assoc in-progress-formatted :board [1 2 3 4 5 6 7 8 9]
-                                          :moves [[1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9]])
+    (should= game-log-formatted
              (game-logs/get-game-log {:ds ds-test :id 8 :db :sql}))))
 

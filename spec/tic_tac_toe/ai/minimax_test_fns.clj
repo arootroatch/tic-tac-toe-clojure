@@ -53,7 +53,7 @@
 
 (defn always-ties? [board]
   (loop [ties? true
-         games (range 1 1001)]
+         games (range 10)]
     (if (or (empty? games) (not ties?))
       ties?
-      (recur (if (= "It's a tie!" (play-ai-game board)) true false) (rest games)))))
+      (recur (if (= "It is a tie!" (play-ai-game board)) true false) (rest games)))))

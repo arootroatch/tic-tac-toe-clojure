@@ -6,6 +6,19 @@
 (def test-path "spec/tic_tac_toe/game_logs/game-logs-test.edn")
 (def game-ids-test-path "spec/tic_tac_toe/game_logs/game-ids.edn")
 (def empty-test-path "spec/tic_tac_toe/game_logs/game-logs-empty-test.edn")
+(def resumed-state {:game-id         4
+                    :game-state      :in-progress
+                    :ui              :gui
+                    :mode            2
+                    :board           [1 2 3 4 :x 6 7 8 9]
+                    :first-ai-level  3
+                    :second-ai-level nil
+                    :player          :o
+                    :human?          false
+                    :db              :edn
+                    :filepath        "spec/tic_tac_toe/game_logs/in_progress/game-4.edn"})
+
+(def game-log {:game-id 5, :filepath "src/tic_tac_toe/game_logs/in_progress/gui/game-5.edn", :current-screen :play, :moves '([1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x :x 7 8 9] [:o 2 3 :o :x :x 7 8 9] [:o 2 :x :o :x :x 7 8 9] [:o 2 :x :o :x :x :o 8 9]), :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state "O wins!", :human? true, :ui :gui, :player :x, :board [1 2 3 4 5 6 7 8 9]})
 
 (describe "logging games"
   (with-stubs)
@@ -13,7 +26,7 @@
     (should= [
               {:game-id 1, :moves [], :game-state :in-progress, :ui :gui}
               {:game-id 2, :moves [], :game-state :in-progress, :ui :tui}
-              {:game-id 5, :filepath "src/tic_tac_toe/game_logs/in_progress/gui/game-5.edn", :current-screen :play, :moves '([1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x :x 7 8 9] [:o 2 3 :o :x :x 7 8 9] [:o 2 :x :o :x :x 7 8 9] [:o 2 :x :o :x :x :o 8 9]), :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state :in-progress, :human? true, :ui :gui, :player :x, :board [1 2 3 4 5 6 7 8 9]}
+              game-log
               {:mode 2, :first-ai-level 3, :second-ai-level nil, :board [1 2 3 4 5 6 7 8 9], :player :x, :game-id 6, :ui :tui, :moves '([1 :x 3 4 5 6 7 8 9] [:o :x 3 4 5 6 7 8 9] [:o :x 3 :x 5 6 7 8 9] [:o :x 3 :x :o 6 7 8 9] [:o :x 3 :x :o 6 :x 8 9] [:o :x 3 :x :o 6 :x 8 :o])}
               ]
              (read-edn-file test-path)))
@@ -28,15 +41,7 @@
     (should= [1 2 3 4 5 6 7 8 9] (get-resumed-game-board "spec/tic_tac_toe/game_logs/in_progress/game-4.edn")))
 
   (it "gets game state for resumed game"
-    (should= {:game-id         4
-              :game-state      :in-progress
-              :ui              :gui
-              :mode            2
-              :board           [1 2 3 4 :x 6 7 8 9]
-              :first-ai-level  3
-              :second-ai-level nil
-              :player          :o
-              :human?          false}
+    (should= resumed-state
              (get-resumed-game-state "spec/tic_tac_toe/game_logs/in_progress/game-4.edn")))
 
   (it "adds game id to game id file"
@@ -107,7 +112,7 @@
     (it "writes completed game to game log"
       (with-redefs [spit (stub :spit)
                     clojure.java.io/delete-file (stub :delete-file)]
-        (game-logs/log-completed-game {:state {:filepath "spec/tic_tac_toe/game_logs/in_progress/completed-game.edn" :db :edn :game-state "O wins!"}
+        (game-logs/log-completed-game {:state    {:filepath "spec/tic_tac_toe/game_logs/in_progress/completed-game.edn" :db :edn :game-state "O wins!"}
                                        :log-file test-path})
         (should-have-invoked :spit {:with ["spec/tic_tac_toe/game_logs/game-logs-test.edn"
                                            "{:game-id 5, :moves [[1 2 3 4 5 6 7 8 9] [1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x :x 7 8 9] [:o 2 3 :o :x :x 7 8 9] [:o :x 3 :o :x :x 7 8 9] [:o :x 3 :o :x :x :o 8 9]], :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state \"O wins!\", :human? true, :ui :gui, :player :x, :board [1 2 3 4 5 6 7 8 9]}\n"
@@ -116,14 +121,14 @@
     (it "deletes temp file after logging"
       (with-redefs [spit (stub :spit)
                     clojure.java.io/delete-file (stub :delete-file)]
-        (game-logs/log-completed-game {:state {:filepath "spec/tic_tac_toe/game_logs/in_progress/game-4.edn" :db :edn}
+        (game-logs/log-completed-game {:state    {:filepath "spec/tic_tac_toe/game_logs/in_progress/game-4.edn" :db :edn}
                                        :log-file test-path})
         (should-have-invoked :delete-file {:with ["spec/tic_tac_toe/game_logs/in_progress/game-4.edn"]})))
 
     (it "doesn't run if temp-file does not exist"
       (with-redefs [spit (stub :spit)
                     clojure.java.io/delete-file (stub :delete-file)]
-        (game-logs/log-completed-game {:state {:filepath "spec/tic_tac_toe/game_logs/in_progress/game-5.edn" :db :edn}
+        (game-logs/log-completed-game {:state    {:filepath "spec/tic_tac_toe/game_logs/in_progress/game-5.edn" :db :edn}
                                        :log-file test-path})
         (should-not-have-invoked :spit)
         (should-not-have-invoked :delete-file)))
@@ -133,7 +138,7 @@
     (it "gets game log for given game id"
       (should= {:game-id 1, :moves [], :game-state :in-progress, :ui :gui}
                (game-logs/get-game-log {:id 1 :db :edn :filepath test-path}))
-      (should= {:game-id 5, :filepath "src/tic_tac_toe/game_logs/in_progress/gui/game-5.edn", :current-screen :play, :moves '([1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x :x 7 8 9] [:o 2 3 :o :x :x 7 8 9] [:o 2 :x :o :x :x 7 8 9] [:o 2 :x :o :x :x :o 8 9]), :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state :in-progress, :human? true, :ui :gui, :player :x, :board [1 2 3 4 5 6 7 8 9]}
+      (should= game-log
                (game-logs/get-game-log {:id 5 :filepath test-path :db :edn})))
 
     (it "returns nil if game id does not exist"
