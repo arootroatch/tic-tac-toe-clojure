@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="Leiningen: org.clojure/clojure:1.11.2">
+  <library name="Deps: org.clojure/clojure:1.11.2">
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/clojure/clojure/1.11.2/clojure-1.11.2.jar!/" />
     </CLASSES>

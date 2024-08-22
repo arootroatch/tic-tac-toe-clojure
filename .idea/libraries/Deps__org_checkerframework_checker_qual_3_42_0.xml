@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="Leiningen: org.checkerframework/checker-qual:3.42.0">
+  <library name="Deps: org.checkerframework/checker-qual:3.42.0">
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/checkerframework/checker-qual/3.42.0/checker-qual-3.42.0.jar!/" />
     </CLASSES>

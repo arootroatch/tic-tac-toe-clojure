@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="Leiningen: org.clojure/math.combinatorics:0.3.0">
+  <library name="Deps: org.clojure/math.combinatorics:0.3.0">
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/clojure/math.combinatorics/0.3.0/math.combinatorics-0.3.0.jar!/" />
     </CLASSES>
