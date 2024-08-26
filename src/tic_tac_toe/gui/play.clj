@@ -38,7 +38,7 @@
           col [0 1 2 3]]
     (create-square (+ x (* col size)) (+ y (* row size)) size (nth board (+ (* row 4) col)) game-state)))
 
-(defn- play-heading [player game-state human?]
+(defn play-heading [player game-state human?]
   (cond
     (and (= game-state :in-progress) (not human?)) "Your opponent is thinking..."
     (= game-state :in-progress) (str (.toUpperCase (name player)) "'s turn!")
