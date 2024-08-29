@@ -58,6 +58,7 @@
               "spec/tic_tac_toe/game_logs/game-logs-test.edn"
               "spec/tic_tac_toe/game_logs/sql_spec.clj"
               "spec/tic_tac_toe/game_logs/game-ids.edn"
+              "spec/tic_tac_toe/game_logs/test_data.clj"
               "spec/tic_tac_toe/game_logs/edn_logs_spec.clj"]
              (get-paths-in-dir "spec/tic_tac_toe/game_logs")))
 

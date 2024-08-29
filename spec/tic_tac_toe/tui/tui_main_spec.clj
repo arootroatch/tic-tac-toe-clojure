@@ -230,7 +230,7 @@
 
 
   (context "launch-user-interface replay sql"
-    (redefs-around [game-logs/get-game-log (stub :game-log {:return sql-spec/game-log-formatted})
+    (redefs-around [game-logs/get-game-log (stub :game-log {:return sql-spec/game-log-formatted-2})
                     print-utils/display-invalid-game-id-error (stub :id-error)
                     print-utils/display-unfinished-game-error (stub :unfinished)
                     print-utils/play-logged-game (stub :logged)])
@@ -246,13 +246,13 @@
 
     (it "displays error if game state is 'abandoned'"
       (with-redefs [game-logs/get-game-log
-                    (stub :game-log {:return (assoc sql-spec/game-log-formatted :game-state "abandoned")})]
+                    (stub :game-log {:return (assoc sql-spec/game-log-formatted-2 :game-state "abandoned")})]
         (launch-user-interface ["--psqldb" "--game" "5"])
         (should-have-invoked :unfinished)))
 
     (it "prints moves to the console"
-      (let [moves (:moves sql-spec/game-log-formatted)
-            game-state (:game-state sql-spec/game-log-formatted)]
+      (let [moves (:moves sql-spec/game-log-formatted-2)
+            game-state (:game-state sql-spec/game-log-formatted-2)]
         (launch-user-interface ["--psqldb" "--game" "5"])
         (should-have-invoked :logged {:with [moves game-state]})))
     ))

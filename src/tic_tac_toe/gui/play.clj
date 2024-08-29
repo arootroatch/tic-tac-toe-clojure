@@ -86,7 +86,6 @@
                    :game-state (eval/score (first moves)))
       (do (q/frame-rate 30) state))))
 
-
 (defmulti clicked (fn [state _] (count (:board state))))
 
 (defmethod clicked 9 [{:keys [board]} mouse-xy]
@@ -98,8 +97,6 @@
                  (number? (nth board i)))
           i
           (recur (inc i)))))))
-
-:board [1 2 3 4 5 6 7 8 9]
 
 (defmethod clicked 16 [{:keys [board]} mouse-xy]
   (loop [i 0]
