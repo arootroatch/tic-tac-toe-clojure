@@ -1,9 +1,9 @@
 (ns tic-tac-toe.game-logs.sql-spec
   (:require [next.jdbc :as jdbc]
             [speclj.core :refer :all]
-            [speclj.stub :as stub]
             [tic-tac-toe.game-logs.game-logs :as game-logs]
-            [tic-tac-toe.game-logs.sql :refer :all]))
+            [tic-tac-toe.game-logs.sql :refer :all]
+            [tic-tac-toe.game-logs.test-data :refer :all]))
 
 (def initial-state {:game-id         7
                     :filepath        "src/tic_tac_toe/game_logs/in_progress/gui/game-7.edn"
@@ -18,7 +18,7 @@
                     :board           [1 2 3 4 5 6 7 8 9]})
 
 (def game-log [{:games/current_screen  ":play",
-                :games/game_state      "X wins!",
+                :games/game_state      ":in-progress",
                 :games/human           false,
                 :games/mode            3,
                 :games/first_ai_level  3,
@@ -27,7 +27,20 @@
                 :games/id              7,
                 :games/ui              ":gui",
                 :games/player          ":x",
-                :games/moves           "[1 2 3 4 :x 6 7 8 9][:o 2 3 4 :x 6 7 8 9]"}])
+                :games/moves           nil}])
+
+(def game-log-formatted {:game-id         7
+                         :current-screen  :play
+                         :db              :sql
+                         :moves           []
+                         :second-ai-level 0
+                         :mode            3
+                         :first-ai-level  3
+                         :game-state      :in-progress
+                         :human?          false
+                         :ui              :gui
+                         :player          :x
+                         :board           [1 2 3 4 5 6 7 8 9]})
 
 (def in-progress {:games/current_screen  "",
                   :games/game_state      ":in-progress",
@@ -53,61 +66,60 @@
                             :player          :o,
                             :db              :sql})
 
-(def game-log-formatted (assoc in-progress-formatted
-                          :board [1 2 3 4 5 6 7 8 9]
-                          :moves [[1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9]]))
+(def game-log-formatted-2 (assoc in-progress-formatted
+                            :board [1 2 3 4 5 6 7 8 9]
+                            :moves [[1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9]]))
 
 (def db-test {:dbtype "postgres" :dbname "ttt-test"})
 (def ds-test (jdbc/get-datasource db-test))
+(defn populate-db [] (run! #(log-game-state ds-test %) test-data))
+(defn clear-db [] (jdbc/execute! ds-test ["TRUNCATE TABLE games;"]))
 
 (describe "db functions"
-  (with-stubs)
+  (after (clear-db))
 
   (it "gets new game ID"
-    (with-redefs [jdbc/execute! (stub :execute {:return []})]
-      (should= 1 (game-logs/get-new-game-id {:db :sql :ds ds-test})))
-    (should= 9 (game-logs/get-new-game-id {:db :sql :ds ds-test})))
+    (should= 1 (game-logs/get-new-game-id {:db :sql :ds ds-test}))
+    (populate-db)
+    (should= 29 (game-logs/get-new-game-id {:db :sql :ds ds-test})))
 
   (it "logs game state to db"
-    (with-redefs [jdbc/execute! (stub :execute)]
-      (log-game-state ds-test initial-state)
-      (should= [[ds-test
-                 ["INSERT INTO games\n    (id, mode, first_ai_level, second_ai_level, game_state, current_screen, human, ui, player, board)\n    VALUES (7, 3, 3, 0, ':in-progress', ':play', false, ':gui', ':x', '[1 2 3 4 5 6 7 8 9]')"]]]
-               (stub/invocations-of :execute)))
+    (log-game-state ds-test initial-state)
     (let [result (jdbc/execute! ds-test ["SELECT * FROM games WHERE id = 7"])]
       (should= game-log result)))
 
   (it "logs each move as it's played"
-    (with-redefs [jdbc/execute! (stub :execute)]
-      (game-logs/log-move {:ds ds-test :state (assoc initial-state :board [1 2 3 4 :x 6 7 8 9] :db :sql)})
-      (should= [[ds-test
-                 ["UPDATE games\n    SET moves = CONCAT(moves, '[1 2 3 4 :x 6 7 8 9]'), player = ':x', human = 'false'\n    WHERE id = 7"]]]
-               (stub/invocations-of :execute))))
+    (log-game-state ds-test initial-state)
+    (game-logs/log-move {:ds ds-test :state (assoc initial-state :board [1 2 3 4 :x 6 7 8 9] :db :sql)})
+    (let [result (jdbc/execute! ds-test ["SELECT moves FROM games WHERE id = 7"])]
+      (should= [{:games/moves "[1 2 3 4 :x 6 7 8 9]"}] result)))
 
   (it "concats next move with last move"
-    (with-redefs [jdbc/execute! (stub :execute)]
-      (game-logs/log-move {:ds ds-test :state (assoc initial-state :board [:o 2 3 4 :x 6 7 8 9] :db :sql)})
-      (should= [[ds-test
-                 ["UPDATE games\n    SET moves = CONCAT(moves, '[:o 2 3 4 :x 6 7 8 9]'), player = ':x', human = 'false'\n    WHERE id = 7"]]]
-               (stub/invocations-of :execute)))
+    (log-game-state ds-test initial-state)
+    (game-logs/log-move {:ds ds-test :state (assoc initial-state :board [1 2 3 4 :x 6 7 8 9] :db :sql)})
+    (game-logs/log-move {:ds ds-test :state (assoc initial-state :board [:o 2 3 4 :x 6 7 8 9] :db :sql)})
     (let [result (jdbc/execute! ds-test ["SELECT moves FROM games WHERE id = 7"])]
       (should= [{:games/moves "[1 2 3 4 :x 6 7 8 9][:o 2 3 4 :x 6 7 8 9]"}] result)))
 
   (it "updates game state"
-    (with-redefs [jdbc/execute! (stub :execute)]
-      (game-logs/log-completed-game {:ds    ds-test
-                                     :state (assoc initial-state :game-state "X wins!" :db :sql)})
-      (should= [[ds-test ["UPDATE games SET game_state = 'X wins!' WHERE id = 7"]]]
-               (stub/invocations-of :execute)))
+    (log-game-state ds-test initial-state)
+    (game-logs/log-completed-game {:ds    ds-test
+                                   :state (assoc initial-state :game-state "X wins!" :db :sql)})
     (let [result (jdbc/execute! ds-test ["SELECT game_state FROM games WHERE id = 7"])]
       (should= [{:games/game_state "X wins!"}] result)))
 
   (it "gets last in progress game"
-    (should= in-progress (game-logs/get-last-in-progress-game {:db :sql :ds ds-test})))
+    (log-game-state ds-test initial-state)
+    (should= (first game-log) (game-logs/get-last-in-progress-game {:db :sql :ds ds-test})))
+
+  (it "last in progress game returns nil if the last game is not in progress"
+    (populate-db)
+    (should= nil (game-logs/get-last-in-progress-game {:db :sql :ds ds-test})))
 
   (it "sets game state to abandoned"
-    (set-abandoned-game-state ds-test 1)
-    (should= "abandoned" (->> (jdbc/execute! ds-test [(str "SELECT game_state FROM games WHERE id = " 1)])
+    (log-game-state ds-test initial-state)
+    (set-abandoned-game-state ds-test 7)
+    (should= "abandoned" (->> (jdbc/execute! ds-test ["SELECT game_state FROM games WHERE id = 7"])
                               first
                               :games/game_state)))
 
@@ -118,6 +130,7 @@
              (format-game-state (assoc in-progress :games/game_state "O wins!") false)))
 
   (it "gets game log"
+    (log-game-state ds-test initial-state)
     (should= game-log-formatted
-             (game-logs/get-game-log {:ds ds-test :id 8 :db :sql}))))
+             (game-logs/get-game-log {:ds ds-test :id 7 :db :sql}))))
 
