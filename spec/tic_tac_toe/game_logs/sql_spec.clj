@@ -76,6 +76,7 @@
 (defn clear-db [] (jdbc/execute! ds-test ["TRUNCATE TABLE games;"]))
 
 (describe "db functions"
+  (before-all (clear-db))
   (after (clear-db))
 
   (it "gets new game ID"
