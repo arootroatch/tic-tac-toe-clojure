@@ -24,12 +24,12 @@
                         :board [1 2 3 4 :x 6 7 8 9]
                         :game-id 4
                         :db :edn
-                        :filepath "spec/tic_tac_toe/game_logs/in_progress/game-4.edn"
+                        :filepath "spec/clj/tic_tac_toe/game_logs/in_progress/game-4.edn"
                         :ui :gui))
 
 (def edn-test-state {:current-screen :resume-selection
                      :db             :edn
-                     :filepath       "spec/tic_tac_toe/game_logs/in_progress/game-4.edn"})
+                     :filepath       "spec/clj/tic_tac_toe/game_logs/in_progress/game-4.edn"})
 
 (describe "resume-selection"
   (with-stubs)

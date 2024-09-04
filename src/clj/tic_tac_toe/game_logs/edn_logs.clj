@@ -1,9 +1,9 @@
 (ns tic-tac-toe.game_logs.edn-logs
   (:require [tic-tac-toe.game-logs.game-logs :as game-logs]))
 
-(def logs-path "src/tic_tac_toe/game_logs/game-logs.edn")
-(def game-id-path "src/tic_tac_toe/game_logs/game-ids.edn")
-(def in-progress-dir-path "src/tic_tac_toe/game_logs/in_progress")
+(def logs-path "src/clj/tic_tac_toe/game_logs/game-logs.edn")
+(def game-id-path "src/clj/tic_tac_toe/game_logs/game-ids.edn")
+(def in-progress-dir-path "src/clj/tic_tac_toe/game_logs/in_progress")
 
 (defn read-edn-file [path]
   (try
