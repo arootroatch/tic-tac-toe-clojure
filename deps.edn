@@ -1,20 +1,24 @@
 {
- :paths   ["src"]
+ :paths   ["src/clj" "src/cljc"]
 
  :deps    {
            org.clojure/clojure               {:mvn/version "1.11.2"}
+           org.clojure/clojurescript         {:mvn/version "1.10.764"}
            quil/quil                         {:mvn/version "4.3.1323"}
            com.github.seancorfield/next.jdbc {:mvn/version "1.3.939"}
            org.postgresql/postgresql         {:mvn/version "42.7.3"}
+           cljsjs/react                      {:mvn/version "17.0.2-0"}
+           cljsjs/react-dom                  {:mvn/version "17.0.2-0"}
+           com.cleancoders.c3kit/apron       {:mvn/version "1.0.2"}
            }
 
  :aliases {
            :test {
-                  :extra-paths ["spec"]
-                  :extra-deps {
-                               speclj/speclj                     {:mvn/version "3.4.6"}
-                               org.clojure/math.combinatorics    {:mvn/version "0.3.0"}
-                               }
+                  :extra-paths ["spec/clj"]
+                  :extra-deps  {
+                                speclj/speclj                  {:mvn/version "3.4.6"}
+                                org.clojure/math.combinatorics {:mvn/version "0.3.0"}
+                                }
                   }
            :spec {:main-opts ["-m" "speclj.main" "-c"]}
            :run  {:main-opts ["-m" "tic-tac-toe.main"]}

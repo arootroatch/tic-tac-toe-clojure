@@ -1,0 +1,14 @@
+{:run-cmd     "phantomjs resources/public/specs/speclj.js"
+ :development {:cache-analysis true
+               :optimizations  :none
+               :output-dir     "resources/public/cljs/"
+               :output-to      "resources/public/cljs/dev.js"
+               :pretty-print   true
+               :source-map     true
+               :sources        ["spec/cljs" "src/cljs"]
+               :specs          true
+               :verbose        false
+               ;:main           "sample-project.core"
+               :watch-fn       runner.cljs/on-dev-compiled
+               }
+ }

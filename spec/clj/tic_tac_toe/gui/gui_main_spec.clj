@@ -31,7 +31,7 @@
       (with-redefs [launch-quil (stub :launch-quil)
                     game-logs/get-new-game-id (stub :new-id {:return 13})]
         (launch-user-interface ["gui" "--edndb"])
-        (should-have-invoked :launch-quil {:with [{:game-id 13, :filepath "src/tic_tac_toe/game_logs/in_progress/game-13.edn", :current-screen :resume-selection, :db :edn, :second-ai-level nil, :mode nil, :first-ai-level nil, :game-state :in-progress, :human? nil, :ui :gui, :player :x, :board nil}]})))
+        (should-have-invoked :launch-quil {:with [{:game-id 13, :filepath "src/clj/tic_tac_toe/game_logs/in_progress/game-13.edn", :current-screen :resume-selection, :db :edn, :second-ai-level nil, :mode nil, :first-ai-level nil, :game-state :in-progress, :human? nil, :ui :gui, :player :x, :board nil}]})))
     )
 
   (context "play game sql"
@@ -55,7 +55,7 @@
     (it "sets game-state to state from log and launches quil"
       (with-redefs [launch-quil (stub :launch-quil)]
         (launch-user-interface ["gui" "--edndb" "--game" "2"])
-        (should-have-invoked :launch-quil {:with [{:game-id 2, :filepath "src/tic_tac_toe/game_logs/in_progress/gui/game-2.edn", :current-screen :replay, :db :edn, :moves [[1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 :x 9] [:o :o 3 4 :x 6 7 :x 9] [:o :o 3 4 :x 6 7 :x :x] [:o :o :o 4 :x 6 7 :x :x]], :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state :in-progress, :human? true, :ui :gui, :player :x, :board [1 2 3 4 5 6 7 8 9], :replay? true}]})))
+        (should-have-invoked :launch-quil {:with [{:game-id 2, :filepath "src/clj/tic_tac_toe/game_logs/in_progress/gui/game-2.edn", :current-screen :replay, :db :edn, :moves [[1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 :x 9] [:o :o 3 4 :x 6 7 :x 9] [:o :o 3 4 :x 6 7 :x :x] [:o :o :o 4 :x 6 7 :x :x]], :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state :in-progress, :human? true, :ui :gui, :player :x, :board [1 2 3 4 5 6 7 8 9], :replay? true}]})))
     )
 
   (context "replay sql"
