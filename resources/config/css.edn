@@ -1,0 +1,7 @@
+{
+ :source-dir  "dev/ttt/styles"
+ :var         ttt.styles.main/screen
+ :output-file "resources/public/css/ttt.css"
+ :flags       {:pretty-print? true
+               :vendors       ["webkit" "moz" "o"]}
+ }
