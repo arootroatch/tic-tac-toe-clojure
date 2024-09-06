@@ -1,10 +1,16 @@
 (ns tic-tac-toe.main
-  (:require [goog.dom :as gdom]
-            [reagent.core :as reagent]
-            [reagent.dom :as rdom]
-            [tic-tac-toe.play-game-web :as play-game]))
+  (:require [reagent.dom :as rdom]
+            [c3kit.wire.js :as wjs])
+  )
+
+(defn base []
+  [:div
+   {:id "bob"}
+   [:a {:href "/"}]])
+
+
+(def one 1)
 
 (defn ^:export main []
-  (rdom/render [play-game/run-ttt] (js/document.getElementById "app")))
-
-(main)
+  (println "hi from cljs")
+  (rdom/render [base] (wjs/element-by-id "app ")))
