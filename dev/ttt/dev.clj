@@ -9,8 +9,7 @@
 (defn run-server [] (sh/sh "./bin/server"))
 (defn run-server-w-message []
   (println "Starting server at http://localhost:8080")
-  (sh/sh "./bin/server")
-  )
+  (sh/sh "./bin/server"))
 
 (def threads
   {:cljs   (Thread. start-cljs)
