@@ -3,7 +3,7 @@
             [tic-tac-toe.ai.lookup-tables :refer :all]
             [tic-tac-toe.eval-board :refer [->paths evaluate-board]]
             [tic-tac-toe.player :as player]
-            [tic-tac-toe.tui.print-utils :as print]))
+            [tic-tac-toe.print-utils :as print]))
 
 (declare minimax)
 

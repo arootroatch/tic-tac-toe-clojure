@@ -13,7 +13,7 @@
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.gui.utils :refer [handle-click]]
             [tic-tac-toe.launch-user-interface :refer [launch-user-interface]]
-            [tic-tac-toe.tui.print-utils :as print-utils]))
+            [tic-tac-toe.print-utils :as print-utils]))
 
 (def window-size 800)
 

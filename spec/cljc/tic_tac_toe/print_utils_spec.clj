@@ -1,7 +1,7 @@
-(ns tic-tac-toe.tui.print-utils-spec
+(ns tic-tac-toe.print-utils-spec
   (:require [speclj.core :refer :all]
             [speclj.stub :as stub]
-            [tic-tac-toe.tui.print-utils :refer :all]))
+            [tic-tac-toe.print-utils :refer :all]))
 
 
 (describe "utility functions"

@@ -7,14 +7,14 @@
 (defn start-cljs [] (cljs/-main "auto" "development"))
 (defn start-css [] (css/-main "auto" "development"))
 (defn run-server [] (sh/sh "./bin/server"))
-(defn run-server-w-message []
+#_(defn run-server-w-message []
   (println "Starting server at http://localhost:8080")
   (sh/sh "./bin/server"))
 
 (def threads
   {:cljs   (Thread. start-cljs)
    :css    (Thread. start-css)
-   :server (Thread. run-server-w-message)})
+   :server (Thread. run-server)})
 
 (defn shutdown []
   (log/report "---- DEV Task - Shutdown ----"))
@@ -31,5 +31,4 @@
     (log/report "Starting: " thread-keys)
     (doseq [[key thread] threads]
       (when (contains? thread-keys key)
-        (.start thread))))
-  )
+        (.start thread)))))

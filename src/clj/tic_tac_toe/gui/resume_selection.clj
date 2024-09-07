@@ -5,7 +5,7 @@
             [tic-tac-toe.game_logs.edn-logs :as edn]
             [tic-tac-toe.gui.components :refer [text-button]]
             [tic-tac-toe.gui.utils :as utils]
-            [tic-tac-toe.tui.print-utils :as print]))
+            [tic-tac-toe.print-utils :as print]))
 
 (defn- resume-selection-screen []
   (q/background 0 0 0)

@@ -9,7 +9,7 @@
             [tic-tac-toe.launch-user-interface :refer [launch-user-interface]]
             [tic-tac-toe.player :as player]
             [tic-tac-toe.tui.get-selection :as get-selection]
-            [tic-tac-toe.tui.print-utils :as print-utils]
+            [tic-tac-toe.print-utils :as print-utils]
             [tic-tac-toe.tui.tui-main :refer :all]))
 
 (def state {:board           [:o 2 :x :o :x :x 7 8 9]

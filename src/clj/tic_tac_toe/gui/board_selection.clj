@@ -2,7 +2,7 @@
   (:require [quil.core :as q]
             [tic-tac-toe.game-logs.sql :as sql]
             [tic-tac-toe.game_logs.edn-logs :as edn]
-            [tic-tac-toe.tui.print-utils :as print]
+            [tic-tac-toe.print-utils :as print]
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.tui.get-selection :as selection]))
 

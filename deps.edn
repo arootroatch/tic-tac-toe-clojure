@@ -1,5 +1,5 @@
 {
- :paths     ["src/clj" "src/cljs" "resources" "dev"]
+ :paths     ["src/clj" "src/cljs" "src/cljc" "resources" "dev"]
  :mvn/repos {"maven_central" {:url "https://repo.maven.apache.org/maven2/"}}
  :deps      {
              org.clojure/clojure               {:mvn/version "1.11.4"}
@@ -19,7 +19,7 @@
                     :deps      {com.github.liquidz/antq {:mvn/version "RELEASE"}}
                     :main-opts ["-m" "antq.core"]}
              :test {
-                    :extra-paths ["spec/clj" "spec/cljs" "dev"]
+                    :extra-paths ["spec/clj" "spec/cljs" "spec/cljc"]
                     :extra-deps  {
                                   org.clojure/clojurescript      {:mvn/version "1.11.132"}
                                   speclj/speclj                  {:mvn/version "3.4.8"}

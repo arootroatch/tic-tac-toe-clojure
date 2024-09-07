@@ -8,7 +8,7 @@
             [tic-tac-toe.launch-user-interface :refer [launch-user-interface]]
             [tic-tac-toe.player :refer [switch-player take-turn]]
             [tic-tac-toe.tui.get-selection :refer [get-selection initial-3x3-board initial-3x3x3-board initial-4x4-board]]
-            [tic-tac-toe.tui.print-utils :as print-utils]))
+            [tic-tac-toe.print-utils :as print-utils]))
 
 (defn get-options [db]
   (let [mode (get-selection {:option :mode})
