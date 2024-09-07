@@ -7,9 +7,6 @@
 (defn start-cljs [] (cljs/-main "auto" "development"))
 (defn start-css [] (css/-main "auto" "development"))
 (defn run-server [] (sh/sh "./bin/server"))
-#_(defn run-server-w-message []
-  (println "Starting server at http://localhost:8080")
-  (sh/sh "./bin/server"))
 
 (def threads
   {:cljs   (Thread. start-cljs)
