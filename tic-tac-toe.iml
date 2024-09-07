@@ -80,7 +80,7 @@
     <orderEntry type="library" name="Deps: trptcolin/versioneer:0.1.1" level="project" />
     <orderEntry type="library" name="Deps: org.eclipse.jetty.websocket/websocket-jetty-server:11.0.20" level="project" />
     <orderEntry type="library" name="Deps: cljsjs/react:17.0.2-0" level="project" />
-    <orderEntry type="library" name="Deps: com.cleancoders.c3kit/scaffold:2.0.4" level="project" />
+    <orderEntry type="library" name="Deps: com.cleancoders.c3kit/scaffold:2.0.3" level="project" />
     <orderEntry type="library" name="Deps: xalan:2.7.2" level="project" />
     <orderEntry type="library" name="Deps: org.eclipse.jetty/jetty-security:11.0.20" level="project" />
     <orderEntry type="library" name="Deps: org.apache.xmlgraphics/batik-constants:1.14" level="project" />

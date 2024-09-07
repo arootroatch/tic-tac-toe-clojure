@@ -6,11 +6,4 @@
     [c3kit.wire.spec-helper :as wire]
     [tic-tac-toe.main :as main]))
 
-(describe "main"
-  (wire/with-root-dom)
-  (before
-    (wire/render [main/base]))
 
-  (it "does stuff"
-    (should-select "#bob")
-    (should= "file:///" (wire/href "#bob a"))))

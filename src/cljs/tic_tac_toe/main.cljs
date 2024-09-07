@@ -1,11 +1,7 @@
 (ns tic-tac-toe.main
   (:require [reagent.dom :as rdom]
-            [c3kit.wire.js :as wjs]))
-
-(defn base []
-  [:div
-   {:id "bob"}
-   [:a {:href "/"}]])
+            [c3kit.wire.js :as wjs]
+            [tic-tac-toe.app :refer [app]]))
 
 (defn ^:export main []
-  (rdom/render [base] (wjs/element-by-id "app ")))
+  (rdom/render [app] (wjs/element-by-id "app")))

@@ -5,7 +5,7 @@
 (defstyles screen
 
            [:body {
-                   :color "red"
-                   }]
-
+                   :text-align "center"
+                   }
+            ]
            )

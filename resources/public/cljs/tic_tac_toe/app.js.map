@@ -1,0 +1,1 @@
+{"version":3,"file":"\/Users\/AlexRoot-Roatch\/current-projects\/tic-tac-toe\/resources\/public\/cljs\/tic_tac_toe\/app.js","sources":["app.cljs"],"lineCount":14,"mappings":";AAAA;;;;;;;;AAQA,sBAAA,tBAAMA;AAAN,AAAA,0FAAA,2EAAA,mFAAA,kDAAA,sBAGG,AAACC,kDAAcC","names":["tic-tac-toe.app\/app","tic-tac-toe.render-screen\/render-screen","tic-tac-toe.state\/state"]}

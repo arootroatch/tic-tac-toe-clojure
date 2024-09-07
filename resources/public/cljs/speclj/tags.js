@@ -15,14 +15,14 @@ speclj.tags.pass_excludes_QMARK_ = (function speclj$tags$pass_excludes_QMARK_(ex
 if(cljs.core.empty_QMARK_.call(null,excludes)){
 return true;
 } else {
-return cljs.core.not.call(null,cljs.core.some.call(null,(function (p1__14338_SHARP_){
-return cljs.core.contains_QMARK_.call(null,excludes,p1__14338_SHARP_);
+return cljs.core.not.call(null,cljs.core.some.call(null,(function (p1__16213_SHARP_){
+return cljs.core.contains_QMARK_.call(null,excludes,p1__16213_SHARP_);
 }),tags));
 }
 });
 speclj.tags.pass_tag_filter_QMARK_ = (function speclj$tags$pass_tag_filter_QMARK_(var_args){
-var G__14350 = arguments.length;
-switch (G__14350) {
+var G__16215 = arguments.length;
+switch (G__16215) {
 case 1:
 return speclj.tags.pass_tag_filter_QMARK_.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -55,26 +55,26 @@ return cljs.core.PersistentHashSet.EMPTY;
 }
 });
 speclj.tags.tag_sets_for = (function speclj$tags$tag_sets_for(context){
-var context_seq = cljs.core.tree_seq.call(null,(function (p1__14364_SHARP_){
-return (!((p1__14364_SHARP_ == null)));
-}),(function (p1__14365_SHARP_){
-return cljs.core.deref.call(null,p1__14365_SHARP_.children);
+var context_seq = cljs.core.tree_seq.call(null,(function (p1__16217_SHARP_){
+return (!((p1__16217_SHARP_ == null)));
+}),(function (p1__16218_SHARP_){
+return cljs.core.deref.call(null,p1__16218_SHARP_.children);
 }),context);
 return cljs.core.map.call(null,speclj.tags.tags_for,context_seq);
 });
 speclj.tags.context_with_tags_seq = (function speclj$tags$context_with_tags_seq(context){
-var context_seq = cljs.core.tree_seq.call(null,(function (p1__14367_SHARP_){
-return (!((p1__14367_SHARP_ == null)));
-}),(function (p1__14368_SHARP_){
-return cljs.core.deref.call(null,p1__14368_SHARP_.children);
+var context_seq = cljs.core.tree_seq.call(null,(function (p1__16219_SHARP_){
+return (!((p1__16219_SHARP_ == null)));
+}),(function (p1__16220_SHARP_){
+return cljs.core.deref.call(null,p1__16220_SHARP_.children);
 }),context);
-return cljs.core.map.call(null,(function (p1__14370_SHARP_){
-return cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"context","context",-830191113),new cljs.core.Keyword(null,"tag-set","tag-set",-711527597)],[p1__14370_SHARP_,speclj.tags.tags_for.call(null,p1__14370_SHARP_)]);
+return cljs.core.map.call(null,(function (p1__16221_SHARP_){
+return cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"context","context",-830191113),new cljs.core.Keyword(null,"tag-set","tag-set",-711527597)],[p1__16221_SHARP_,speclj.tags.tags_for.call(null,p1__16221_SHARP_)]);
 }),context_seq);
 });
 speclj.tags.describe_filter = (function speclj$tags$describe_filter(var_args){
-var G__14373 = arguments.length;
-switch (G__14373) {
+var G__16223 = arguments.length;
+switch (G__16223) {
 case 0:
 return speclj.tags.describe_filter.cljs$core$IFn$_invoke$arity$0();
 

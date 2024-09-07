@@ -1,0 +1,13 @@
+.selection-btn {
+    display: block;
+    margin: 1rem auto;
+    width: 400px;
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+.selection-btn:hover {
+    background-color: #ce36ce;
+    color: aliceblue;
+}
