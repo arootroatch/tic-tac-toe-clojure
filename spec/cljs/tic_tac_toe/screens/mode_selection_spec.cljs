@@ -5,7 +5,8 @@
     [speclj.core]
     [c3kit.wire.spec-helper :as wire]
     [tic-tac-toe.print-utils :as print]
-    [tic-tac-toe.render-screen :as sut]))
+    [tic-tac-toe.render-screen :as sut]
+    [tic-tac-toe.screens.mode-selection]))
 
 (describe "mode selection screen"
   (wire/with-root-dom)
