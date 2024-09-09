@@ -6,15 +6,40 @@
     [speclj.core]
     [tic-tac-toe.print-utils :as print]
     [tic-tac-toe.render-screen :as sut]
-    [tic-tac-toe.screens.board-selection]))
+    [tic-tac-toe.screens.board-selection]
+    [tic-tac-toe.board-options :as board]))
+
+(defonce state (atom {:current-screen :board-selection}))
 
 (describe "board selection screen"
   (wire/with-root-dom)
   (before
-    (wire/render [sut/render-screen (atom {:current-screen :board-selection})]))
+    (reset! state {:current-screen :board-selection})
+    (wire/render [sut/render-screen state]))
 
   (it "renders board selection screen"
     (should-select "#board-selection")
     (should= (first print/board-prompt) (wire/text "#board-selection h2"))
     (should= (nth print/board-prompt 1) (wire/text "#board-selection button:nth-of-type(1)"))
-    (should= (nth print/board-prompt 2) (wire/text "#board-selection button:nth-of-type(2)"))))
+    (should= (nth print/board-prompt 2) (wire/text "#board-selection button:nth-of-type(2)")))
+
+  (it "sets 3x3 board upon user selection"
+    (wire/click! "#board-selection button:nth-of-type(1)")
+    (should= board/initial-3x3-board (:board @state)))
+
+  (it "sets 4x4 board upon user selection"
+    (wire/click! "#board-selection button:nth-of-type(2)")
+    (should= board/initial-4x4-board (:board @state)))
+
+  (it "sets screen to first-level-selection upon user selection and not mode 1"
+    (doseq [item ["#board-selection button:nth-of-type(1)"
+                  "#board-selection button:nth-of-type(2)"]]
+      (wire/click! item)
+      (should= :first-level-selection (:current-screen @state))))
+
+  (it "sets screen to play upon user selection and mode 1"
+    (swap! state assoc :mode 1)
+    (doseq [item ["#board-selection button:nth-of-type(1)"
+                  "#board-selection button:nth-of-type(2)"]]
+      (wire/click! item)
+      (should= :play (:current-screen @state)))))

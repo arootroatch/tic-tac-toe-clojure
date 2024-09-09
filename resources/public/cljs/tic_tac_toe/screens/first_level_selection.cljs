@@ -1,16 +1,19 @@
 (ns tic-tac-toe.screens.first-level-selection
   (:require [tic-tac-toe.render-screen :refer [render-screen]]
             [tic-tac-toe.print-utils :as print]
-            [tic-tac-toe.screens.selection-button :refer [selection-button]]
-            [tic-tac-toe.state :refer [state]]))
+            [tic-tac-toe.screens.selection-button :refer [selection-button]]))
 
-(defn- on-click []
-  (swap! state assoc :current-screen (if (= 4 (:mode @state)) :second-level-selection :play)))
+(defn- on-click [state n]
+  (swap! state assoc :current-screen (if (= 4 (:mode @state)) :second-level-selection :play))
+  (swap! state assoc :first-ai-level n))
 
-(defn selection-heading [state]
+(defn- selection-heading [state]
   (if (= 4 (:mode @state)) (first print/level-prompt) (nth print/level-prompt 2)))
+
+(defn- set-number [n]
+  (case n 3 1 4 2 6 3))
 
 (defmethod render-screen :first-level-selection [state]
   [:div#first-level-selection.screen
    [:h2 (selection-heading state)]
-   (map #(selection-button (nth print/level-prompt %) on-click %) [3 4 6])])
+   (map #(selection-button (nth print/level-prompt %) (partial on-click state (set-number %)) %) [3 4 6])])
