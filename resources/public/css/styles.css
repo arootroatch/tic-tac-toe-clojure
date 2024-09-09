@@ -14,30 +14,42 @@ h1 {
 }
 
 .selection-btn, .select-board-btn {
-    color: whitesmoke;
     display: block;
     margin: 1rem auto;
     width: 420px;
     padding: 1rem;
     border-radius: 10px;
     font-size: 1.2rem;
+}
+
+.selection-btn, .select-board-btn, .board-square {
+    color: whitesmoke;
     background-color: rgba(151, 2, 159, 0.785);
     cursor: pointer;
 }
 
-.selection-btn:hover, .select-board-btn:hover {
+.selection-btn:hover, .select-board-btn:hover, .board-square:hover {
     background-color: rgba(201, 1, 201, 0.678);
 }
 
+.three-grid, .four-grid {
+    display: grid;
+}
+
+.three-grid, .four-grid, #board-wrapper {
+    width: fit-content;
+}
 
 .three-grid {
-    display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
 .four-grid {
-    display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+#board-wrapper {
+    margin: 0 auto;
 }
 
 .preview-square-20 {
@@ -50,7 +62,19 @@ h1 {
     width: 27px;
 }
 
-.three-grid, .preview-square-20, .preview-square-27, .four-grid {
+.board-square {
+    height: 100px;
+    width: 100px;
+    font-size: 80px;
+    padding: 0;
+    text-align: center;
+}
+
+.board-square:disabled {
+    background-color: rgba(138, 1, 138, 0.649);
+}
+
+.three-grid, .preview-square-20, .preview-square-27, .four-grid, .board-square {
     border: 1px solid white;
 }
 

@@ -5,6 +5,7 @@
             [tic-tac-toe.screens.board-selection]
             [tic-tac-toe.screens.first-level-selection]
             [tic-tac-toe.screens.second-level-selection]
+            [tic-tac-toe.screens.play]
             ))
 
 (defn app []
