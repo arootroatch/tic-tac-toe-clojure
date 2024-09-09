@@ -4,7 +4,7 @@
             [tic-tac-toe.game_logs.edn-logs :as edn]
             [tic-tac-toe.print-utils :as print]
             [tic-tac-toe.gui.utils :as utils]
-            [tic-tac-toe.tui.get-selection :as selection]))
+            [tic-tac-toe.board-options :as selection]))
 
 (defn three-board-preview [x y square-size]
   (q/fill 255 255 255)

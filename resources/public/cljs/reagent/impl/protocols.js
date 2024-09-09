@@ -7,7 +7,7 @@ goog.require('cljs.core');
  */
 reagent.impl.protocols.Compiler = function(){};
 
-var reagent$impl$protocols$Compiler$get_id$dyn_8508 = (function (this$){
+var reagent$impl$protocols$Compiler$get_id$dyn_8510 = (function (this$){
 var x__5350__auto__ = (((this$ == null))?null:this$);
 var m__5351__auto__ = (reagent.impl.protocols.get_id[goog.typeOf(x__5350__auto__)]);
 if((!((m__5351__auto__ == null)))){
@@ -25,7 +25,7 @@ reagent.impl.protocols.get_id = (function reagent$impl$protocols$get_id(this$){
 if((((!((this$ == null)))) && ((!((this$.reagent$impl$protocols$Compiler$get_id$arity$1 == null)))))){
 return this$.reagent$impl$protocols$Compiler$get_id$arity$1(this$);
 } else {
-return reagent$impl$protocols$Compiler$get_id$dyn_8508.call(null,this$);
+return reagent$impl$protocols$Compiler$get_id$dyn_8510.call(null,this$);
 }
 });
 
@@ -51,7 +51,7 @@ return reagent$impl$protocols$Compiler$parse_tag$dyn_8511.call(null,this$,tag_na
 }
 });
 
-var reagent$impl$protocols$Compiler$as_element$dyn_8512 = (function (this$,x){
+var reagent$impl$protocols$Compiler$as_element$dyn_8516 = (function (this$,x){
 var x__5350__auto__ = (((this$ == null))?null:this$);
 var m__5351__auto__ = (reagent.impl.protocols.as_element[goog.typeOf(x__5350__auto__)]);
 if((!((m__5351__auto__ == null)))){
@@ -69,11 +69,11 @@ reagent.impl.protocols.as_element = (function reagent$impl$protocols$as_element(
 if((((!((this$ == null)))) && ((!((this$.reagent$impl$protocols$Compiler$as_element$arity$2 == null)))))){
 return this$.reagent$impl$protocols$Compiler$as_element$arity$2(this$,x);
 } else {
-return reagent$impl$protocols$Compiler$as_element$dyn_8512.call(null,this$,x);
+return reagent$impl$protocols$Compiler$as_element$dyn_8516.call(null,this$,x);
 }
 });
 
-var reagent$impl$protocols$Compiler$make_element$dyn_8513 = (function (this$,argv,component,jsprops,first_child){
+var reagent$impl$protocols$Compiler$make_element$dyn_8519 = (function (this$,argv,component,jsprops,first_child){
 var x__5350__auto__ = (((this$ == null))?null:this$);
 var m__5351__auto__ = (reagent.impl.protocols.make_element[goog.typeOf(x__5350__auto__)]);
 if((!((m__5351__auto__ == null)))){
@@ -91,7 +91,7 @@ reagent.impl.protocols.make_element = (function reagent$impl$protocols$make_elem
 if((((!((this$ == null)))) && ((!((this$.reagent$impl$protocols$Compiler$make_element$arity$5 == null)))))){
 return this$.reagent$impl$protocols$Compiler$make_element$arity$5(this$,argv,component,jsprops,first_child);
 } else {
-return reagent$impl$protocols$Compiler$make_element$dyn_8513.call(null,this$,argv,component,jsprops,first_child);
+return reagent$impl$protocols$Compiler$make_element$dyn_8519.call(null,this$,argv,component,jsprops,first_child);
 }
 });
 

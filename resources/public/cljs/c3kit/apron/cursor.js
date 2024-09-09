@@ -47,9 +47,9 @@ return cljs.core.apply.call(null,f,v,x,y,more);
 (c3kit.apron.cursor.do_swap_BANG_.cljs$lang$maxFixedArity = 6);
 
 c3kit.apron.cursor.swap_vals_result = (function c3kit$apron$cursor$swap_vals_result(path,result){
-var vec__15850 = result;
-var o = cljs.core.nth.call(null,vec__15850,(0),null);
-var n = cljs.core.nth.call(null,vec__15850,(1),null);
+var vec__15851 = result;
+var o = cljs.core.nth.call(null,vec__15851,(0),null);
+var n = cljs.core.nth.call(null,vec__15851,(1),null);
 return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.get_in.call(null,o,path),cljs.core.get_in.call(null,n,path)], null);
 });
 c3kit.apron.cursor.do_reset_BANG_ = (function c3kit$apron$cursor$do_reset_BANG_(base,path,new_value){

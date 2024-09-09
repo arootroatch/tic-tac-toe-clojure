@@ -534,14 +534,14 @@ return reagent.impl.util.class_names.cljs$core$IFn$_invoke$arity$2((arguments[(0
 break;
 default:
 var args_arr__5751__auto__ = [];
-var len__5726__auto___8624 = arguments.length;
-var i__5727__auto___8625 = (0);
+var len__5726__auto___8622 = arguments.length;
+var i__5727__auto___8623 = (0);
 while(true){
-if((i__5727__auto___8625 < len__5726__auto___8624)){
-args_arr__5751__auto__.push((arguments[i__5727__auto___8625]));
+if((i__5727__auto___8623 < len__5726__auto___8622)){
+args_arr__5751__auto__.push((arguments[i__5727__auto___8623]));
 
-var G__8626 = (i__5727__auto___8625 + (1));
-i__5727__auto___8625 = G__8626;
+var G__8624 = (i__5727__auto___8623 + (1));
+i__5727__auto___8623 = G__8624;
 continue;
 } else {
 }
@@ -658,14 +658,14 @@ return reagent.impl.util.merge_props.cljs$core$IFn$_invoke$arity$2((arguments[(0
 break;
 default:
 var args_arr__5751__auto__ = [];
-var len__5726__auto___8631 = arguments.length;
-var i__5727__auto___8632 = (0);
+var len__5726__auto___8630 = arguments.length;
+var i__5727__auto___8631 = (0);
 while(true){
-if((i__5727__auto___8632 < len__5726__auto___8631)){
-args_arr__5751__auto__.push((arguments[i__5727__auto___8632]));
+if((i__5727__auto___8631 < len__5726__auto___8630)){
+args_arr__5751__auto__.push((arguments[i__5727__auto___8631]));
 
-var G__8633 = (i__5727__auto___8632 + (1));
-i__5727__auto___8632 = G__8633;
+var G__8632 = (i__5727__auto___8631 + (1));
+i__5727__auto___8631 = G__8632;
 continue;
 } else {
 }
@@ -764,7 +764,7 @@ return (!(("object" === goog.typeOf(x))));
 });
 reagent.impl.util.try_get_react_key = (function reagent$impl$util$try_get_react_key(x){
 try{return cljs.core.get.call(null,x,new cljs.core.Keyword(null,"key","key",-1516042587));
-}catch (e8621){var e = e8621;
+}catch (e8625){var e = e8625;
 return null;
 }});
 reagent.impl.util.get_react_key = (function reagent$impl$util$get_react_key(x){
@@ -779,9 +779,9 @@ var k = new cljs.core.Keyword(null,"key","key",-1516042587).cljs$core$IFn$_invok
 if((!((k == null)))){
 return k;
 } else {
-var G__8622 = cljs.core.nth.call(null,v,(0),null);
-var G__8622__$1 = (((G__8622 instanceof cljs.core.Keyword))?G__8622.fqn:null);
-switch (G__8622__$1) {
+var G__8626 = cljs.core.nth.call(null,v,(0),null);
+var G__8626__$1 = (((G__8626 instanceof cljs.core.Keyword))?G__8626.fqn:null);
+switch (G__8626__$1) {
 case ">":
 case "f>":
 return reagent.impl.util.get_react_key.call(null,cljs.core.nth.call(null,v,(2),null));
@@ -806,11 +806,11 @@ reagent.impl.util.str_coll = (function reagent$impl$util$str_coll(coll){
 return cljs.core.str.cljs$core$IFn$_invoke$arity$1(clojure.walk.prewalk.call(null,(function (x){
 if(cljs.core.fn_QMARK_.call(null,x)){
 var n = reagent.impl.util.fun_name.call(null,x);
-var G__8629 = n;
-if(cljs.core._EQ_.call(null,"",G__8629)){
+var G__8633 = n;
+if(cljs.core._EQ_.call(null,"",G__8633)){
 return x;
 } else {
-if(cljs.core._EQ_.call(null,null,G__8629)){
+if(cljs.core._EQ_.call(null,null,G__8633)){
 return x;
 } else {
 return cljs.core.symbol.call(null,n);

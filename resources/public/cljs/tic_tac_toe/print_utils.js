@@ -32,8 +32,8 @@ return cljs.core.println.call(null,["Your opponent plays ",cljs.core.str.cljs$co
 }
 });
 tic_tac_toe.print_utils.print_board_selection = (function tic_tac_toe$print_utils$print_board_selection(input){
-var G__8407 = input;
-switch (G__8407) {
+var G__16024 = input;
+switch (G__16024) {
 case (1):
 return cljs.core.println.call(null,"3x3 board activated!\n");
 
@@ -47,7 +47,7 @@ return cljs.core.println.call(null,"3 dimensional board activated!\n");
 
 break;
 default:
-throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__8407)].join('')));
+throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__16024)].join('')));
 
 }
 });
@@ -62,8 +62,8 @@ cljs.core.println.call(null,["2 - ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(
 return cljs.core.println.call(null,["3 - ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cljs.core.nth.call(null,tic_tac_toe.print_utils.board_prompt,(3)))].join(''));
 });
 tic_tac_toe.print_utils.print_level_selection = (function tic_tac_toe$print_utils$print_level_selection(level,mode,board){
-var G__8409 = level;
-switch (G__8409) {
+var G__16031 = level;
+switch (G__16031) {
 case (1):
 return cljs.core.println.call(null,"Easy mode activated!\n");
 
@@ -81,7 +81,7 @@ return cljs.core.println.call(null,"Unbeatable mode activated!\n");
 
 break;
 default:
-throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__8409)].join('')));
+throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__16031)].join('')));
 
 }
 });
@@ -109,8 +109,8 @@ return cljs.core.println.call(null,["3 - ",cljs.core.str.cljs$core$IFn$_invoke$a
 }
 });
 tic_tac_toe.print_utils.print_mode_selection = (function tic_tac_toe$print_utils$print_mode_selection(mode){
-var G__8411 = mode;
-switch (G__8411) {
+var G__16045 = mode;
+switch (G__16045) {
 case (1):
 return cljs.core.println.call(null,"Human vs Human activated!\n");
 
@@ -128,7 +128,7 @@ return cljs.core.println.call(null,"Computer vs Computer activated!\n");
 
 break;
 default:
-throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__8411)].join('')));
+throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__16045)].join('')));
 
 }
 });
@@ -145,8 +145,8 @@ cljs.core.println.call(null,["3 - ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(
 return cljs.core.println.call(null,["4 - ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cljs.core.nth.call(null,tic_tac_toe.print_utils.mode_prompt,(4)))].join(''));
 });
 tic_tac_toe.print_utils.print_resume_selection = (function tic_tac_toe$print_utils$print_resume_selection(input){
-var G__8413 = input;
-switch (G__8413) {
+var G__16050 = input;
+switch (G__16050) {
 case (1):
 return cljs.core.println.call(null,"Game resumed!\n");
 
@@ -156,7 +156,7 @@ return cljs.core.println.call(null,"New game started!\n");
 
 break;
 default:
-throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__8413)].join('')));
+throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__16050)].join('')));
 
 }
 });
@@ -171,14 +171,14 @@ return cljs.core.println.call(null,["2 - ",cljs.core.str.cljs$core$IFn$_invoke$a
 tic_tac_toe.print_utils.purple = "\u001B[35m";
 tic_tac_toe.print_utils.reset = "\u001B[0m";
 tic_tac_toe.print_utils.format_board = (function tic_tac_toe$print_utils$format_board(board){
-return cljs.core.map.call(null,(function (p1__8415_SHARP_){
-if((p1__8415_SHARP_ instanceof cljs.core.Keyword)){
-return [" ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cljs.core.name.call(null,p1__8415_SHARP_).toUpperCase())].join('');
+return cljs.core.map.call(null,(function (p1__16059_SHARP_){
+if((p1__16059_SHARP_ instanceof cljs.core.Keyword)){
+return [" ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cljs.core.name.call(null,p1__16059_SHARP_).toUpperCase())].join('');
 } else {
-if((p1__8415_SHARP_ < (10))){
-return [" ",tic_tac_toe.print_utils.purple,cljs.core.str.cljs$core$IFn$_invoke$arity$1(p1__8415_SHARP_),tic_tac_toe.print_utils.reset].join('');
+if((p1__16059_SHARP_ < (10))){
+return [" ",tic_tac_toe.print_utils.purple,cljs.core.str.cljs$core$IFn$_invoke$arity$1(p1__16059_SHARP_),tic_tac_toe.print_utils.reset].join('');
 } else {
-return [tic_tac_toe.print_utils.purple,cljs.core.str.cljs$core$IFn$_invoke$arity$1(p1__8415_SHARP_),tic_tac_toe.print_utils.reset].join('');
+return [tic_tac_toe.print_utils.purple,cljs.core.str.cljs$core$IFn$_invoke$arity$1(p1__16059_SHARP_),tic_tac_toe.print_utils.reset].join('');
 
 }
 }

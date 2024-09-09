@@ -9,10 +9,10 @@ reagent.impl.input.has_selection_api_QMARK_ = (function reagent$impl$input$has_s
 return cljs.core.contains_QMARK_.call(null,reagent.impl.input.these_inputs_have_selection_api,input_type);
 });
 reagent.impl.input._STAR_force_set_dom_value_STAR_ = false;
-reagent.impl.input.input_node_set_value = (function reagent$impl$input$input_node_set_value(node,rendered_value,dom_value,component,p__9128){
-var map__9129 = p__9128;
-var map__9129__$1 = cljs.core.__destructure_map.call(null,map__9129);
-var on_write = cljs.core.get.call(null,map__9129__$1,new cljs.core.Keyword(null,"on-write","on-write",31519475));
+reagent.impl.input.input_node_set_value = (function reagent$impl$input$input_node_set_value(node,rendered_value,dom_value,component,p__9124){
+var map__9125 = p__9124;
+var map__9125__$1 = cljs.core.__destructure_map.call(null,map__9125);
+var on_write = cljs.core.get.call(null,map__9125__$1,new cljs.core.Keyword(null,"on-write","on-write",31519475));
 if(cljs.core.truth_((function (){var or__5002__auto__ = (!((((node === document.activeElement)) && (((reagent.impl.input.has_selection_api_QMARK_.call(null,node.type)) && (((typeof rendered_value === 'string') && (typeof dom_value === 'string'))))))));
 if(or__5002__auto__){
 return or__5002__auto__;
@@ -33,12 +33,12 @@ return null;
 var node_value = node.value;
 if(cljs.core.not_EQ_.call(null,node_value,dom_value)){
 return reagent.impl.batching.do_after_render.call(null,(function (){
-var _STAR_force_set_dom_value_STAR__orig_val__9130 = reagent.impl.input._STAR_force_set_dom_value_STAR_;
-var _STAR_force_set_dom_value_STAR__temp_val__9131 = true;
-(reagent.impl.input._STAR_force_set_dom_value_STAR_ = _STAR_force_set_dom_value_STAR__temp_val__9131);
+var _STAR_force_set_dom_value_STAR__orig_val__9127 = reagent.impl.input._STAR_force_set_dom_value_STAR_;
+var _STAR_force_set_dom_value_STAR__temp_val__9128 = true;
+(reagent.impl.input._STAR_force_set_dom_value_STAR_ = _STAR_force_set_dom_value_STAR__temp_val__9128);
 
 try{return reagent.impl.input.input_component_set_value.call(null,component);
-}finally {(reagent.impl.input._STAR_force_set_dom_value_STAR_ = _STAR_force_set_dom_value_STAR__orig_val__9130);
+}finally {(reagent.impl.input._STAR_force_set_dom_value_STAR_ = _STAR_force_set_dom_value_STAR__orig_val__9127);
 }}));
 } else {
 var existing_offset_from_end = (cljs.core.count.call(null,node_value) - node.selectionStart);

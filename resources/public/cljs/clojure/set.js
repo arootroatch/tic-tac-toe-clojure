@@ -28,10 +28,10 @@ return clojure.set.union.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(argumen
 break;
 default:
 var args_arr__5751__auto__ = [];
-var len__5726__auto___8549 = arguments.length;
+var len__5726__auto___8550 = arguments.length;
 var i__5727__auto___8551 = (0);
 while(true){
-if((i__5727__auto___8551 < len__5726__auto___8549)){
+if((i__5727__auto___8551 < len__5726__auto___8550)){
 args_arr__5751__auto__.push((arguments[i__5727__auto___8551]));
 
 var G__8552 = (i__5727__auto___8551 + (1));
@@ -85,8 +85,8 @@ return self__5711__auto__.cljs$core$IFn$_invoke$arity$variadic(G__8536,G__8537,s
  * Return a set that is the intersection of the input sets
  */
 clojure.set.intersection = (function clojure$set$intersection(var_args){
-var G__8550 = arguments.length;
-switch (G__8550) {
+var G__8549 = arguments.length;
+switch (G__8549) {
 case 1:
 return clojure.set.intersection.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -97,10 +97,10 @@ return clojure.set.intersection.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(
 break;
 default:
 var args_arr__5751__auto__ = [];
-var len__5726__auto___8562 = arguments.length;
+var len__5726__auto___8563 = arguments.length;
 var i__5727__auto___8564 = (0);
 while(true){
-if((i__5727__auto___8564 < len__5726__auto___8562)){
+if((i__5727__auto___8564 < len__5726__auto___8563)){
 args_arr__5751__auto__.push((arguments[i__5727__auto___8564]));
 
 var G__8565 = (i__5727__auto___8564 + (1));
@@ -124,10 +124,10 @@ return s1;
 (clojure.set.intersection.cljs$core$IFn$_invoke$arity$2 = (function (s1,s2){
 while(true){
 if((cljs.core.count.call(null,s2) < cljs.core.count.call(null,s1))){
-var G__8566 = s2;
-var G__8567 = s1;
-s1 = G__8566;
-s2 = G__8567;
+var G__8568 = s2;
+var G__8569 = s1;
+s1 = G__8568;
+s2 = G__8569;
 continue;
 } else {
 return cljs.core.reduce.call(null,((function (s1,s2){
@@ -145,20 +145,20 @@ break;
 }));
 
 (clojure.set.intersection.cljs$core$IFn$_invoke$arity$variadic = (function (s1,s2,sets){
-var bubbled_sets = clojure.set.bubble_max_key.call(null,(function (p1__8541_SHARP_){
-return (- cljs.core.count.call(null,p1__8541_SHARP_));
+var bubbled_sets = clojure.set.bubble_max_key.call(null,(function (p1__8544_SHARP_){
+return (- cljs.core.count.call(null,p1__8544_SHARP_));
 }),cljs.core.conj.call(null,sets,s2,s1));
 return cljs.core.reduce.call(null,clojure.set.intersection,cljs.core.first.call(null,bubbled_sets),cljs.core.rest.call(null,bubbled_sets));
 }));
 
 /** @this {Function} */
-(clojure.set.intersection.cljs$lang$applyTo = (function (seq8543){
-var G__8544 = cljs.core.first.call(null,seq8543);
-var seq8543__$1 = cljs.core.next.call(null,seq8543);
-var G__8545 = cljs.core.first.call(null,seq8543__$1);
-var seq8543__$2 = cljs.core.next.call(null,seq8543__$1);
+(clojure.set.intersection.cljs$lang$applyTo = (function (seq8546){
+var G__8547 = cljs.core.first.call(null,seq8546);
+var seq8546__$1 = cljs.core.next.call(null,seq8546);
+var G__8548 = cljs.core.first.call(null,seq8546__$1);
+var seq8546__$2 = cljs.core.next.call(null,seq8546__$1);
 var self__5711__auto__ = this;
-return self__5711__auto__.cljs$core$IFn$_invoke$arity$variadic(G__8544,G__8545,seq8543__$2);
+return self__5711__auto__.cljs$core$IFn$_invoke$arity$variadic(G__8547,G__8548,seq8546__$2);
 }));
 
 (clojure.set.intersection.cljs$lang$maxFixedArity = (2));
@@ -167,8 +167,8 @@ return self__5711__auto__.cljs$core$IFn$_invoke$arity$variadic(G__8544,G__8545,s
  * Return a set that is the first set without elements of the remaining sets
  */
 clojure.set.difference = (function clojure$set$difference(var_args){
-var G__8563 = arguments.length;
-switch (G__8563) {
+var G__8562 = arguments.length;
+switch (G__8562) {
 case 1:
 return clojure.set.difference.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 

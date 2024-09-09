@@ -112,12 +112,12 @@ return or__5002__auto__;
 throw cljs.core.ex_info.call(null,err_15438,new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"given","given",716253602),x,new cljs.core.Keyword(null,"type","type",1174270348),cljs.core.type.call(null,x)], null));
 }
 });
-var valid_level__GT_int_15441 = taoensso.timbre.valid_level__GT_int;
+var valid_level__GT_int_15445 = taoensso.timbre.valid_level__GT_int;
 /**
  * Implementation detail.
  */
 taoensso.timbre.level_GT__EQ_ = (function taoensso$timbre$level_GT__EQ_(x,y){
-return (valid_level__GT_int_15441.call(null,x) >= valid_level__GT_int_15441.call(null,y));
+return (valid_level__GT_int_15445.call(null,x) >= valid_level__GT_int_15445.call(null,y));
 });
 var fn_QMARK__15446 = cljs.core.fn_QMARK_;
 var compile_15447 = taoensso.encore.fmemoize.call(null,(function (x){
@@ -148,10 +148,10 @@ return false;
  * [[<ns-pattern> <min-level>] ... ["*" <default-min-level>]], ns -> ?min-level
  */
 taoensso.timbre.ns__GT__QMARK_min_level = taoensso.encore.fmemoize.call(null,(function (specs,ns){
-return taoensso.encore.rsome.call(null,(function (p__15442){
-var vec__15443 = p__15442;
-var ns_pattern = cljs.core.nth.call(null,vec__15443,(0),null);
-var min_level = cljs.core.nth.call(null,vec__15443,(1),null);
+return taoensso.encore.rsome.call(null,(function (p__15441){
+var vec__15442 = p__15441;
+var ns_pattern = cljs.core.nth.call(null,vec__15442,(0),null);
+var min_level = cljs.core.nth.call(null,vec__15442,(1),null);
 if(cljs.core.truth_(conform_QMARK__STAR__15448.call(null,ns_pattern,ns))){
 return taoensso.timbre.valid_level.call(null,min_level);
 } else {

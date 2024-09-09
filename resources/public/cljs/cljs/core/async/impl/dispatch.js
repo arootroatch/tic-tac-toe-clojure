@@ -12,16 +12,16 @@ cljs.core.async.impl.dispatch.process_messages = (function cljs$core$async$impl$
 
 (cljs.core.async.impl.dispatch.queued_QMARK_ = false);
 
-var count_9685 = (0);
+var count_9712 = (0);
 while(true){
-var m_9686 = cljs.core.async.impl.dispatch.tasks.pop();
-if((m_9686 == null)){
+var m_9713 = cljs.core.async.impl.dispatch.tasks.pop();
+if((m_9713 == null)){
 } else {
-m_9686.call(null);
+m_9713.call(null);
 
-if((count_9685 < cljs.core.async.impl.dispatch.TASK_BATCH_SIZE)){
-var G__9687 = (count_9685 + (1));
-count_9685 = G__9687;
+if((count_9712 < cljs.core.async.impl.dispatch.TASK_BATCH_SIZE)){
+var G__9714 = (count_9712 + (1));
+count_9712 = G__9714;
 continue;
 } else {
 }
