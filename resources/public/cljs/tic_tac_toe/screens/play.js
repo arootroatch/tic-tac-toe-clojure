@@ -4,13 +4,7 @@ goog.require('cljs.core');
 goog.require('c3kit.wire.js');
 goog.require('tic_tac_toe.eval_board');
 goog.require('tic_tac_toe.render_screen');
-tic_tac_toe.screens.play.switch_player = (function tic_tac_toe$screens$play$switch_player(player){
-if(cljs.core._EQ_.call(null,new cljs.core.Keyword(null,"x","x",2099068185),player)){
-return new cljs.core.Keyword(null,"o","o",-1350007228);
-} else {
-return new cljs.core.Keyword(null,"x","x",2099068185);
-}
-});
+goog.require('tic_tac_toe.player');
 tic_tac_toe.screens.play.read_player = (function tic_tac_toe$screens$play$read_player(player){
 if(cljs.core._EQ_.call(null,new cljs.core.Keyword(null,"x","x",2099068185),player)){
 return "X";
@@ -27,7 +21,7 @@ var btn = c3kit.wire.js.element_by_id.call(null,["index-",cljs.core.str.cljs$cor
 
 (btn.disabled = true);
 
-return cljs.core.swap_BANG_.call(null,state,cljs.core.assoc,new cljs.core.Keyword(null,"board","board",-1907017633),new_board,new cljs.core.Keyword(null,"player","player",-97687400),tic_tac_toe.screens.play.switch_player.call(null,player),new cljs.core.Keyword(null,"game-state","game-state",935682735),tic_tac_toe.eval_board.score.call(null,new_board));
+return cljs.core.swap_BANG_.call(null,state,cljs.core.assoc,new cljs.core.Keyword(null,"board","board",-1907017633),new_board,new cljs.core.Keyword(null,"player","player",-97687400),tic_tac_toe.player.switch_player.call(null,player),new cljs.core.Keyword(null,"game-state","game-state",935682735),tic_tac_toe.eval_board.score.call(null,new_board));
 });
 tic_tac_toe.screens.play.board_square = (function tic_tac_toe$screens$play$board_square(state,n){
 return cljs.core.with_meta(new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"button.board-square","button.board-square",-1824570174),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"id","id",-1388402092),["index-",cljs.core.str.cljs$core$IFn$_invoke$arity$1(n)].join(''),new cljs.core.Keyword(null,"on-click","on-click",1632826543),cljs.core.partial.call(null,tic_tac_toe.screens.play.on_click,state,n)], null),""], null),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"key","key",-1516042587),n], null));
@@ -45,13 +39,13 @@ return cljs.core.count.call(null,new cljs.core.Keyword(null,"board","board",-190
 })();
 }
 cljs.core._add_method.call(null,tic_tac_toe.screens.play.render_board,(9),(function (state){
-return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div.three-grid","div.three-grid",224966406),cljs.core.doall.call(null,cljs.core.map.call(null,(function (p1__18453_SHARP_){
-return tic_tac_toe.screens.play.board_square.call(null,state,p1__18453_SHARP_);
+return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div.three-grid","div.three-grid",224966406),cljs.core.doall.call(null,cljs.core.map.call(null,(function (p1__10092_SHARP_){
+return tic_tac_toe.screens.play.board_square.call(null,state,p1__10092_SHARP_);
 }),cljs.core.range.call(null,(9))))], null);
 }));
 cljs.core._add_method.call(null,tic_tac_toe.screens.play.render_board,(16),(function (state){
-return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div.four-grid","div.four-grid",-321265237),cljs.core.doall.call(null,cljs.core.map.call(null,(function (p1__18454_SHARP_){
-return tic_tac_toe.screens.play.board_square.call(null,state,p1__18454_SHARP_);
+return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div.four-grid","div.four-grid",-321265237),cljs.core.doall.call(null,cljs.core.map.call(null,(function (p1__10093_SHARP_){
+return tic_tac_toe.screens.play.board_square.call(null,state,p1__10093_SHARP_);
 }),cljs.core.range.call(null,(16))))], null);
 }));
 tic_tac_toe.screens.play.play_heading = (function tic_tac_toe$screens$play$play_heading(state){

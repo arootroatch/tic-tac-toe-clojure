@@ -1,10 +1,8 @@
 (ns tic-tac-toe.screens.play
   (:require [c3kit.wire.js :as wjs]
             [tic-tac-toe.eval-board :as eval-board]
-            [tic-tac-toe.render-screen :refer [render-screen]]))
-
-(defn- switch-player [player]
-  (if (= :x player) :o :x))
+            [tic-tac-toe.render-screen :refer [render-screen]]
+            [tic-tac-toe.player :as player]))
 
 (defn- read-player [player]
   (if (= :x player) "X" "O"))
@@ -16,7 +14,7 @@
         btn (wjs/element-by-id (str "index-" move))]
     (set! (.-innerHTML btn) (read-player player))
     (set! (.-disabled btn) true)
-    (swap! state assoc :board new-board :player (switch-player player) :game-state (eval-board/score new-board))))
+    (swap! state assoc :board new-board :player (player/switch-player player) :game-state (eval-board/score new-board))))
 
 (defn- board-square [state n]
   ^{:key n} [:button.board-square {:id (str "index-" n) :on-click (partial on-click state n)} ""])
