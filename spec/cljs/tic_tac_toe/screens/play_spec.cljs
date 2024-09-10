@@ -1,5 +1,5 @@
 (ns tic-tac-toe.screens.play-spec
-  (:require-macros [c3kit.wire.spec-helperc :refer [should-select]]
+  (:require-macros [c3kit.wire.spec-helperc :refer [should-select should-not-select]]
                    [speclj.core :refer [before context describe focus-it it should-contain should-not= should= with-stubs xit]])
   (:require
     [c3kit.wire.js :as wjs]
@@ -16,7 +16,20 @@
 (describe "play screen"
   (wire/with-root-dom)
 
+  (it "displays restart button at end of game"
+    (swap! state assoc :game-state "X wins!")
+    (wire/render [sut/render-screen state])
+    (should-select "#restart")
+    (should= "Restart" (wire/text "#restart")))
+
+  (it "doesn't display restart button if game is in progress"
+    (swap! state assoc :game-state :in-progress)
+    (wire/render [sut/render-screen state])
+    (should-not-select "#restart"))
+
   (context "play heading"
+    (before (reset! state {:current-screen :play :board board-3 :game-state :in-progress}))
+
     (it "prompts player x for move"
       (swap! state assoc :player :x)
       (wire/render [sut/render-screen state])
@@ -31,6 +44,8 @@
       (swap! state assoc :game-state "X wins!")
       (wire/render [sut/render-screen state])
       (should= "X wins!" (wire/text "#play-heading")))
+
+    ; TODO make restart button that appears at end of game
     )
 
 
@@ -92,12 +107,18 @@
            (wire/render [sut/render-screen state])
            (wire/click! (str "#index-" n))
            (should-not= (assoc board-3 n :x) (:board @state))
+           (should= (if (= 2 mode) :x :o) (:player @state))
            (reset! state {:board board-3 :player :x :current-screen :play})))
 
     (it "AI is not triggered if game over"
       (swap! state assoc :board [:x :x 3 :o :o 6 7 8 9] :mode 2 :first-ai-level 3)
       (wire/click! "#index-2")
       (should= [:x :x :x :o :o 6 7 8 9] (:board @state)))
+
+    (it "AI updates game state"
+      (swap! state assoc :board [:x :x 3 :o :o :x :o :o 9] :mode 2 :first-ai-level 3)
+      (wire/click! "#index-8")
+      (should= "O wins!" (:game-state @state)))
     )
 
 
@@ -146,6 +167,7 @@
         (wire/render [sut/render-screen state])
         (wire/click! (str "#index-" n))
         (should-not= (assoc board-4 n :x) (:board @state))
+        (should= (if (= 2 mode) :x :o) (:player @state))
         (reset! state {:board board-4 :player :x :current-screen :play})))
 
     (it "AI is not triggered if game over"

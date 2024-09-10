@@ -13,9 +13,12 @@
         player (:player @state)
         new-board (assoc board move player)
         btn (wjs/element-by-id (str "index-" move))]
-    (swap! state assoc :board new-board :player (player/switch-player player) :game-state (eval-board/score new-board))
+    (swap! state assoc :board new-board :player (player/switch-player player) :game-state (eval-board/score new-board)))
     (when (and (= :in-progress (:game-state @state)) (not= 1 (:mode @state)))
-      (swap! state assoc :board (player/take-turn @state)))))
+      (let [new-board (player/take-turn @state)]
+        (swap! state assoc :player (player/switch-player (:player @state))
+               :board new-board
+               :game-state (eval-board/score new-board)))))
 
 (defn- set-token [state n]
   (let [val (nth (:board @state) n)]
@@ -50,4 +53,6 @@
 (defmethod render-screen :play [state]
   [:div#board-wrapper
    [play-heading state]
-   [render-board state]])
+   [render-board state]
+   (when (not= :in-progress (:game-state @state))
+     [:button#restart "Restart"])])
