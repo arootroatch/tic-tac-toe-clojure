@@ -6,12 +6,16 @@
             [tic-tac-toe.player :as player]
             [tic-tac-toe.render-screen :refer [render-screen]]))
 
+; TODO add mode 4 AI game
+
 (defn- on-click [state move]
   (let [board (:board @state)
         player (:player @state)
         new-board (assoc board move player)
         btn (wjs/element-by-id (str "index-" move))]
-    (swap! state assoc :board new-board :player (player/switch-player player) :game-state (eval-board/score new-board))))
+    (swap! state assoc :board new-board :player (player/switch-player player) :game-state (eval-board/score new-board))
+    (when (and (= :in-progress (:game-state @state)) (not= 1 (:mode @state)))
+      (swap! state assoc :board (player/take-turn @state)))))
 
 (defn- set-token [state n]
   (let [val (nth (:board @state) n)]
@@ -21,7 +25,7 @@
   (let [token (set-token state n)]
     [:button.board-square {:id       (str "index-" n)
                            :on-click (partial on-click state n)
-                           :disabled (some? token)} token]))
+                           :disabled (or (not= :in-progress (:game-state @state)) (some? token))} token]))
 
 (defmulti render-board (fn [state] (count (:board @state))))
 
