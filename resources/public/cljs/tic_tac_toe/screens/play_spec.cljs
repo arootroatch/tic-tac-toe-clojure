@@ -34,7 +34,7 @@
 
 
   (context "3x3"
-    (before (reset! state {:current-screen :play :board board-3 :player :x})
+    (before (reset! state {:current-screen :play :board board-3 :player :x :mode 1})
             (wire/render [sut/render-screen state]))
 
     (it "renders board"
@@ -56,7 +56,7 @@
       (doseq [n (range 9)]
         (wire/click! (str "#index-" n))
         (should= :o (:player @state))
-        (swap! state assoc :player :x)))
+        (swap! state assoc :board board-3 :player :x)))
 
     (it "clicking button updates game-state in state"
       (swap! state assoc :board [1 :x :x :o :o 6 7 8 9])
@@ -67,18 +67,18 @@
       (doseq [n (range 9)]
         (wire/click! (str "#index-" n))
         (should= "X" (wire/text (str "#index-" n)))
-        (reset! state {:board board-3 :player :x :current-screen :play})))
+        (reset! state {:board board-3 :player :x :current-screen :play :mode 1})))
 
     (it "clicking button disables button"
       (doseq [n (range 9)]
         (wire/click! (str "#index-" n))
         (should= true (wire/disabled? (str "#index-" n)))
-        (reset! state {:board board-3 :player :x :current-screen :play})))
+        (reset! state {:board board-3 :player :x :current-screen :play :mode 1})))
     )
 
 
   (context "4x4"
-    (before (reset! state {:current-screen :play :board board-4 :player :x})
+    (before (reset! state {:current-screen :play :board board-4 :player :x :mode 1})
             (wire/render [sut/render-screen state]))
 
     (it "renders board"
@@ -106,11 +106,11 @@
       (doseq [n (range 16)]
         (wire/click! (str "#index-" n))
         (should= "X" (wire/text (str "#index-" n)))
-        (reset! state {:board board-4 :player :x :current-screen :play})))
+        (reset! state {:board board-4 :player :x :current-screen :play :mode 1})))
 
     (it "clicking button disables button"
       (doseq [n (range 16)]
         (wire/click! (str "#index-" n))
         (should= true (wire/disabled? (str "#index-" n)))
-        (reset! state {:board board-4 :player :x :current-screen :play})))
+        (reset! state {:board board-4 :player :x :current-screen :play :mode 1})))
     ))

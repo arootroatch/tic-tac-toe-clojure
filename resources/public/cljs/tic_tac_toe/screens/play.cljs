@@ -17,26 +17,29 @@
     (swap! state assoc :board new-board :player (player/switch-player player) :game-state (eval-board/score new-board))))
 
 (defn- board-square [state n]
-  ^{:key n} [:button.board-square {:id (str "index-" n) :on-click (partial on-click state n)}])
+  [:button.board-square {:id (str "index-" n) :on-click (partial on-click state n)}])
 
 (defmulti render-board (fn [state] (count (:board @state))))
 
 (defmethod render-board 9 [state]
   [:div.three-grid
-   (map #(board-square state %) (range 9))])
+   (for [n (range 9)]
+     ^{:key n} [board-square state n])])
 
 (defmethod render-board 16 [state]
   [:div.four-grid
-   (map #(board-square state %) (range 16))])
+   (for [n (range 16)]
+     ^{:key n} [board-square state n])])
 
 (defn- play-heading [state]
-  (let [player (read-player (:player @state))
-        game-state (:game-state @state)]
-    (if (= :in-progress game-state)
-      (str player "'s turn!")
-      game-state)))
+  [:h2#play-heading
+   (let [player (read-player (:player @state))
+         game-state (:game-state @state)]
+     (if (= :in-progress game-state)
+       (str player "'s turn!")
+       game-state))])
 
 (defmethod render-screen :play [state]
   [:div#board-wrapper
-   [:h2#play-heading (play-heading state)]
-   (render-board state)])
+   [play-heading state]
+   [render-board state]])
