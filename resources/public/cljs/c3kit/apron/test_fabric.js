@@ -125,10 +125,10 @@ return c3kit.apron.test_fabric._normal_tester.call(null,cljs.core._EQ_,v);
 }
 }
 });
-c3kit.apron.test_fabric.kv__GT_tester = (function c3kit$apron$test_fabric$kv__GT_tester(p__8675){
-var vec__8676 = p__8675;
-var k = cljs.core.nth.call(null,vec__8676,(0),null);
-var v = cljs.core.nth.call(null,vec__8676,(1),null);
+c3kit.apron.test_fabric.kv__GT_tester = (function c3kit$apron$test_fabric$kv__GT_tester(p__8676){
+var vec__8677 = p__8676;
+var k = cljs.core.nth.call(null,vec__8677,(0),null);
+var v = cljs.core.nth.call(null,vec__8677,(1),null);
 var tester = c3kit.apron.test_fabric.get_tester_by_type.call(null,v);
 var key_path = c3kit.apron.test_fabric.ensure_key.call(null,k);
 return (function (e){

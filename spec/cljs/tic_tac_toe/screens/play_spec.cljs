@@ -1,16 +1,17 @@
 (ns tic-tac-toe.screens.play-spec
   (:require-macros [c3kit.wire.spec-helperc :refer [should-select]]
-                   [speclj.core :refer [before context describe it should-contain should=]])
+                   [speclj.core :refer [before context describe focus-it it should-contain should-not= should= with-stubs xit]])
   (:require
     [c3kit.wire.js :as wjs]
     [c3kit.wire.spec-helper :as wire]
+    [reagent.core :as reagent]
     [speclj.core]
     [tic-tac-toe.render-screen :as sut]
     [tic-tac-toe.screens.play]))
 
 (def board-3 [1 2 3 4 5 6 7 8 9])
 (def board-4 (vec (range 1 17)))
-(defonce state (atom {:current-screen :play :board board-3 :game-state :in-progress}))
+(defonce state (reagent/atom {:current-screen :play :board board-3 :game-state :in-progress}))
 
 (describe "play screen"
   (wire/with-root-dom)
@@ -74,6 +75,22 @@
         (wire/click! (str "#index-" n))
         (should= true (wire/disabled? (str "#index-" n)))
         (reset! state {:board board-3 :player :x :current-screen :play :mode 1})))
+
+    (it "all buttons disabled when game-over"
+      (doseq [n (range 9)]
+        (wire/click! (str "#index-" n))
+        (should= true (wire/disabled? (str "#index-" n)))
+        (reset! state {:board board-3 :player :x :current-screen :play :mode 1})))
+
+    (xit "clicking button triggers easy AI if mode 2 or 3 and AI mode is 1"
+         (doseq [ai [1]
+                 mode [2 3]
+                 n (range 9)]
+           (swap! state assoc :mode mode :first-ai-level ai)
+           (wire/render [sut/render-screen state])
+           (wire/click! (str "#index-" n))
+           (should-not= (assoc board-3 n :x) (:board @state))
+           (reset! state {:board board-3 :player :x :current-screen :play})))
     )
 
 

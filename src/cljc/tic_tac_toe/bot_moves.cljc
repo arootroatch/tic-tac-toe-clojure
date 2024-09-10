@@ -1,8 +1,10 @@
 (ns tic-tac-toe.bot-moves
-  (:require [tic-tac-toe.ai.easy-medium :refer [find-medium-move find-easy-move]]
-            [tic-tac-toe.ai.minimax :refer [find-best-move-memo]]
-            [tic-tac-toe.player :as player]
-            [tic-tac-toe.print-utils :refer [display-bot-move-message]]))
+  (:require
+    [tic-tac-toe.ai.easy-medium :refer [find-easy-move find-medium-move]]
+    [tic-tac-toe.ai.minimax :refer [find-best-move-memo]]
+    [tic-tac-toe.player :as player]
+    [tic-tac-toe.print-utils :refer [display-bot-move-message]]
+    ))
 
 (defn play-bot-move [move board mode player ui]
   (when (= ui :tui) (display-bot-move-message move mode player))

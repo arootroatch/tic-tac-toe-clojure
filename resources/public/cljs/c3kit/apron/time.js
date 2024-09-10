@@ -126,8 +126,8 @@ return c3kit.apron.time.from_epoch.call(null,(c3kit.apron.time.millis_since_epoc
  *   e.g. in AZ: (local 2020 1 1 0 0 0) -> 2020-01-01T07:00:00.000-00:00
  */
 c3kit.apron.time.local = (function c3kit$apron$time$local(var_args){
-var G__14040 = arguments.length;
-switch (G__14040) {
+var G__14038 = arguments.length;
+switch (G__14038) {
 case 3:
 return c3kit.apron.time.local.cljs$core$IFn$_invoke$arity$3((arguments[(0)]),(arguments[(1)]),(arguments[(2)]));
 
@@ -165,8 +165,8 @@ return (new Date(year,(month - (1)),day,hour,minute,second));
  *   e.g. (utc 2020 1 1 0 0 0) -> 2020-01-01T00:00:00.000-00:00
  */
 c3kit.apron.time.utc = (function c3kit$apron$time$utc(var_args){
-var G__14043 = arguments.length;
-switch (G__14043) {
+var G__14041 = arguments.length;
+switch (G__14041) {
 case 3:
 return c3kit.apron.time.utc.cljs$core$IFn$_invoke$arity$3((arguments[(0)]),(arguments[(1)]),(arguments[(2)]));
 
@@ -357,10 +357,10 @@ return time.setFullYear(direction.call(null,time.getFullYear(),n));
  *   a Date, the second argument to be a vector representing the amount of time to be changed,
  *   and the last argument to be either a + or - (indicating which direction to modify time).
  */
-c3kit.apron.time.mod_time_by_units = (function c3kit$apron$time$mod_time_by_units(time,p__14057,direction){
-var vec__14058 = p__14057;
-var unit = cljs.core.nth.call(null,vec__14058,(0),null);
-var n = cljs.core.nth.call(null,vec__14058,(1),null);
+c3kit.apron.time.mod_time_by_units = (function c3kit$apron$time$mod_time_by_units(time,p__14047,direction){
+var vec__14048 = p__14047;
+var unit = cljs.core.nth.call(null,vec__14048,(0),null);
+var n = cljs.core.nth.call(null,vec__14048,(1),null);
 var new_date = (new Date(time.getTime()));
 c3kit.apron.time._js_mod_time_by_units.call(null,new_date,unit,n,direction);
 
@@ -389,14 +389,14 @@ return null;
  */
 c3kit.apron.time.before = (function c3kit$apron$time$before(var_args){
 var args__5732__auto__ = [];
-var len__5726__auto___14080 = arguments.length;
-var i__5727__auto___14081 = (0);
+var len__5726__auto___14059 = arguments.length;
+var i__5727__auto___14060 = (0);
 while(true){
-if((i__5727__auto___14081 < len__5726__auto___14080)){
-args__5732__auto__.push((arguments[i__5727__auto___14081]));
+if((i__5727__auto___14060 < len__5726__auto___14059)){
+args__5732__auto__.push((arguments[i__5727__auto___14060]));
 
-var G__14082 = (i__5727__auto___14081 + (1));
-i__5727__auto___14081 = G__14082;
+var G__14061 = (i__5727__auto___14060 + (1));
+i__5727__auto___14060 = G__14061;
 continue;
 } else {
 }
@@ -408,19 +408,19 @@ return c3kit.apron.time.before.cljs$core$IFn$_invoke$arity$variadic((arguments[(
 });
 
 (c3kit.apron.time.before.cljs$core$IFn$_invoke$arity$variadic = (function (time,bits){
-return cljs.core.reduce.call(null,(function (p1__14064_SHARP_,p2__14065_SHARP_){
-return c3kit.apron.time.mod_time.call(null,p1__14064_SHARP_,p2__14065_SHARP_,cljs.core._);
+return cljs.core.reduce.call(null,(function (p1__14051_SHARP_,p2__14052_SHARP_){
+return c3kit.apron.time.mod_time.call(null,p1__14051_SHARP_,p2__14052_SHARP_,cljs.core._);
 }),time,bits);
 }));
 
 (c3kit.apron.time.before.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(c3kit.apron.time.before.cljs$lang$applyTo = (function (seq14066){
-var G__14067 = cljs.core.first.call(null,seq14066);
-var seq14066__$1 = cljs.core.next.call(null,seq14066);
+(c3kit.apron.time.before.cljs$lang$applyTo = (function (seq14053){
+var G__14054 = cljs.core.first.call(null,seq14053);
+var seq14053__$1 = cljs.core.next.call(null,seq14053);
 var self__5711__auto__ = this;
-return self__5711__auto__.cljs$core$IFn$_invoke$arity$variadic(G__14067,seq14066__$1);
+return self__5711__auto__.cljs$core$IFn$_invoke$arity$variadic(G__14054,seq14053__$1);
 }));
 
 /**
@@ -429,14 +429,14 @@ return self__5711__auto__.cljs$core$IFn$_invoke$arity$variadic(G__14067,seq14066
  */
 c3kit.apron.time.after = (function c3kit$apron$time$after(var_args){
 var args__5732__auto__ = [];
-var len__5726__auto___14087 = arguments.length;
-var i__5727__auto___14088 = (0);
+var len__5726__auto___14062 = arguments.length;
+var i__5727__auto___14063 = (0);
 while(true){
-if((i__5727__auto___14088 < len__5726__auto___14087)){
-args__5732__auto__.push((arguments[i__5727__auto___14088]));
+if((i__5727__auto___14063 < len__5726__auto___14062)){
+args__5732__auto__.push((arguments[i__5727__auto___14063]));
 
-var G__14089 = (i__5727__auto___14088 + (1));
-i__5727__auto___14088 = G__14089;
+var G__14064 = (i__5727__auto___14063 + (1));
+i__5727__auto___14063 = G__14064;
 continue;
 } else {
 }
@@ -448,19 +448,19 @@ return c3kit.apron.time.after.cljs$core$IFn$_invoke$arity$variadic((arguments[(0
 });
 
 (c3kit.apron.time.after.cljs$core$IFn$_invoke$arity$variadic = (function (time,bits){
-return cljs.core.reduce.call(null,(function (p1__14076_SHARP_,p2__14077_SHARP_){
-return c3kit.apron.time.mod_time.call(null,p1__14076_SHARP_,p2__14077_SHARP_,cljs.core._PLUS_);
+return cljs.core.reduce.call(null,(function (p1__14055_SHARP_,p2__14056_SHARP_){
+return c3kit.apron.time.mod_time.call(null,p1__14055_SHARP_,p2__14056_SHARP_,cljs.core._PLUS_);
 }),time,bits);
 }));
 
 (c3kit.apron.time.after.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(c3kit.apron.time.after.cljs$lang$applyTo = (function (seq14078){
-var G__14079 = cljs.core.first.call(null,seq14078);
-var seq14078__$1 = cljs.core.next.call(null,seq14078);
+(c3kit.apron.time.after.cljs$lang$applyTo = (function (seq14057){
+var G__14058 = cljs.core.first.call(null,seq14057);
+var seq14057__$1 = cljs.core.next.call(null,seq14057);
 var self__5711__auto__ = this;
-return self__5711__auto__.cljs$core$IFn$_invoke$arity$variadic(G__14079,seq14078__$1);
+return self__5711__auto__.cljs$core$IFn$_invoke$arity$variadic(G__14058,seq14057__$1);
 }));
 
 c3kit.apron.time.earlier_QMARK_ = c3kit.apron.time.before_QMARK_;
