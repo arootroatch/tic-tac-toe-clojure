@@ -10,4 +10,5 @@
 (defmethod render-screen :mode-selection [state]
   [:div#mode-selection.screen
    [:h2 (first print/mode-prompt)]
-   (map #(selection-button (nth print/mode-prompt %) (partial on-click state %) %) [1 2 3 4])])
+   (for [n [1 2 3 4]]
+     ^{:key n}[selection-button (nth print/mode-prompt n) (partial on-click state n)])])
