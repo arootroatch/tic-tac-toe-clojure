@@ -29,7 +29,9 @@
     (it "displays game state if game over"
       (swap! state assoc :game-state "X wins!")
       (wire/render [sut/render-screen state])
-      (should= "X wins!" (wire/text "#play-heading"))))
+      (should= "X wins!" (wire/text "#play-heading")))
+    )
+
 
   (context "3x3"
     (before (reset! state {:current-screen :play :board board-3 :player :x})
@@ -73,6 +75,7 @@
         (should= true (wire/disabled? (str "#index-" n)))
         (reset! state {:board board-3 :player :x :current-screen :play})))
     )
+
 
   (context "4x4"
     (before (reset! state {:current-screen :play :board board-4 :player :x})
