@@ -35,7 +35,7 @@
 
 
   (context "3x3"
-    (before (reset! state {:current-screen :play :board board-3 :player :x :mode 1})
+    (before (reset! state {:current-screen :play :board board-3 :player :x :mode 1 :game-state :in-progress})
             (wire/render [sut/render-screen state]))
 
     (it "renders board"
@@ -77,25 +77,32 @@
         (reset! state {:board board-3 :player :x :current-screen :play :mode 1})))
 
     (it "all buttons disabled when game-over"
-      (doseq [n (range 9)]
-        (wire/click! (str "#index-" n))
+      (doseq [n (range 9)
+              states ["X wins!" "O wins!" "It is a tie!"]]
+        (swap! state assoc :game-state states)
+        (wire/render [sut/render-screen state])
         (should= true (wire/disabled? (str "#index-" n)))
         (reset! state {:board board-3 :player :x :current-screen :play :mode 1})))
 
-    (xit "clicking button triggers easy AI if mode 2 or 3 and AI mode is 1"
-         (doseq [ai [1]
+    (it "clicking button triggers AI if mode 2 or 3"
+         (doseq [ai [1 2 3]
                  mode [2 3]
                  n (range 9)]
-           (swap! state assoc :mode mode :first-ai-level ai)
+           (swap! state assoc :mode mode :first-ai-level ai :player (if (= 2 mode) :x :o) :ui :gui)
            (wire/render [sut/render-screen state])
            (wire/click! (str "#index-" n))
            (should-not= (assoc board-3 n :x) (:board @state))
            (reset! state {:board board-3 :player :x :current-screen :play})))
+
+    (it "AI is not triggered if game over"
+      (swap! state assoc :board [:x :x 3 :o :o 6 7 8 9] :mode 2 :first-ai-level 3)
+      (wire/click! "#index-2")
+      (should= [:x :x :x :o :o 6 7 8 9] (:board @state)))
     )
 
 
   (context "4x4"
-    (before (reset! state {:current-screen :play :board board-4 :player :x :mode 1})
+    (before (reset! state {:current-screen :play :board board-4 :player :x :mode 1 :game-state :in-progress})
             (wire/render [sut/render-screen state]))
 
     (it "renders board"
@@ -117,7 +124,7 @@
       (doseq [n (range 16)]
         (wire/click! (str "#index-" n))
         (should= :o (:player @state))
-        (swap! state assoc :player :x)))
+        (swap! state assoc :player :x :board board-4)))
 
     (it "clicking button adds token to button HTML"
       (doseq [n (range 16)]
@@ -130,4 +137,19 @@
         (wire/click! (str "#index-" n))
         (should= true (wire/disabled? (str "#index-" n)))
         (reset! state {:board board-4 :player :x :current-screen :play :mode 1})))
+
+    (it "clicking button triggers AI if mode 2 or 3"
+      (doseq [ai [1 2 3]
+              mode [2 3]
+              n (range 16)]
+        (swap! state assoc :mode mode :first-ai-level ai :player (if (= 2 mode) :x :o) :ui :gui)
+        (wire/render [sut/render-screen state])
+        (wire/click! (str "#index-" n))
+        (should-not= (assoc board-4 n :x) (:board @state))
+        (reset! state {:board board-4 :player :x :current-screen :play})))
+
+    (it "AI is not triggered if game over"
+      (swap! state assoc :board [:x :x 3 :x :o :o :o 8 9 10 11 12 13 14 15 16] :mode 2 :first-ai-level 3)
+      (wire/click! "#index-2")
+      (should= [:x :x :x :x :o :o :o 8 9 10 11 12 13 14 15 16] (:board @state)))
     ))
