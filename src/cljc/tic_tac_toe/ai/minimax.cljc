@@ -1,9 +1,10 @@
 (ns tic-tac-toe.ai.minimax
-  (:require [tic-tac-toe.ai.easy-medium :as ai]
-            [tic-tac-toe.ai.lookup-tables :refer :all]
-            [tic-tac-toe.eval-board :refer [->paths evaluate-board]]
-            [tic-tac-toe.player :as player]
-            [tic-tac-toe.print-utils :as print]))
+  (:require
+    [tic-tac-toe.ai.easy-medium :as ai]
+    [tic-tac-toe.ai.lookup-tables :refer [move-table-x move-table-o]]
+    [tic-tac-toe.eval-board :refer [->paths evaluate-board]]
+    [tic-tac-toe.player :as player]
+    [tic-tac-toe.print-utils :as print]))
 
 (declare minimax)
 
@@ -68,7 +69,8 @@
   (let [available (filter number? board)
         winning-move (ai/get-winning-move board player)
         blocking-move (ai/get-winning-move board (player/switch-player player))
-        move-table (if (= player :x) move-table-x move-table-o)]
+        move-table (if (= player :x) move-table-x move-table-o)
+         ]
     (cond (every? number? board) (if (= 27 (count board)) 14 1)
           (some? winning-move) winning-move
           (some? blocking-move) blocking-move

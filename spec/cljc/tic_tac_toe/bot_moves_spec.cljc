@@ -1,10 +1,10 @@
 (ns tic-tac-toe.bot-moves-spec
-  (:require [speclj.core :refer :all]
+  (:require [speclj.core :refer [describe with-stubs redefs-around stub it context should= should-have-invoked]]
             [speclj.stub :as stub]
             [tic-tac-toe.print-utils :as print-utils]
             [tic-tac-toe.ai.easy-medium :refer [find-medium-move find-easy-move]]
             [tic-tac-toe.ai.minimax :refer [find-best-move-memo]]
-            [tic-tac-toe.bot-moves :refer :all]
+            [tic-tac-toe.bot-moves :as sut]
             [tic-tac-toe.player :as player]))
 
 (describe "playing bot moves"
@@ -15,7 +15,7 @@
     (redefs-around [find-easy-move (stub :find-easy-move)
                     find-medium-move (stub :find-medium-move)
                     find-best-move-memo (stub :find-best-move)
-                    play-bot-move (stub :play-bot-move)])
+                    sut/play-bot-move (stub :play-bot-move)])
 
     (it "calls find-easy-move"
       (player/take-turn {:first-ai-level 1 :board [1 2 3 4 5 6 7 8 9] :player :o :mode 2 :second-ai-level nil})
@@ -43,13 +43,13 @@
 
   (context "play-bot-move"
     (it "plays bot move to board"
-      (should= [1 2 3 4 :o 6 7 8 9] (play-bot-move 5 [1 2 3 4 5 6 7 8 9] 2 :o false))
-      (should= [:o 2 3 4 5 6 7 8 9] (play-bot-move 1 [1 2 3 4 5 6 7 8 9] 2 :o false))
-      (should= [1 2 3 4 5 6 7 8 :o] (play-bot-move 9 [1 2 3 4 5 6 7 8 9] 2 :o false)))
+      (should= [1 2 3 4 :o 6 7 8 9] (sut/play-bot-move 5 [1 2 3 4 5 6 7 8 9] 2 :o false))
+      (should= [:o 2 3 4 5 6 7 8 9] (sut/play-bot-move 1 [1 2 3 4 5 6 7 8 9] 2 :o false))
+      (should= [1 2 3 4 5 6 7 8 :o] (sut/play-bot-move 9 [1 2 3 4 5 6 7 8 9] 2 :o false)))
 
     (it "displays bot-move to user"
       (with-redefs [print-utils/display-bot-move-message (stub :display-bot-move-message)]
-        (play-bot-move 5 [1 2 3 4 5 6 7 8 9] 2 :o :tui)
+        (sut/play-bot-move 5 [1 2 3 4 5 6 7 8 9] 2 :o :tui)
         (should-have-invoked :display-bot-move-message {:with [5 2 :o]})))
     ))
 

@@ -1,7 +1,6 @@
 (ns tic-tac-toe.ai.minimax-test-fns
   (:require [clojure.math.combinatorics :as combo]
-            [clojure.test :refer :all]
-            [tic-tac-toe.ai.minimax :refer :all]
+            [tic-tac-toe.ai.minimax :refer [find-best-move-memo]]
             [tic-tac-toe.eval-board :as eval-board]))
 
 (defn- possible-combo? [moves]
