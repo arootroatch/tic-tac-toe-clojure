@@ -18,5 +18,3 @@
    [:h2 (selection-heading state)]
    (for [n [3 4 6]]
      ^{:key n}[selection-button (nth print/level-prompt n) (partial on-click state (set-number n))])])
-
-; TODO add AI trigger if mode 3

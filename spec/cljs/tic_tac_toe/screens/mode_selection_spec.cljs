@@ -8,7 +8,7 @@
     [tic-tac-toe.render-screen :as sut]
     [tic-tac-toe.screens.mode-selection]))
 
-(defonce state (atom {:current-screen :mode-selection}))
+(defonce state (atom {:current-screen :mode-selection :human? true}))
 
 (describe "mode selection screen"
   (wire/with-root-dom)
@@ -47,4 +47,20 @@
                   "#mode-selection button:nth-of-type(4)"]]
       (wire/click! item)
       (should= :board-selection (:current-screen @state))))
+
+  (it "sets human? to false if mode 3"
+    (wire/click! "#mode-selection button:nth-of-type(3)")
+    (should= false (:human? @state)))
+
+  (it "sets human? to false if mode 4"
+    (wire/click! "#mode-selection button:nth-of-type(4)")
+    (should= false (:human? @state)))
+
+  (it "sets human? to true if mode 1"
+    (wire/click! "#mode-selection button:nth-of-type(1)")
+    (should= true (:human? @state)))
+
+  (it "sets human? to true if mode 2"
+    (wire/click! "#mode-selection button:nth-of-type(2)")
+    (should= true (:human? @state)))
   )
