@@ -1,11 +1,12 @@
 (ns tic-tac-toe.screens.play-spec
   (:require-macros [c3kit.wire.spec-helperc :refer [should-not-select should-select]]
-                   [speclj.core :refer [before context describe focus-it it should-contain should-not= should= stub with-stubs xit]])
+                   [speclj.core :refer [before context describe focus-it it should-contain should-have-invoked should-not= should= stub with-stubs xit]])
   (:require
     [c3kit.wire.js :as wjs]
     [c3kit.wire.spec-helper :as wire]
     [reagent.core :as reagent]
     [speclj.core]
+    [tic-tac-toe.player :as player]
     [tic-tac-toe.render-screen :as sut]
     [tic-tac-toe.screens.play :as play]))
 
@@ -141,15 +142,16 @@
         (reset! state {:board board-3 :player :x :current-screen :play :mode 1})))
 
     (it "clicking button triggers AI if mode 2 or 3"
-      (doseq [ai [1 2 3]
-              mode [2 3]
-              n (range 9)]
-        (swap! state assoc :mode mode :first-ai-level ai :player (if (= 2 mode) :x :o) :ui :gui)
-        (wire/render [sut/render-screen state])
-        (wire/click! (str "#index-" n))
-        (should-not= (assoc board-3 n :x) (:board @state))
-        (should= (if (= 2 mode) :x :o) (:player @state))
-        (reset! state {:board board-3 :player :x :current-screen :play})))
+      (with-redefs [player/take-turn (stub :turn {:return board-3})]
+                   (doseq [ai [1 2 3]
+                           mode [2 3]
+                           n (range 9)]
+                     (swap! state assoc :mode mode :first-ai-level ai :player (if (= 2 mode) :x :o) :ui :gui)
+                     (wire/render [sut/render-screen state])
+                     (wire/click! (str "#index-" n))
+                     (should-have-invoked :turn)
+                     (should= (if (= 2 mode) :x :o) (:player @state))
+                     (reset! state {:board board-3 :player :x :current-screen :play}))))
 
     (it "AI is not triggered if game over"
       (swap! state assoc :board [:x :x 3 :o :o 6 7 8 9] :mode 2 :first-ai-level 3)
@@ -162,9 +164,10 @@
       (should= "O wins!" (:game-state @state)))
 
     (it "AI doesn't toggle human? to true if mode 4"
-              (swap! state assoc :mode 4 :human? false :first-ai-level 1 :second-ai-level 3)
-              (wire/render [sut/render-screen state])
-              (should= false (:human? @state)))
+      (with-redefs [player/take-turn (stub :turn {:return board-3})]
+                   (swap! state assoc :mode 4 :human? false :first-ai-level 1 :second-ai-level 3)
+                   (wire/render [sut/render-screen state])
+                   (should= false (:human? @state))))
     )
 
 
@@ -223,15 +226,16 @@
         (reset! state {:board board-4 :player :x :current-screen :play :mode 1})))
 
     (it "clicking button triggers AI if mode 2 or 3"
-      (doseq [ai [1 2 3]
-              mode [2 3]
-              n (range 16)]
-        (swap! state assoc :mode mode :first-ai-level ai :player (if (= 2 mode) :x :o) :ui :gui)
-        (wire/render [sut/render-screen state])
-        (wire/click! (str "#index-" n))
-        (should-not= (assoc board-4 n :x) (:board @state))
-        (should= (if (= 2 mode) :x :o) (:player @state))
-        (reset! state {:board board-4 :player :x :current-screen :play})))
+      (with-redefs [player/take-turn (stub :turn {:return board-4})]
+                   (doseq [ai [1 2 3]
+                           mode [2 3]
+                           n (range 16)]
+                     (swap! state assoc :mode mode :first-ai-level ai :player (if (= 2 mode) :x :o) :ui :gui)
+                     (wire/render [sut/render-screen state])
+                     (wire/click! (str "#index-" n))
+                     (should-have-invoked :turn)
+                     (should= (if (= 2 mode) :x :o) (:player @state))
+                     (reset! state {:board board-4 :player :x :current-screen :play}))))
 
     (it "AI is not triggered if game over"
       (swap! state assoc :board [:x :x 3 :x :o :o :o 8 9 10 11 12 13 14 15 16] :mode 2 :first-ai-level 3)
