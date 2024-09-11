@@ -32,8 +32,8 @@ return cljs.core.println.call(null,["Your opponent plays ",cljs.core.str.cljs$co
 }
 });
 tic_tac_toe.print_utils.print_board_selection = (function tic_tac_toe$print_utils$print_board_selection(input){
-var G__16051 = input;
-switch (G__16051) {
+var G__16066 = input;
+switch (G__16066) {
 case (1):
 return cljs.core.println.call(null,"3x3 board activated!\n");
 
@@ -47,7 +47,7 @@ return cljs.core.println.call(null,"3 dimensional board activated!\n");
 
 break;
 default:
-throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__16051)].join('')));
+throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__16066)].join('')));
 
 }
 });
@@ -62,8 +62,8 @@ cljs.core.println.call(null,["2 - ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(
 return cljs.core.println.call(null,["3 - ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cljs.core.nth.call(null,tic_tac_toe.print_utils.board_prompt,(3)))].join(''));
 });
 tic_tac_toe.print_utils.print_level_selection = (function tic_tac_toe$print_utils$print_level_selection(level,mode,board){
-var G__16084 = level;
-switch (G__16084) {
+var G__16078 = level;
+switch (G__16078) {
 case (1):
 return cljs.core.println.call(null,"Easy mode activated!\n");
 
@@ -81,7 +81,7 @@ return cljs.core.println.call(null,"Unbeatable mode activated!\n");
 
 break;
 default:
-throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__16084)].join('')));
+throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__16078)].join('')));
 
 }
 });
@@ -109,8 +109,8 @@ return cljs.core.println.call(null,["3 - ",cljs.core.str.cljs$core$IFn$_invoke$a
 }
 });
 tic_tac_toe.print_utils.print_mode_selection = (function tic_tac_toe$print_utils$print_mode_selection(mode){
-var G__16096 = mode;
-switch (G__16096) {
+var G__16085 = mode;
+switch (G__16085) {
 case (1):
 return cljs.core.println.call(null,"Human vs Human activated!\n");
 
@@ -128,7 +128,7 @@ return cljs.core.println.call(null,"Computer vs Computer activated!\n");
 
 break;
 default:
-throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__16096)].join('')));
+throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__16085)].join('')));
 
 }
 });
@@ -145,8 +145,8 @@ cljs.core.println.call(null,["3 - ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(
 return cljs.core.println.call(null,["4 - ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cljs.core.nth.call(null,tic_tac_toe.print_utils.mode_prompt,(4)))].join(''));
 });
 tic_tac_toe.print_utils.print_resume_selection = (function tic_tac_toe$print_utils$print_resume_selection(input){
-var G__16098 = input;
-switch (G__16098) {
+var G__16092 = input;
+switch (G__16092) {
 case (1):
 return cljs.core.println.call(null,"Game resumed!\n");
 
@@ -156,7 +156,7 @@ return cljs.core.println.call(null,"New game started!\n");
 
 break;
 default:
-throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__16098)].join('')));
+throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__16092)].join('')));
 
 }
 });

@@ -17,9 +17,9 @@ return cljs.core.swap_BANG_.call(null,reagent.debug.warnings,cljs.core.update_in
 var G__8512 = function (var_args){
 var args = null;
 if (arguments.length > 0) {
-var G__8513__i = 0, G__8513__a = new Array(arguments.length -  0);
-while (G__8513__i < G__8513__a.length) {G__8513__a[G__8513__i] = arguments[G__8513__i + 0]; ++G__8513__i;}
-  args = new cljs.core.IndexedSeq(G__8513__a,0,null);
+var G__8514__i = 0, G__8514__a = new Array(arguments.length -  0);
+while (G__8514__i < G__8514__a.length) {G__8514__a[G__8514__i] = arguments[G__8514__i + 0]; ++G__8514__i;}
+  args = new cljs.core.IndexedSeq(G__8514__a,0,null);
 } 
 return G__8512__delegate.call(this,args);};
 G__8512.cljs$lang$maxFixedArity = 0;

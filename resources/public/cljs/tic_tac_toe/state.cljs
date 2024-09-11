@@ -7,5 +7,6 @@
                         :first-ai-level  nil
                         :second-ai-level nil
                         :player          :x
+                        :human?          true
                         :game-state      :in-progress
                         :ui              :gui}))

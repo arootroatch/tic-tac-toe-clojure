@@ -113,14 +113,14 @@ var n__5593__auto__ = self__.length;
 var x = (0);
 while(true){
 if((x < n__5593__auto__)){
-var v_9669 = this$.pop();
-if(keep_QMARK_.call(null,v_9669)){
-this$.unshift(v_9669);
+var v_9665 = this$.pop();
+if(keep_QMARK_.call(null,v_9665)){
+this$.unshift(v_9665);
 } else {
 }
 
-var G__9670 = (x + (1));
-x = G__9670;
+var G__9666 = (x + (1));
+x = G__9666;
 continue;
 } else {
 return null;

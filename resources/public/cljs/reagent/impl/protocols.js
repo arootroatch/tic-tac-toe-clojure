@@ -51,7 +51,7 @@ return reagent$impl$protocols$Compiler$parse_tag$dyn_8511.call(null,this$,tag_na
 }
 });
 
-var reagent$impl$protocols$Compiler$as_element$dyn_8514 = (function (this$,x){
+var reagent$impl$protocols$Compiler$as_element$dyn_8513 = (function (this$,x){
 var x__5350__auto__ = (((this$ == null))?null:this$);
 var m__5351__auto__ = (reagent.impl.protocols.as_element[goog.typeOf(x__5350__auto__)]);
 if((!((m__5351__auto__ == null)))){
@@ -69,7 +69,7 @@ reagent.impl.protocols.as_element = (function reagent$impl$protocols$as_element(
 if((((!((this$ == null)))) && ((!((this$.reagent$impl$protocols$Compiler$as_element$arity$2 == null)))))){
 return this$.reagent$impl$protocols$Compiler$as_element$arity$2(this$,x);
 } else {
-return reagent$impl$protocols$Compiler$as_element$dyn_8514.call(null,this$,x);
+return reagent$impl$protocols$Compiler$as_element$dyn_8513.call(null,this$,x);
 }
 });
 

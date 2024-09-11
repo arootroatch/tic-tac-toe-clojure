@@ -23,20 +23,20 @@ if((!(typeof cljs.core.get.call(null,board,(cljs.core.first.call(null,moves) - (
 return "O wins!";
 } else {
 if(cljs.core._EQ_.call(null,cljs.core.first.call(null,player),new cljs.core.Keyword(null,"x","x",2099068185))){
-var G__11744 = cljs.core.rest.call(null,moves);
-var G__11745 = cljs.core.assoc.call(null,board,(cljs.core.first.call(null,moves) - (1)),cljs.core.first.call(null,player));
-var G__11746 = cljs.core.rest.call(null,player);
-moves = G__11744;
-board = G__11745;
-player = G__11746;
+var G__20840 = cljs.core.rest.call(null,moves);
+var G__20841 = cljs.core.assoc.call(null,board,(cljs.core.first.call(null,moves) - (1)),cljs.core.first.call(null,player));
+var G__20842 = cljs.core.rest.call(null,player);
+moves = G__20840;
+board = G__20841;
+player = G__20842;
 continue;
 } else {
-var G__11747 = moves;
-var G__11748 = tic_tac_toe.ai.minimax_test_fns.play_minimax_turn.call(null,board,cljs.core.first.call(null,player));
-var G__11749 = cljs.core.rest.call(null,player);
-moves = G__11747;
-board = G__11748;
-player = G__11749;
+var G__20845 = moves;
+var G__20846 = tic_tac_toe.ai.minimax_test_fns.play_minimax_turn.call(null,board,cljs.core.first.call(null,player));
+var G__20847 = cljs.core.rest.call(null,player);
+moves = G__20845;
+board = G__20846;
+player = G__20847;
 continue;
 
 }
@@ -46,8 +46,8 @@ break;
 }
 });
 tic_tac_toe.ai.minimax_test_fns.unbeatable_QMARK_ = (function tic_tac_toe$ai$minimax_test_fns$unbeatable_QMARK_(board){
-var all_move_combos = cljs.core.set.call(null,cljs.core.filter.call(null,tic_tac_toe.ai.minimax_test_fns.possible_combo_QMARK_,cljs.core.map.call(null,(function (p1__11739_SHARP_){
-return cljs.core.drop_last.call(null,(4),p1__11739_SHARP_);
+var all_move_combos = cljs.core.set.call(null,cljs.core.filter.call(null,tic_tac_toe.ai.minimax_test_fns.possible_combo_QMARK_,cljs.core.map.call(null,(function (p1__20838_SHARP_){
+return cljs.core.drop_last.call(null,(4),p1__20838_SHARP_);
 }),clojure.math.combinatorics.permutations.call(null,cljs.core.vec.call(null,board)))));
 var lost_QMARK_ = false;
 var game_count = (0);
@@ -55,12 +55,12 @@ while(true){
 if(((cljs.core.empty_QMARK_.call(null,all_move_combos)) || (lost_QMARK_))){
 return (!(lost_QMARK_));
 } else {
-var G__11756 = cljs.core.rest.call(null,all_move_combos);
-var G__11757 = ((cljs.core._EQ_.call(null,"X wins!",tic_tac_toe.ai.minimax_test_fns.play_sim_game.call(null,cljs.core.first.call(null,all_move_combos))))?true:false);
-var G__11758 = (game_count + (1));
-all_move_combos = G__11756;
-lost_QMARK_ = G__11757;
-game_count = G__11758;
+var G__20851 = cljs.core.rest.call(null,all_move_combos);
+var G__20852 = ((cljs.core._EQ_.call(null,"X wins!",tic_tac_toe.ai.minimax_test_fns.play_sim_game.call(null,cljs.core.first.call(null,all_move_combos))))?true:false);
+var G__20853 = (game_count + (1));
+all_move_combos = G__20851;
+lost_QMARK_ = G__20852;
+game_count = G__20853;
 continue;
 }
 break;
@@ -73,10 +73,10 @@ while(true){
 if(cljs.core.not_EQ_.call(null,tic_tac_toe.eval_board.score.call(null,board__$1),new cljs.core.Keyword(null,"in-progress","in-progress",2126442630))){
 return tic_tac_toe.eval_board.score.call(null,board__$1);
 } else {
-var G__11770 = cljs.core.rest.call(null,player);
-var G__11771 = tic_tac_toe.ai.minimax_test_fns.play_minimax_turn.call(null,board__$1,cljs.core.first.call(null,player));
-player = G__11770;
-board__$1 = G__11771;
+var G__20855 = cljs.core.rest.call(null,player);
+var G__20856 = tic_tac_toe.ai.minimax_test_fns.play_minimax_turn.call(null,board__$1,cljs.core.first.call(null,player));
+player = G__20855;
+board__$1 = G__20856;
 continue;
 }
 break;
@@ -89,10 +89,10 @@ while(true){
 if(((cljs.core.empty_QMARK_.call(null,games)) || ((!(ties_QMARK_))))){
 return ties_QMARK_;
 } else {
-var G__11780 = ((cljs.core._EQ_.call(null,"It is a tie!",tic_tac_toe.ai.minimax_test_fns.play_ai_game.call(null,board)))?true:false);
-var G__11781 = cljs.core.rest.call(null,games);
-ties_QMARK_ = G__11780;
-games = G__11781;
+var G__20859 = ((cljs.core._EQ_.call(null,"It is a tie!",tic_tac_toe.ai.minimax_test_fns.play_ai_game.call(null,board)))?true:false);
+var G__20860 = cljs.core.rest.call(null,games);
+ties_QMARK_ = G__20859;
+games = G__20860;
 continue;
 }
 break;

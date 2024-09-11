@@ -17,53 +17,53 @@ c3kit.apron.log.warn_BANG_.call(null);
 c3kit.wire.spec_helper.pprint = cljs.pprint.pprint;
 c3kit.wire.spec_helper.render_roots = cljs.core.atom.call(null,cljs.core.PersistentVector.EMPTY);
 c3kit.wire.spec_helper.unmount_render_roots = (function c3kit$wire$spec_helper$unmount_render_roots(){
-var seq__20187_20191 = cljs.core.seq.call(null,cljs.core.deref.call(null,c3kit.wire.spec_helper.render_roots));
-var chunk__20188_20192 = null;
-var count__20189_20193 = (0);
-var i__20190_20194 = (0);
+var seq__20756_20760 = cljs.core.seq.call(null,cljs.core.deref.call(null,c3kit.wire.spec_helper.render_roots));
+var chunk__20757_20761 = null;
+var count__20758_20762 = (0);
+var i__20759_20763 = (0);
 while(true){
-if((i__20190_20194 < count__20189_20193)){
-var root_20195 = cljs.core._nth.call(null,chunk__20188_20192,i__20190_20194);
-reagent.dom.unmount_component_at_node.call(null,root_20195);
+if((i__20759_20763 < count__20758_20762)){
+var root_20764 = cljs.core._nth.call(null,chunk__20757_20761,i__20759_20763);
+reagent.dom.unmount_component_at_node.call(null,root_20764);
 
 
-var G__20196 = seq__20187_20191;
-var G__20197 = chunk__20188_20192;
-var G__20198 = count__20189_20193;
-var G__20199 = (i__20190_20194 + (1));
-seq__20187_20191 = G__20196;
-chunk__20188_20192 = G__20197;
-count__20189_20193 = G__20198;
-i__20190_20194 = G__20199;
+var G__20765 = seq__20756_20760;
+var G__20766 = chunk__20757_20761;
+var G__20767 = count__20758_20762;
+var G__20768 = (i__20759_20763 + (1));
+seq__20756_20760 = G__20765;
+chunk__20757_20761 = G__20766;
+count__20758_20762 = G__20767;
+i__20759_20763 = G__20768;
 continue;
 } else {
-var temp__5804__auto___20200 = cljs.core.seq.call(null,seq__20187_20191);
-if(temp__5804__auto___20200){
-var seq__20187_20202__$1 = temp__5804__auto___20200;
-if(cljs.core.chunked_seq_QMARK_.call(null,seq__20187_20202__$1)){
-var c__5525__auto___20203 = cljs.core.chunk_first.call(null,seq__20187_20202__$1);
-var G__20204 = cljs.core.chunk_rest.call(null,seq__20187_20202__$1);
-var G__20205 = c__5525__auto___20203;
-var G__20206 = cljs.core.count.call(null,c__5525__auto___20203);
-var G__20207 = (0);
-seq__20187_20191 = G__20204;
-chunk__20188_20192 = G__20205;
-count__20189_20193 = G__20206;
-i__20190_20194 = G__20207;
+var temp__5804__auto___20769 = cljs.core.seq.call(null,seq__20756_20760);
+if(temp__5804__auto___20769){
+var seq__20756_20771__$1 = temp__5804__auto___20769;
+if(cljs.core.chunked_seq_QMARK_.call(null,seq__20756_20771__$1)){
+var c__5525__auto___20772 = cljs.core.chunk_first.call(null,seq__20756_20771__$1);
+var G__20773 = cljs.core.chunk_rest.call(null,seq__20756_20771__$1);
+var G__20774 = c__5525__auto___20772;
+var G__20775 = cljs.core.count.call(null,c__5525__auto___20772);
+var G__20776 = (0);
+seq__20756_20760 = G__20773;
+chunk__20757_20761 = G__20774;
+count__20758_20762 = G__20775;
+i__20759_20763 = G__20776;
 continue;
 } else {
-var root_20209 = cljs.core.first.call(null,seq__20187_20202__$1);
-reagent.dom.unmount_component_at_node.call(null,root_20209);
+var root_20778 = cljs.core.first.call(null,seq__20756_20771__$1);
+reagent.dom.unmount_component_at_node.call(null,root_20778);
 
 
-var G__20210 = cljs.core.next.call(null,seq__20187_20202__$1);
-var G__20211 = null;
-var G__20212 = (0);
-var G__20213 = (0);
-seq__20187_20191 = G__20210;
-chunk__20188_20192 = G__20211;
-count__20189_20193 = G__20212;
-i__20190_20194 = G__20213;
+var G__20779 = cljs.core.next.call(null,seq__20756_20771__$1);
+var G__20780 = null;
+var G__20781 = (0);
+var G__20782 = (0);
+seq__20756_20760 = G__20779;
+chunk__20757_20761 = G__20780;
+count__20758_20762 = G__20781;
+i__20759_20763 = G__20782;
 continue;
 }
 } else {
@@ -81,8 +81,8 @@ c3kit.wire.spec_helper.unmount_render_roots.call(null);
 return (body.innerHTML = content);
 });
 c3kit.wire.spec_helper.with_clean_dom = (function c3kit$wire$spec_helper$with_clean_dom(var_args){
-var G__20208 = arguments.length;
-switch (G__20208) {
+var G__20777 = arguments.length;
+switch (G__20777) {
 case 0:
 return c3kit.wire.spec_helper.with_clean_dom.cljs$core$IFn$_invoke$arity$0();
 
@@ -115,8 +115,8 @@ c3kit.wire.spec_helper.with_root_dom = (function c3kit$wire$spec_helper$with_roo
 return c3kit.wire.spec_helper.with_clean_dom.call(null,"<div id='root'/>");
 });
 c3kit.wire.spec_helper.select = (function c3kit$wire$spec_helper$select(var_args){
-var G__20216 = arguments.length;
-switch (G__20216) {
+var G__20785 = arguments.length;
+switch (G__20785) {
 case 1:
 return c3kit.wire.spec_helper.select.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -152,8 +152,8 @@ return root.querySelector(selector);
 (c3kit.wire.spec_helper.select.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.select_all = (function c3kit$wire$spec_helper$select_all(var_args){
-var G__20220 = arguments.length;
-switch (G__20220) {
+var G__20789 = arguments.length;
+switch (G__20789) {
 case 1:
 return c3kit.wire.spec_helper.select_all.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -184,8 +184,8 @@ throw (new Error(["Assert failed: ",["select-all: selector must be a string!: ",
 }
 
 var results = root.querySelectorAll(selector);
-var slice = (function (p1__20217_SHARP_){
-return Array.prototype.slice.call(p1__20217_SHARP_);
+var slice = (function (p1__20786_SHARP_){
+return Array.prototype.slice.call(p1__20786_SHARP_);
 });
 return cljs.core.into.call(null,cljs.core.PersistentVector.EMPTY,slice.call(null,results));
 }));
@@ -193,8 +193,8 @@ return cljs.core.into.call(null,cljs.core.PersistentVector.EMPTY,slice.call(null
 (c3kit.wire.spec_helper.select_all.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.select_map = (function c3kit$wire$spec_helper$select_map(var_args){
-var G__20223 = arguments.length;
-switch (G__20223) {
+var G__20791 = arguments.length;
+switch (G__20791) {
 case 2:
 return c3kit.wire.spec_helper.select_map.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -220,8 +220,8 @@ return cljs.core.map.call(null,f,c3kit.wire.spec_helper.select_all.call(null,roo
 (c3kit.wire.spec_helper.select_map.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.count_all = (function c3kit$wire$spec_helper$count_all(var_args){
-var G__20226 = arguments.length;
-switch (G__20226) {
+var G__20795 = arguments.length;
+switch (G__20795) {
 case 1:
 return c3kit.wire.spec_helper.count_all.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -250,8 +250,8 @@ return cljs.core.count.call(null,c3kit.wire.spec_helper.select_all.call(null,roo
  * Use me to render components for testing.  Using reagent/render directly may work, but is not as good.
  */
 c3kit.wire.spec_helper.render = (function c3kit$wire$spec_helper$render(var_args){
-var G__20229 = arguments.length;
-switch (G__20229) {
+var G__20798 = arguments.length;
+switch (G__20798) {
 case 1:
 return c3kit.wire.spec_helper.render.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -282,7 +282,7 @@ return cljs.core.clj__GT_js.call(null,new cljs.core.PersistentArrayMap(null, 2, 
 }));
 
 try{return reagent.dom.render.call(null,component,root);
-}catch (e20230){var e = e20230;
+}catch (e20799){var e = e20799;
 throw cljs.core.ex_info.call(null,"Render Error",new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"message","message",-406056002),e], null));
 }}));
 
@@ -293,8 +293,8 @@ return reagent.core.flush.call(null);
 });
 c3kit.wire.spec_helper.simulator = ReactTestUtils.Simulate;
 c3kit.wire.spec_helper.resolve_node = (function c3kit$wire$spec_helper$resolve_node(var_args){
-var G__20233 = arguments.length;
-switch (G__20233) {
+var G__20802 = arguments.length;
+switch (G__20802) {
 case 2:
 return c3kit.wire.spec_helper.resolve_node.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -349,8 +349,8 @@ return cljs.core.assoc.call(null,m,code,cljs.core.clj__GT_js.call(null,new cljs.
 });
 c3kit.wire.spec_helper.keypresses = cljs.core.reduce_kv.call(null,c3kit.wire.spec_helper.assoc_key_event,cljs.core.PersistentArrayMap.EMPTY,cljs.core.PersistentHashMap.fromArrays([c3kit.wire.js.TAB,c3kit.wire.js.DIGIT5,c3kit.wire.js.DIGIT6,c3kit.wire.js.ENTER,c3kit.wire.js.UP,c3kit.wire.js.DIGIT1,c3kit.wire.js.DIGIT3,c3kit.wire.js.DIGIT0,c3kit.wire.js.DIGIT2,c3kit.wire.js.ESC,c3kit.wire.js.DIGIT4,c3kit.wire.js.DIGIT9,c3kit.wire.js.RIGHT,c3kit.wire.js.DIGIT7,c3kit.wire.js.LEFT,c3kit.wire.js.DIGIT8,c3kit.wire.js.DOWN],["Tab","5","6","Enter","ArrowUp","1","3","0","2","Escape","4","9","ArrowRight","7","ArrowLeft","8","ArrowDown"]));
 c3kit.wire.spec_helper.simulate = (function c3kit$wire$spec_helper$simulate(var_args){
-var G__20236 = arguments.length;
-switch (G__20236) {
+var G__20805 = arguments.length;
+switch (G__20805) {
 case 3:
 return c3kit.wire.spec_helper.simulate.cljs$core$IFn$_invoke$arity$3((arguments[(0)]),(arguments[(1)]),(arguments[(2)]));
 
@@ -383,8 +383,8 @@ return c3kit.wire.spec_helper.simulate.call(null,event_name,c3kit.wire.spec_help
 (c3kit.wire.spec_helper.simulate.cljs$lang$maxFixedArity = 4);
 
 c3kit.wire.spec_helper.simulate_BANG_ = (function c3kit$wire$spec_helper$simulate_BANG_(var_args){
-var G__20239 = arguments.length;
-switch (G__20239) {
+var G__20808 = arguments.length;
+switch (G__20808) {
 case 3:
 return c3kit.wire.spec_helper.simulate_BANG_.cljs$core$IFn$_invoke$arity$3((arguments[(0)]),(arguments[(1)]),(arguments[(2)]));
 
@@ -414,8 +414,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.simulate_BANG_.cljs$lang$maxFixedArity = 4);
 
 c3kit.wire.spec_helper.key_down = (function c3kit$wire$spec_helper$key_down(var_args){
-var G__20242 = arguments.length;
-switch (G__20242) {
+var G__20811 = arguments.length;
+switch (G__20811) {
 case 2:
 return c3kit.wire.spec_helper.key_down.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -441,8 +441,8 @@ return c3kit.wire.spec_helper.key_down.call(null,c3kit.wire.spec_helper.resolve_
 (c3kit.wire.spec_helper.key_down.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.key_down_BANG_ = (function c3kit$wire$spec_helper$key_down_BANG_(var_args){
-var G__20244 = arguments.length;
-switch (G__20244) {
+var G__20814 = arguments.length;
+switch (G__20814) {
 case 2:
 return c3kit.wire.spec_helper.key_down_BANG_.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -472,8 +472,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.key_down_BANG_.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.key_up = (function c3kit$wire$spec_helper$key_up(var_args){
-var G__20247 = arguments.length;
-switch (G__20247) {
+var G__20817 = arguments.length;
+switch (G__20817) {
 case 2:
 return c3kit.wire.spec_helper.key_up.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -499,8 +499,8 @@ return c3kit.wire.spec_helper.key_up.call(null,c3kit.wire.spec_helper.resolve_no
 (c3kit.wire.spec_helper.key_up.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.key_up_BANG_ = (function c3kit$wire$spec_helper$key_up_BANG_(var_args){
-var G__20251 = arguments.length;
-switch (G__20251) {
+var G__20820 = arguments.length;
+switch (G__20820) {
 case 2:
 return c3kit.wire.spec_helper.key_up_BANG_.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -530,8 +530,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.key_up_BANG_.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.key_press = (function c3kit$wire$spec_helper$key_press(var_args){
-var G__20254 = arguments.length;
-switch (G__20254) {
+var G__20822 = arguments.length;
+switch (G__20822) {
 case 2:
 return c3kit.wire.spec_helper.key_press.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -557,8 +557,8 @@ return c3kit.wire.spec_helper.key_press.call(null,c3kit.wire.spec_helper.resolve
 (c3kit.wire.spec_helper.key_press.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.key_press_BANG_ = (function c3kit$wire$spec_helper$key_press_BANG_(var_args){
-var G__20256 = arguments.length;
-switch (G__20256) {
+var G__20828 = arguments.length;
+switch (G__20828) {
 case 2:
 return c3kit.wire.spec_helper.key_press_BANG_.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -588,8 +588,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.key_press_BANG_.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.touch_end = (function c3kit$wire$spec_helper$touch_end(var_args){
-var G__20260 = arguments.length;
-switch (G__20260) {
+var G__20831 = arguments.length;
+switch (G__20831) {
 case 1:
 return c3kit.wire.spec_helper.touch_end.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -615,8 +615,8 @@ return c3kit.wire.spec_helper.touch_end.call(null,c3kit.wire.spec_helper.resolve
 (c3kit.wire.spec_helper.touch_end.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.touch_end_BANG_ = (function c3kit$wire$spec_helper$touch_end_BANG_(var_args){
-var G__20263 = arguments.length;
-switch (G__20263) {
+var G__20834 = arguments.length;
+switch (G__20834) {
 case 1:
 return c3kit.wire.spec_helper.touch_end_BANG_.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -646,8 +646,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.touch_end_BANG_.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.touch_start = (function c3kit$wire$spec_helper$touch_start(var_args){
-var G__20265 = arguments.length;
-switch (G__20265) {
+var G__20837 = arguments.length;
+switch (G__20837) {
 case 1:
 return c3kit.wire.spec_helper.touch_start.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -673,8 +673,8 @@ return c3kit.wire.spec_helper.touch_start.call(null,c3kit.wire.spec_helper.resol
 (c3kit.wire.spec_helper.touch_start.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.touch_start_BANG_ = (function c3kit$wire$spec_helper$touch_start_BANG_(var_args){
-var G__20268 = arguments.length;
-switch (G__20268) {
+var G__20844 = arguments.length;
+switch (G__20844) {
 case 1:
 return c3kit.wire.spec_helper.touch_start_BANG_.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -704,8 +704,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.touch_start_BANG_.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.click = (function c3kit$wire$spec_helper$click(var_args){
-var G__20272 = arguments.length;
-switch (G__20272) {
+var G__20850 = arguments.length;
+switch (G__20850) {
 case 1:
 return c3kit.wire.spec_helper.click.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -731,8 +731,8 @@ return c3kit.wire.spec_helper.click.call(null,c3kit.wire.spec_helper.resolve_nod
 (c3kit.wire.spec_helper.click.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.click_BANG_ = (function c3kit$wire$spec_helper$click_BANG_(var_args){
-var G__20274 = arguments.length;
-switch (G__20274) {
+var G__20858 = arguments.length;
+switch (G__20858) {
 case 1:
 return c3kit.wire.spec_helper.click_BANG_.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -762,8 +762,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.click_BANG_.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.mouse_enter = (function c3kit$wire$spec_helper$mouse_enter(var_args){
-var G__20278 = arguments.length;
-switch (G__20278) {
+var G__20863 = arguments.length;
+switch (G__20863) {
 case 1:
 return c3kit.wire.spec_helper.mouse_enter.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -789,8 +789,8 @@ return c3kit.wire.spec_helper.mouse_enter.call(null,c3kit.wire.spec_helper.resol
 (c3kit.wire.spec_helper.mouse_enter.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.mouse_enter_BANG_ = (function c3kit$wire$spec_helper$mouse_enter_BANG_(var_args){
-var G__20280 = arguments.length;
-switch (G__20280) {
+var G__20866 = arguments.length;
+switch (G__20866) {
 case 1:
 return c3kit.wire.spec_helper.mouse_enter_BANG_.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -820,8 +820,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.mouse_enter_BANG_.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.mouse_up = (function c3kit$wire$spec_helper$mouse_up(var_args){
-var G__20284 = arguments.length;
-switch (G__20284) {
+var G__20868 = arguments.length;
+switch (G__20868) {
 case 1:
 return c3kit.wire.spec_helper.mouse_up.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -847,8 +847,8 @@ return c3kit.wire.spec_helper.mouse_up.call(null,c3kit.wire.spec_helper.resolve_
 (c3kit.wire.spec_helper.mouse_up.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.mouse_up_BANG_ = (function c3kit$wire$spec_helper$mouse_up_BANG_(var_args){
-var G__20287 = arguments.length;
-switch (G__20287) {
+var G__20871 = arguments.length;
+switch (G__20871) {
 case 1:
 return c3kit.wire.spec_helper.mouse_up_BANG_.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -878,8 +878,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.mouse_up_BANG_.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.mouse_move = (function c3kit$wire$spec_helper$mouse_move(var_args){
-var G__20290 = arguments.length;
-switch (G__20290) {
+var G__20874 = arguments.length;
+switch (G__20874) {
 case 1:
 return c3kit.wire.spec_helper.mouse_move.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -905,8 +905,8 @@ return c3kit.wire.spec_helper.mouse_move.call(null,c3kit.wire.spec_helper.resolv
 (c3kit.wire.spec_helper.mouse_move.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.mouse_move_BANG_ = (function c3kit$wire$spec_helper$mouse_move_BANG_(var_args){
-var G__20293 = arguments.length;
-switch (G__20293) {
+var G__20877 = arguments.length;
+switch (G__20877) {
 case 1:
 return c3kit.wire.spec_helper.mouse_move_BANG_.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -936,8 +936,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.mouse_move_BANG_.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.mouse_down = (function c3kit$wire$spec_helper$mouse_down(var_args){
-var G__20296 = arguments.length;
-switch (G__20296) {
+var G__20881 = arguments.length;
+switch (G__20881) {
 case 1:
 return c3kit.wire.spec_helper.mouse_down.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -972,8 +972,8 @@ return c3kit.wire.spec_helper.mouse_down.call(null,c3kit.wire.spec_helper.resolv
 (c3kit.wire.spec_helper.mouse_down.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.mouse_down_BANG_ = (function c3kit$wire$spec_helper$mouse_down_BANG_(var_args){
-var G__20299 = arguments.length;
-switch (G__20299) {
+var G__20886 = arguments.length;
+switch (G__20886) {
 case 1:
 return c3kit.wire.spec_helper.mouse_down_BANG_.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -1003,8 +1003,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.mouse_down_BANG_.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.mouse_leave = (function c3kit$wire$spec_helper$mouse_leave(var_args){
-var G__20301 = arguments.length;
-switch (G__20301) {
+var G__20893 = arguments.length;
+switch (G__20893) {
 case 1:
 return c3kit.wire.spec_helper.mouse_leave.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -1030,8 +1030,8 @@ return c3kit.wire.spec_helper.mouse_leave.call(null,c3kit.wire.spec_helper.resol
 (c3kit.wire.spec_helper.mouse_leave.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.mouse_leave_BANG_ = (function c3kit$wire$spec_helper$mouse_leave_BANG_(var_args){
-var G__20305 = arguments.length;
-switch (G__20305) {
+var G__20904 = arguments.length;
+switch (G__20904) {
 case 1:
 return c3kit.wire.spec_helper.mouse_leave_BANG_.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -1061,8 +1061,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.mouse_leave_BANG_.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.drag = (function c3kit$wire$spec_helper$drag(var_args){
-var G__20308 = arguments.length;
-switch (G__20308) {
+var G__20921 = arguments.length;
+switch (G__20921) {
 case 2:
 return c3kit.wire.spec_helper.drag.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -1088,8 +1088,8 @@ return c3kit.wire.spec_helper.drag.call(null,c3kit.wire.spec_helper.resolve_node
 (c3kit.wire.spec_helper.drag.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.drag_BANG_ = (function c3kit$wire$spec_helper$drag_BANG_(var_args){
-var G__20311 = arguments.length;
-switch (G__20311) {
+var G__20924 = arguments.length;
+switch (G__20924) {
 case 2:
 return c3kit.wire.spec_helper.drag_BANG_.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -1119,8 +1119,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.drag_BANG_.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.drag_start = (function c3kit$wire$spec_helper$drag_start(var_args){
-var G__20314 = arguments.length;
-switch (G__20314) {
+var G__20933 = arguments.length;
+switch (G__20933) {
 case 2:
 return c3kit.wire.spec_helper.drag_start.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -1146,8 +1146,8 @@ return c3kit.wire.spec_helper.drag_start.call(null,c3kit.wire.spec_helper.resolv
 (c3kit.wire.spec_helper.drag_start.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.drag_start_BANG_ = (function c3kit$wire$spec_helper$drag_start_BANG_(var_args){
-var G__20316 = arguments.length;
-switch (G__20316) {
+var G__20946 = arguments.length;
+switch (G__20946) {
 case 2:
 return c3kit.wire.spec_helper.drag_start_BANG_.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -1177,8 +1177,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.drag_start_BANG_.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.drag_enter = (function c3kit$wire$spec_helper$drag_enter(var_args){
-var G__20320 = arguments.length;
-switch (G__20320) {
+var G__20948 = arguments.length;
+switch (G__20948) {
 case 2:
 return c3kit.wire.spec_helper.drag_enter.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -1204,8 +1204,8 @@ return c3kit.wire.spec_helper.drag_enter.call(null,c3kit.wire.spec_helper.resolv
 (c3kit.wire.spec_helper.drag_enter.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.drag_enter_BANG_ = (function c3kit$wire$spec_helper$drag_enter_BANG_(var_args){
-var G__20323 = arguments.length;
-switch (G__20323) {
+var G__20952 = arguments.length;
+switch (G__20952) {
 case 2:
 return c3kit.wire.spec_helper.drag_enter_BANG_.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -1235,8 +1235,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.drag_enter_BANG_.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.drag_leave = (function c3kit$wire$spec_helper$drag_leave(var_args){
-var G__20326 = arguments.length;
-switch (G__20326) {
+var G__20955 = arguments.length;
+switch (G__20955) {
 case 2:
 return c3kit.wire.spec_helper.drag_leave.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -1262,8 +1262,8 @@ return c3kit.wire.spec_helper.drag_leave.call(null,c3kit.wire.spec_helper.resolv
 (c3kit.wire.spec_helper.drag_leave.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.drag_leave_BANG_ = (function c3kit$wire$spec_helper$drag_leave_BANG_(var_args){
-var G__20328 = arguments.length;
-switch (G__20328) {
+var G__20957 = arguments.length;
+switch (G__20957) {
 case 2:
 return c3kit.wire.spec_helper.drag_leave_BANG_.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -1293,8 +1293,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.drag_leave_BANG_.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.drag_end = (function c3kit$wire$spec_helper$drag_end(var_args){
-var G__20332 = arguments.length;
-switch (G__20332) {
+var G__20969 = arguments.length;
+switch (G__20969) {
 case 2:
 return c3kit.wire.spec_helper.drag_end.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -1320,8 +1320,8 @@ return c3kit.wire.spec_helper.drag_end.call(null,c3kit.wire.spec_helper.resolve_
 (c3kit.wire.spec_helper.drag_end.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.drag_end_BANG_ = (function c3kit$wire$spec_helper$drag_end_BANG_(var_args){
-var G__20335 = arguments.length;
-switch (G__20335) {
+var G__20972 = arguments.length;
+switch (G__20972) {
 case 2:
 return c3kit.wire.spec_helper.drag_end_BANG_.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -1351,8 +1351,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.drag_end_BANG_.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.drag_over = (function c3kit$wire$spec_helper$drag_over(var_args){
-var G__20338 = arguments.length;
-switch (G__20338) {
+var G__20975 = arguments.length;
+switch (G__20975) {
 case 2:
 return c3kit.wire.spec_helper.drag_over.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -1378,8 +1378,8 @@ return c3kit.wire.spec_helper.drag_over.call(null,c3kit.wire.spec_helper.resolve
 (c3kit.wire.spec_helper.drag_over.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.drag_over_BANG_ = (function c3kit$wire$spec_helper$drag_over_BANG_(var_args){
-var G__20340 = arguments.length;
-switch (G__20340) {
+var G__20984 = arguments.length;
+switch (G__20984) {
 case 2:
 return c3kit.wire.spec_helper.drag_over_BANG_.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -1409,8 +1409,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.drag_over_BANG_.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.on_drop = (function c3kit$wire$spec_helper$on_drop(var_args){
-var G__20344 = arguments.length;
-switch (G__20344) {
+var G__20987 = arguments.length;
+switch (G__20987) {
 case 2:
 return c3kit.wire.spec_helper.on_drop.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -1436,8 +1436,8 @@ return c3kit.wire.spec_helper.on_drop.call(null,c3kit.wire.spec_helper.resolve_n
 (c3kit.wire.spec_helper.on_drop.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.on_drop_BANG_ = (function c3kit$wire$spec_helper$on_drop_BANG_(var_args){
-var G__20347 = arguments.length;
-switch (G__20347) {
+var G__20990 = arguments.length;
+switch (G__20990) {
 case 2:
 return c3kit.wire.spec_helper.on_drop_BANG_.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -1467,8 +1467,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.on_drop_BANG_.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.focus = (function c3kit$wire$spec_helper$focus(var_args){
-var G__20350 = arguments.length;
-switch (G__20350) {
+var G__20993 = arguments.length;
+switch (G__20993) {
 case 1:
 return c3kit.wire.spec_helper.focus.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -1494,8 +1494,8 @@ return c3kit.wire.spec_helper.focus.call(null,c3kit.wire.spec_helper.resolve_nod
 (c3kit.wire.spec_helper.focus.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.focus_BANG_ = (function c3kit$wire$spec_helper$focus_BANG_(var_args){
-var G__20353 = arguments.length;
-switch (G__20353) {
+var G__21002 = arguments.length;
+switch (G__21002) {
 case 1:
 return c3kit.wire.spec_helper.focus_BANG_.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -1525,8 +1525,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.focus_BANG_.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.blur = (function c3kit$wire$spec_helper$blur(var_args){
-var G__20355 = arguments.length;
-switch (G__20355) {
+var G__21005 = arguments.length;
+switch (G__21005) {
 case 1:
 return c3kit.wire.spec_helper.blur.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -1552,8 +1552,8 @@ return c3kit.wire.spec_helper.blur.call(null,c3kit.wire.spec_helper.resolve_node
 (c3kit.wire.spec_helper.blur.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.blur_BANG_ = (function c3kit$wire$spec_helper$blur_BANG_(var_args){
-var G__20359 = arguments.length;
-switch (G__20359) {
+var G__21008 = arguments.length;
+switch (G__21008) {
 case 1:
 return c3kit.wire.spec_helper.blur_BANG_.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -1583,8 +1583,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.blur_BANG_.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.change = (function c3kit$wire$spec_helper$change(var_args){
-var G__20362 = arguments.length;
-switch (G__20362) {
+var G__21015 = arguments.length;
+switch (G__21015) {
 case 1:
 return c3kit.wire.spec_helper.change.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -1625,8 +1625,8 @@ return c3kit.wire.spec_helper.change.call(null,c3kit.wire.spec_helper.resolve_no
 (c3kit.wire.spec_helper.change.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.change_BANG_ = (function c3kit$wire$spec_helper$change_BANG_(var_args){
-var G__20365 = arguments.length;
-switch (G__20365) {
+var G__21022 = arguments.length;
+switch (G__21022) {
 case 2:
 return c3kit.wire.spec_helper.change_BANG_.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -1656,8 +1656,8 @@ return c3kit.wire.spec_helper.flush.call(null);
 (c3kit.wire.spec_helper.change_BANG_.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.check_box = (function c3kit$wire$spec_helper$check_box(var_args){
-var G__20368 = arguments.length;
-switch (G__20368) {
+var G__21024 = arguments.length;
+switch (G__21024) {
 case 2:
 return c3kit.wire.spec_helper.check_box.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -1686,8 +1686,8 @@ return c3kit.wire.spec_helper.check_box.call(null,c3kit.wire.spec_helper.resolve
 (c3kit.wire.spec_helper.check_box.cljs$lang$maxFixedArity = 3);
 
 c3kit.wire.spec_helper.check_box_BANG_ = (function c3kit$wire$spec_helper$check_box_BANG_(var_args){
-var G__20371 = arguments.length;
-switch (G__20371) {
+var G__21028 = arguments.length;
+switch (G__21028) {
 case 2:
 return c3kit.wire.spec_helper.check_box_BANG_.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -1720,8 +1720,8 @@ return c3kit.wire.spec_helper.flush.call(null);
  * Throws exception if the node doesn't exist.
  */
 c3kit.wire.spec_helper.text_BANG_ = (function c3kit$wire$spec_helper$text_BANG_(var_args){
-var G__20373 = arguments.length;
-switch (G__20373) {
+var G__21031 = arguments.length;
+switch (G__21031) {
 case 1:
 return c3kit.wire.spec_helper.text_BANG_.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -1750,8 +1750,8 @@ return c3kit.wire.spec_helper.resolve_node.call(null,new cljs.core.Keyword(null,
  * Return nil if the node doesn't exist.
  */
 c3kit.wire.spec_helper.text = (function c3kit$wire$spec_helper$text(var_args){
-var G__20377 = arguments.length;
-switch (G__20377) {
+var G__21036 = arguments.length;
+switch (G__21036) {
 case 0:
 return c3kit.wire.spec_helper.text.cljs$core$IFn$_invoke$arity$0();
 
@@ -1776,11 +1776,11 @@ return c3kit.wire.js.node_text.call(null,c3kit.wire.js.doc_body.call(null));
 
 (c3kit.wire.spec_helper.text.cljs$core$IFn$_invoke$arity$1 = (function (selector_or_elem){
 if(typeof selector_or_elem === 'string'){
-var G__20378 = c3kit.wire.spec_helper.select.call(null,selector_or_elem);
-if((G__20378 == null)){
+var G__21037 = c3kit.wire.spec_helper.select.call(null,selector_or_elem);
+if((G__21037 == null)){
 return null;
 } else {
-return c3kit.wire.js.node_text.call(null,G__20378);
+return c3kit.wire.js.node_text.call(null,G__21037);
 }
 } else {
 if((selector_or_elem == null)){
@@ -1793,11 +1793,11 @@ return c3kit.wire.js.node_text.call(null,selector_or_elem);
 }));
 
 (c3kit.wire.spec_helper.text.cljs$core$IFn$_invoke$arity$2 = (function (root,selector){
-var G__20379 = c3kit.wire.spec_helper.select.call(null,root,selector);
-if((G__20379 == null)){
+var G__21038 = c3kit.wire.spec_helper.select.call(null,root,selector);
+if((G__21038 == null)){
 return null;
 } else {
-return c3kit.wire.js.node_text.call(null,G__20379);
+return c3kit.wire.js.node_text.call(null,G__21038);
 }
 }));
 
@@ -1807,8 +1807,8 @@ return c3kit.wire.js.node_text.call(null,G__20379);
  * Throws exception if the node doesn't exist.
  */
 c3kit.wire.spec_helper.html_BANG_ = (function c3kit$wire$spec_helper$html_BANG_(var_args){
-var G__20382 = arguments.length;
-switch (G__20382) {
+var G__21041 = arguments.length;
+switch (G__21041) {
 case 1:
 return c3kit.wire.spec_helper.html_BANG_.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -1837,8 +1837,8 @@ return c3kit.wire.spec_helper.resolve_node.call(null,new cljs.core.Keyword(null,
  * Return nil if the node doesn't exist.
  */
 c3kit.wire.spec_helper.html = (function c3kit$wire$spec_helper$html(var_args){
-var G__20385 = arguments.length;
-switch (G__20385) {
+var G__21044 = arguments.length;
+switch (G__21044) {
 case 0:
 return c3kit.wire.spec_helper.html.cljs$core$IFn$_invoke$arity$0();
 
@@ -1893,8 +1893,8 @@ return null;
 (c3kit.wire.spec_helper.html.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.class_name = (function c3kit$wire$spec_helper$class_name(var_args){
-var G__20388 = arguments.length;
-switch (G__20388) {
+var G__21051 = arguments.length;
+switch (G__21051) {
 case 1:
 return c3kit.wire.spec_helper.class_name.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -1920,8 +1920,8 @@ return c3kit.wire.spec_helper.resolve_node.call(null,new cljs.core.Keyword(null,
 (c3kit.wire.spec_helper.class_name.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.tag_name = (function c3kit$wire$spec_helper$tag_name(var_args){
-var G__20390 = arguments.length;
-switch (G__20390) {
+var G__21068 = arguments.length;
+switch (G__21068) {
 case 1:
 return c3kit.wire.spec_helper.tag_name.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -1947,8 +1947,8 @@ return c3kit.wire.spec_helper.resolve_node.call(null,new cljs.core.Keyword(null,
 (c3kit.wire.spec_helper.tag_name.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.href = (function c3kit$wire$spec_helper$href(var_args){
-var G__20394 = arguments.length;
-switch (G__20394) {
+var G__21071 = arguments.length;
+switch (G__21071) {
 case 1:
 return c3kit.wire.spec_helper.href.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -1974,8 +1974,8 @@ return c3kit.wire.spec_helper.resolve_node.call(null,new cljs.core.Keyword(null,
 (c3kit.wire.spec_helper.href.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.id = (function c3kit$wire$spec_helper$id(var_args){
-var G__20397 = arguments.length;
-switch (G__20397) {
+var G__21074 = arguments.length;
+switch (G__21074) {
 case 1:
 return c3kit.wire.spec_helper.id.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -2001,8 +2001,8 @@ return c3kit.wire.spec_helper.resolve_node.call(null,new cljs.core.Keyword(null,
 (c3kit.wire.spec_helper.id.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.value = (function c3kit$wire$spec_helper$value(var_args){
-var G__20400 = arguments.length;
-switch (G__20400) {
+var G__21077 = arguments.length;
+switch (G__21077) {
 case 1:
 return c3kit.wire.spec_helper.value.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -2028,8 +2028,8 @@ return c3kit.wire.spec_helper.resolve_node.call(null,new cljs.core.Keyword(null,
 (c3kit.wire.spec_helper.value.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.placeholder = (function c3kit$wire$spec_helper$placeholder(var_args){
-var G__20402 = arguments.length;
-switch (G__20402) {
+var G__21079 = arguments.length;
+switch (G__21079) {
 case 1:
 return c3kit.wire.spec_helper.placeholder.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -2055,8 +2055,8 @@ return c3kit.wire.spec_helper.resolve_node.call(null,new cljs.core.Keyword(null,
 (c3kit.wire.spec_helper.placeholder.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.checked_QMARK_ = (function c3kit$wire$spec_helper$checked_QMARK_(var_args){
-var G__20406 = arguments.length;
-switch (G__20406) {
+var G__21082 = arguments.length;
+switch (G__21082) {
 case 1:
 return c3kit.wire.spec_helper.checked_QMARK_.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -2082,8 +2082,8 @@ return c3kit.wire.spec_helper.resolve_node.call(null,new cljs.core.Keyword(null,
 (c3kit.wire.spec_helper.checked_QMARK_.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.disabled_QMARK_ = (function c3kit$wire$spec_helper$disabled_QMARK_(var_args){
-var G__20408 = arguments.length;
-switch (G__20408) {
+var G__21086 = arguments.length;
+switch (G__21086) {
 case 1:
 return c3kit.wire.spec_helper.disabled_QMARK_.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -2109,8 +2109,8 @@ return c3kit.wire.spec_helper.resolve_node.call(null,new cljs.core.Keyword(null,
 (c3kit.wire.spec_helper.disabled_QMARK_.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.readonly_QMARK_ = (function c3kit$wire$spec_helper$readonly_QMARK_(var_args){
-var G__20411 = arguments.length;
-switch (G__20411) {
+var G__21097 = arguments.length;
+switch (G__21097) {
 case 1:
 return c3kit.wire.spec_helper.readonly_QMARK_.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -2136,8 +2136,8 @@ return c3kit.wire.spec_helper.resolve_node.call(null,new cljs.core.Keyword(null,
 (c3kit.wire.spec_helper.readonly_QMARK_.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.src = (function c3kit$wire$spec_helper$src(var_args){
-var G__20415 = arguments.length;
-switch (G__20415) {
+var G__21100 = arguments.length;
+switch (G__21100) {
 case 1:
 return c3kit.wire.spec_helper.src.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -2163,8 +2163,8 @@ return c3kit.wire.spec_helper.resolve_node.call(null,new cljs.core.Keyword(null,
 (c3kit.wire.spec_helper.src.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.alt = (function c3kit$wire$spec_helper$alt(var_args){
-var G__20418 = arguments.length;
-switch (G__20418) {
+var G__21108 = arguments.length;
+switch (G__21108) {
 case 1:
 return c3kit.wire.spec_helper.alt.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -2190,8 +2190,8 @@ return c3kit.wire.spec_helper.resolve_node.call(null,new cljs.core.Keyword(null,
 (c3kit.wire.spec_helper.alt.cljs$lang$maxFixedArity = 2);
 
 c3kit.wire.spec_helper.style = (function c3kit$wire$spec_helper$style(var_args){
-var G__20420 = arguments.length;
-switch (G__20420) {
+var G__21112 = arguments.length;
+switch (G__21112) {
 case 1:
 return c3kit.wire.spec_helper.style.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -2232,19 +2232,19 @@ c3kit.wire.spec_helper.print_js_errors = (function c3kit$wire$spec_helper$print_
 return (window.onerror = c3kit.wire.spec_helper.print_error);
 });
 c3kit.wire.spec_helper.stub_ajax = (function c3kit$wire$spec_helper$stub_ajax(){
-return speclj.components.new_around.call(null,(function (it__19769__auto__){
-var post_BANG__orig_val__20423 = c3kit.wire.ajax.post_BANG_;
-var get_BANG__orig_val__20424 = c3kit.wire.ajax.get_BANG_;
-var post_BANG__temp_val__20425 = speclj.stub.stub.call(null,new cljs.core.Keyword("ajax","post!","ajax/post!",-369377915),cljs.core.PersistentArrayMap.EMPTY);
-var get_BANG__temp_val__20426 = speclj.stub.stub.call(null,new cljs.core.Keyword("ajax","get!","ajax/get!",1836236045),cljs.core.PersistentArrayMap.EMPTY);
-(c3kit.wire.ajax.post_BANG_ = post_BANG__temp_val__20425);
+return speclj.components.new_around.call(null,(function (it__20338__auto__){
+var post_BANG__orig_val__21114 = c3kit.wire.ajax.post_BANG_;
+var get_BANG__orig_val__21115 = c3kit.wire.ajax.get_BANG_;
+var post_BANG__temp_val__21116 = speclj.stub.stub.call(null,new cljs.core.Keyword("ajax","post!","ajax/post!",-369377915),cljs.core.PersistentArrayMap.EMPTY);
+var get_BANG__temp_val__21117 = speclj.stub.stub.call(null,new cljs.core.Keyword("ajax","get!","ajax/get!",1836236045),cljs.core.PersistentArrayMap.EMPTY);
+(c3kit.wire.ajax.post_BANG_ = post_BANG__temp_val__21116);
 
-(c3kit.wire.ajax.get_BANG_ = get_BANG__temp_val__20426);
+(c3kit.wire.ajax.get_BANG_ = get_BANG__temp_val__21117);
 
-try{return it__19769__auto__.call(null);
-}finally {(c3kit.wire.ajax.get_BANG_ = get_BANG__orig_val__20424);
+try{return it__20338__auto__.call(null);
+}finally {(c3kit.wire.ajax.get_BANG_ = get_BANG__orig_val__21115);
 
-(c3kit.wire.ajax.post_BANG_ = post_BANG__orig_val__20423);
+(c3kit.wire.ajax.post_BANG_ = post_BANG__orig_val__21114);
 }}));
 });
 c3kit.wire.spec_helper.last_ajax_post_url = (function c3kit$wire$spec_helper$last_ajax_post_url(){
@@ -2320,29 +2320,29 @@ return null;
 }
 });
 c3kit.wire.spec_helper.invoke_last_ajax_post_handler = (function c3kit$wire$spec_helper$invoke_last_ajax_post_handler(payload){
-var G__20427 = c3kit.wire.spec_helper.last_ajax_post_handler.call(null);
-if((G__20427 == null)){
+var G__21124 = c3kit.wire.spec_helper.last_ajax_post_handler.call(null);
+if((G__21124 == null)){
 return null;
 } else {
-return c3kit.apron.corec.invoke.call(null,G__20427,payload);
+return c3kit.apron.corec.invoke.call(null,G__21124,payload);
 }
 });
 c3kit.wire.spec_helper.invoke_last_ajax_get_handler = (function c3kit$wire$spec_helper$invoke_last_ajax_get_handler(payload){
-var G__20428 = c3kit.wire.spec_helper.last_ajax_get_handler.call(null);
-if((G__20428 == null)){
+var G__21125 = c3kit.wire.spec_helper.last_ajax_get_handler.call(null);
+if((G__21125 == null)){
 return null;
 } else {
-return c3kit.apron.corec.invoke.call(null,G__20428,payload);
+return c3kit.apron.corec.invoke.call(null,G__21125,payload);
 }
 });
 c3kit.wire.spec_helper.stub_ws = (function c3kit$wire$spec_helper$stub_ws(){
-return speclj.components.new_around.call(null,(function (it__19769__auto__){
-var call_BANG__orig_val__20429 = c3kit.wire.websocket.call_BANG_;
-var call_BANG__temp_val__20430 = speclj.stub.stub.call(null,new cljs.core.Keyword("ws","call!","ws/call!",1190060416),cljs.core.PersistentArrayMap.EMPTY);
-(c3kit.wire.websocket.call_BANG_ = call_BANG__temp_val__20430);
+return speclj.components.new_around.call(null,(function (it__20338__auto__){
+var call_BANG__orig_val__21126 = c3kit.wire.websocket.call_BANG_;
+var call_BANG__temp_val__21127 = speclj.stub.stub.call(null,new cljs.core.Keyword("ws","call!","ws/call!",1190060416),cljs.core.PersistentArrayMap.EMPTY);
+(c3kit.wire.websocket.call_BANG_ = call_BANG__temp_val__21127);
 
-try{return it__19769__auto__.call(null);
-}finally {(c3kit.wire.websocket.call_BANG_ = call_BANG__orig_val__20429);
+try{return it__20338__auto__.call(null);
+}finally {(c3kit.wire.websocket.call_BANG_ = call_BANG__orig_val__21126);
 }}));
 });
 c3kit.wire.spec_helper.last_ws_call_id = (function c3kit$wire$spec_helper$last_ws_call_id(){
@@ -2382,11 +2382,11 @@ return null;
 }
 });
 c3kit.wire.spec_helper.invoke_last_ws_call_handler = (function c3kit$wire$spec_helper$invoke_last_ws_call_handler(payload){
-var G__20431 = c3kit.wire.spec_helper.last_ws_call_handler.call(null);
-if((G__20431 == null)){
+var G__21130 = c3kit.wire.spec_helper.last_ws_call_handler.call(null);
+if((G__21130 == null)){
 return null;
 } else {
-return c3kit.apron.corec.invoke.call(null,G__20431,payload);
+return c3kit.apron.corec.invoke.call(null,G__21130,payload);
 }
 });
 

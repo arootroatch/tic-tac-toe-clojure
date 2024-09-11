@@ -6,10 +6,22 @@
                  :output-to      "resources/public/cljs/tic_tac_toe_dev.js"
                  :pretty-print   true
                  ;:source-map     true
-                 :sources        ["spec/cljs" "src/cljs" "spec/cljc" "src/cljc"]
+                 :sources        ["spec/cljs" "src/cljs"
+                                  "spec/cljc" "src/cljc"
+                                  ]
                  :specs          true
                  :verbose        true
                  :watch-fn       c3kit.scaffold.cljs/on-dev-compiled
                  :parallel-build true
+                 }
+
+ :production    {:cache-analysis false
+                 :optimizations  :advanced
+                 :output-dir     "out"
+                 :output-to      "out/tic_tac_toe_dev.js"
+                 :pretty-print   false
+                 :sources        ["src/cljc" "src/cljs"]
+                 :specs          false
+                 :verbose        false
                  }
  }
