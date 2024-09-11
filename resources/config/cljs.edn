@@ -7,7 +7,7 @@
                  :pretty-print   true
                  ;:source-map     true
                  :sources        ["spec/cljs" "src/cljs"
-                                  "spec/cljc" "src/cljc"
+                                  ;"spec/cljc" "src/cljc"
                                   ]
                  :specs          true
                  :verbose        true
