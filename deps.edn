@@ -1,5 +1,5 @@
 {
- :paths     ["src/clj" "src/cljs" "src/cljc" "resources" "dev"]
+ :paths     ["src/clj" "src/cljc" "src/cljs" "resources" "dev"]
  :mvn/repos {"maven_central" {:url "https://repo.maven.apache.org/maven2/"}}
  :deps      {
              org.clojure/clojure               {:mvn/version "1.11.4"}
