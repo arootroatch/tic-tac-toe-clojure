@@ -32,7 +32,10 @@ jobs:
           key: playwright-${{ runner.os }}
 
       - name: Install Playwright OS dependencies
-        run: npx playwright install-deps && sudo apt-get install -y libvpx7
+        run: npx playwright install-deps
+
+      - name: Install libvpx7
+        run: sudo apt-get update && sudo apt-get install -y libvpx7
 
       - name: Run Clojure tests
         run: clojure -M:test:spec --tag=~db
