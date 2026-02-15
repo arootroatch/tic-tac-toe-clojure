@@ -25,6 +25,15 @@ jobs:
           key: clojure-${{ hashFiles('deps.edn') }}
           restore-keys: clojure-
 
+      - uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}
+
+      - name: Install Playwright dependencies
+        run: npx playwright install --with-deps
+
       - name: Run Clojure tests
         run: clojure -M:test:spec --tag=~db
 
