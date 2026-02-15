@@ -31,8 +31,8 @@ jobs:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}
 
-      - name: Install Playwright dependencies
-        run: npx playwright install --with-deps
+      - name: Install Playwright OS dependencies
+        run: npx playwright install-deps
 
       - name: Run Clojure tests
         run: clojure -M:test:spec --tag=~db
