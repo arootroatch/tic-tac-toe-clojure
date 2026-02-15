@@ -50,17 +50,18 @@
       (should-have-invoked :spit {:with ["spec/clj/tic_tac_toe/game_logs/game-ids.edn" "5\n" :append true]})))
 
   (it "gets paths in given directory"
-    (should= ["spec/clj/tic_tac_toe/game_logs/game-logs-empty-test.edn"
-              "spec/clj/tic_tac_toe/game_logs/in_progress"
-              "spec/clj/tic_tac_toe/game_logs/in_progress/completed-game.edn"
-              "spec/clj/tic_tac_toe/game_logs/in_progress/game-4.edn"
-              "spec/clj/tic_tac_toe/game_logs/in_progress_empty"
-              "spec/clj/tic_tac_toe/game_logs/game-logs-test.edn"
-              "spec/clj/tic_tac_toe/game_logs/sql_spec.clj"
-              "spec/clj/tic_tac_toe/game_logs/game-ids.edn"
-              "spec/clj/tic_tac_toe/game_logs/test_data.clj"
-              "spec/clj/tic_tac_toe/game_logs/edn_logs_spec.clj"]
-             (get-paths-in-dir "spec/clj/tic_tac_toe/game_logs")))
+    (should= #{"spec/clj/tic_tac_toe/game_logs/game-logs-empty-test.edn"
+               "spec/clj/tic_tac_toe/game_logs/in_progress"
+               "spec/clj/tic_tac_toe/game_logs/in_progress/completed-game.edn"
+               "spec/clj/tic_tac_toe/game_logs/in_progress/game-4.edn"
+               "spec/clj/tic_tac_toe/game_logs/in_progress_empty"
+               "spec/clj/tic_tac_toe/game_logs/in_progress_empty/.gitkeep"
+               "spec/clj/tic_tac_toe/game_logs/game-logs-test.edn"
+               "spec/clj/tic_tac_toe/game_logs/sql_spec.clj"
+               "spec/clj/tic_tac_toe/game_logs/game-ids.edn"
+               "spec/clj/tic_tac_toe/game_logs/test_data.clj"
+               "spec/clj/tic_tac_toe/game_logs/edn_logs_spec.clj"}
+             (set (get-paths-in-dir "spec/clj/tic_tac_toe/game_logs"))))
 
   (it "creates new filename and path for in progress game"
     (should= "spec/clj/tic_tac_toe/game_logs/in_progress/game-5.edn"

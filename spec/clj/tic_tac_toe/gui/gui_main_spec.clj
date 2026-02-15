@@ -59,6 +59,7 @@
     )
 
   (context "replay sql"
+    (tags :db)
     (it "displays game id error when invalid game id is entered"
       (should= "There is no game with ID 50\n"
                (with-out-str (launch-user-interface ["gui" "--psqldb" "--game" "50"]))))
