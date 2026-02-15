@@ -6,7 +6,7 @@
     [c3kit.wire.spec-helper :as wire]
     [tic-tac-toe.prompts :as prompts]
     [tic-tac-toe.render-screen :as sut]
-    [tic-tac-toe.screens.second-level-selection]))
+    [tic-tac-toe.screens.level-selection]))
 
 (defonce state (atom {:current-screen :second-level-selection}))
 

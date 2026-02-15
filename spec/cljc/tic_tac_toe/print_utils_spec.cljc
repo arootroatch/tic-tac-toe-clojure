@@ -119,10 +119,10 @@
     (with-redefs [println (stub :println)]
       (sut/display-command-options)
       (should= [["Please enter your preferences:"]
-                ["Format: 'lein run <ui> <db> <game id>"]
+                ["Format: 'clj -Mrun <ui> <db> <game id>"]
                 ["<db> is the only required field\n"]
                 ["--psqldb         Run with PostgreSQL"]
                 ["--edndb         Run with EDN Database"]
                 ["gui             Run GUI"]
-                ["--game <id>     Run GUI"]]
+                ["--game <id>     Replay specific game"]]
               (stub/invocations-of :println)))))

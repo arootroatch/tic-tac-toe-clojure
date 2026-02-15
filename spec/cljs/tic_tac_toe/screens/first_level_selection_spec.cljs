@@ -6,7 +6,7 @@
     [speclj.core]
     [tic-tac-toe.prompts :as prompts]
     [tic-tac-toe.render-screen :as sut]
-    [tic-tac-toe.screens.first-level-selection]))
+    [tic-tac-toe.screens.level-selection]))
 
 (defonce state (atom {:current-screen :first-level-selection}))
 

@@ -3,8 +3,7 @@
             [tic-tac-toe.state :refer [state]]
             [tic-tac-toe.screens.mode-selection]
             [tic-tac-toe.screens.board-selection]
-            [tic-tac-toe.screens.first-level-selection]
-            [tic-tac-toe.screens.second-level-selection]
+            [tic-tac-toe.screens.level-selection]
             [tic-tac-toe.screens.play]
             ))
 
