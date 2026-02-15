@@ -1,13 +1,13 @@
 // Compiled by ClojureScript 1.11.132 {:optimizations :none}
 goog.provide('tic_tac_toe.player');
 goog.require('cljs.core');
-tic_tac_toe.player.dispatch_player = (function tic_tac_toe$player$dispatch_player(p__16224){
-var map__16225 = p__16224;
-var map__16225__$1 = cljs.core.__destructure_map.call(null,map__16225);
-var player = cljs.core.get.call(null,map__16225__$1,new cljs.core.Keyword(null,"player","player",-97687400));
-var mode = cljs.core.get.call(null,map__16225__$1,new cljs.core.Keyword(null,"mode","mode",654403691));
-var first_ai_level = cljs.core.get.call(null,map__16225__$1,new cljs.core.Keyword(null,"first-ai-level","first-ai-level",1004633644));
-var second_ai_level = cljs.core.get.call(null,map__16225__$1,new cljs.core.Keyword(null,"second-ai-level","second-ai-level",-418730455));
+tic_tac_toe.player.dispatch_player = (function tic_tac_toe$player$dispatch_player(p__20108){
+var map__20109 = p__20108;
+var map__20109__$1 = cljs.core.__destructure_map.call(null,map__20109);
+var player = cljs.core.get.call(null,map__20109__$1,new cljs.core.Keyword(null,"player","player",-97687400));
+var mode = cljs.core.get.call(null,map__20109__$1,new cljs.core.Keyword(null,"mode","mode",654403691));
+var first_ai_level = cljs.core.get.call(null,map__20109__$1,new cljs.core.Keyword(null,"first-ai-level","first-ai-level",1004633644));
+var second_ai_level = cljs.core.get.call(null,map__20109__$1,new cljs.core.Keyword(null,"second-ai-level","second-ai-level",-418730455));
 if(((((cljs.core._EQ_.call(null,player,new cljs.core.Keyword(null,"o","o",-1350007228))) && (cljs.core._EQ_.call(null,mode,(2))))) || (((cljs.core._EQ_.call(null,player,new cljs.core.Keyword(null,"x","x",2099068185))) && (((cljs.core._EQ_.call(null,mode,(3))) || (cljs.core._EQ_.call(null,mode,(4))))))))){
 return first_ai_level;
 } else {

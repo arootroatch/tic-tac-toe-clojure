@@ -4,9 +4,9 @@
   (:require
     [c3kit.wire.spec-helper :as wire]
     [speclj.core]
-    [tic-tac-toe.print-utils :as print]
+    [tic-tac-toe.prompts :as prompts]
     [tic-tac-toe.render-screen :as sut]
-    [tic-tac-toe.screens.first-level-selection]))
+    [tic-tac-toe.screens.level-selection]))
 
 (defonce state (atom {:current-screen :first-level-selection}))
 
@@ -17,15 +17,15 @@
 
   (it "renders first level selection screen"
     (should-select "#first-level-selection")
-    (should= (nth print/level-prompt 2) (wire/text "#first-level-selection h2"))
-    (should= (nth print/level-prompt 3) (wire/text "#first-level-selection button:nth-of-type(1)"))
-    (should= (nth print/level-prompt 4) (wire/text "#first-level-selection button:nth-of-type(2)"))
-    (should= (nth print/level-prompt 6) (wire/text "#first-level-selection button:nth-of-type(3)")))
+    (should= (nth prompts/level-prompt 2) (wire/text "#first-level-selection h2"))
+    (should= (nth prompts/level-prompt 3) (wire/text "#first-level-selection button:nth-of-type(1)"))
+    (should= (nth prompts/level-prompt 4) (wire/text "#first-level-selection button:nth-of-type(2)"))
+    (should= (nth prompts/level-prompt 6) (wire/text "#first-level-selection button:nth-of-type(3)")))
 
   (it "specifies player X if mode is 4"
     (swap! state assoc :mode 4)
     (wire/render [sut/render-screen state])
-    (should= (first print/level-prompt) (wire/text "#first-level-selection h2")))
+    (should= (first prompts/level-prompt) (wire/text "#first-level-selection h2")))
 
   (it "sets :first-ai-level to 1 when Easy is clicked"
       (wire/click! "#first-level-selection button:nth-of-type(1)")

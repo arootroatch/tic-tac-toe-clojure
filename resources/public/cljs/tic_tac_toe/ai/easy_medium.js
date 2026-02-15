@@ -3,8 +3,8 @@ goog.provide('tic_tac_toe.ai.easy_medium');
 goog.require('cljs.core');
 goog.require('tic_tac_toe.eval_board');
 tic_tac_toe.ai.easy_medium.played_corner_QMARK_ = (function tic_tac_toe$ai$easy_medium$played_corner_QMARK_(board){
-return cljs.core.some.call(null,new cljs.core.PersistentHashSet(null, new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"o","o",-1350007228),null,new cljs.core.Keyword(null,"x","x",2099068185),null], null), null),cljs.core.map.call(null,(function (p1__17097_SHARP_){
-return cljs.core.nth.call(null,board,p1__17097_SHARP_);
+return cljs.core.some.call(null,new cljs.core.PersistentHashSet(null, new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"o","o",-1350007228),null,new cljs.core.Keyword(null,"x","x",2099068185),null], null), null),cljs.core.map.call(null,(function (p1__21926_SHARP_){
+return cljs.core.nth.call(null,board,p1__21926_SHARP_);
 }),new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [(0),(2),(6),(8)], null)));
 });
 tic_tac_toe.ai.easy_medium.can_win_QMARK_ = (function tic_tac_toe$ai$easy_medium$can_win_QMARK_(path,player){
@@ -17,8 +17,8 @@ return and__5000__auto__;
 });
 tic_tac_toe.ai.easy_medium.get_winning_move = (function tic_tac_toe$ai$easy_medium$get_winning_move(board,player){
 var paths = tic_tac_toe.eval_board.__GT_paths.call(null,board);
-return cljs.core.first.call(null,cljs.core.filter.call(null,cljs.core.number_QMARK_,cljs.core.flatten.call(null,cljs.core.filter.call(null,(function (p1__17101_SHARP_){
-return tic_tac_toe.ai.easy_medium.can_win_QMARK_.call(null,p1__17101_SHARP_,player);
+return cljs.core.first.call(null,cljs.core.filter.call(null,cljs.core.number_QMARK_,cljs.core.flatten.call(null,cljs.core.filter.call(null,(function (p1__21932_SHARP_){
+return tic_tac_toe.ai.easy_medium.can_win_QMARK_.call(null,p1__21932_SHARP_,player);
 }),paths))));
 });
 tic_tac_toe.ai.easy_medium.find_easy_move = (function tic_tac_toe$ai$easy_medium$find_easy_move(board){

@@ -4,9 +4,9 @@
   (:require
     [speclj.core]
     [c3kit.wire.spec-helper :as wire]
-    [tic-tac-toe.print-utils :as print]
+    [tic-tac-toe.prompts :as prompts]
     [tic-tac-toe.render-screen :as sut]
-    [tic-tac-toe.screens.second-level-selection]))
+    [tic-tac-toe.screens.level-selection]))
 
 (defonce state (atom {:current-screen :second-level-selection}))
 
@@ -18,10 +18,10 @@
 
   (it "renders second level selection screen"
     (should-select "#second-level-selection")
-    (should= (nth print/level-prompt 1) (wire/text "#second-level-selection h2"))
-    (should= (nth print/level-prompt 3) (wire/text "#second-level-selection button:nth-of-type(1)"))
-    (should= (nth print/level-prompt 4) (wire/text "#second-level-selection button:nth-of-type(2)"))
-    (should= (nth print/level-prompt 6) (wire/text "#second-level-selection button:nth-of-type(3)")))
+    (should= (nth prompts/level-prompt 1) (wire/text "#second-level-selection h2"))
+    (should= (nth prompts/level-prompt 3) (wire/text "#second-level-selection button:nth-of-type(1)"))
+    (should= (nth prompts/level-prompt 4) (wire/text "#second-level-selection button:nth-of-type(2)"))
+    (should= (nth prompts/level-prompt 6) (wire/text "#second-level-selection button:nth-of-type(3)")))
 
   (it "sets :first-ai-level to 1 when Easy is clicked"
     (wire/click! "#second-level-selection button:nth-of-type(1)")

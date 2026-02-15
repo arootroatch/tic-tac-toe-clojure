@@ -48,7 +48,7 @@ c3kit.wire.flash.add_BANG_ = (function c3kit$wire$flash$add_BANG_(f){
 var f__$1 = c3kit.wire.flashc.conform_BANG_.call(null,f);
 taoensso.timbre._log_BANG_.call(null,taoensso.timbre._STAR_config_STAR_,new cljs.core.Keyword(null,"debug","debug",-1608172596),"c3kit.wire.flash",null,null,null,new cljs.core.Keyword(null,"p","p",151049309),new cljs.core.Keyword(null,"auto","auto",-566279492),(new cljs.core.Delay((function (){
 return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, ["adding flash: ",f__$1], null);
-}),null)),null,(67),null);
+}),null)),null,(102),null);
 
 cljs.core.swap_BANG_.call(null,c3kit.wire.flash.state,c3kit.wire.flash.add_no_dups,f__$1);
 
@@ -80,25 +80,25 @@ c3kit.wire.flash.flash_root = (function c3kit$wire$flash$flash_root(){
 var temp__5804__auto__ = cljs.core.seq.call(null,cljs.core.deref.call(null,c3kit.wire.flash.state));
 if(temp__5804__auto__){
 var flashes = temp__5804__auto__;
-return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div.flash-root","div.flash-root",-1425229719),(function (){var iter__5480__auto__ = (function c3kit$wire$flash$flash_root_$_iter__16271(s__16272){
+return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div.flash-root","div.flash-root",-1425229719),(function (){var iter__5480__auto__ = (function c3kit$wire$flash$flash_root_$_iter__20710(s__20711){
 return (new cljs.core.LazySeq(null,(function (){
-var s__16272__$1 = s__16272;
+var s__20711__$1 = s__20711;
 while(true){
-var temp__5804__auto____$1 = cljs.core.seq.call(null,s__16272__$1);
+var temp__5804__auto____$1 = cljs.core.seq.call(null,s__20711__$1);
 if(temp__5804__auto____$1){
-var s__16272__$2 = temp__5804__auto____$1;
-if(cljs.core.chunked_seq_QMARK_.call(null,s__16272__$2)){
-var c__5478__auto__ = cljs.core.chunk_first.call(null,s__16272__$2);
+var s__20711__$2 = temp__5804__auto____$1;
+if(cljs.core.chunked_seq_QMARK_.call(null,s__20711__$2)){
+var c__5478__auto__ = cljs.core.chunk_first.call(null,s__20711__$2);
 var size__5479__auto__ = cljs.core.count.call(null,c__5478__auto__);
-var b__16274 = cljs.core.chunk_buffer.call(null,size__5479__auto__);
-if((function (){var i__16273 = (0);
+var b__20713 = cljs.core.chunk_buffer.call(null,size__5479__auto__);
+if((function (){var i__20712 = (0);
 while(true){
-if((i__16273 < size__5479__auto__)){
-var f = cljs.core._nth.call(null,c__5478__auto__,i__16273);
-cljs.core.chunk_append.call(null,b__16274,cljs.core.with_meta(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [c3kit.wire.flash.flash_message,f], null),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"key","key",-1516042587),c3kit.wire.flashc.id.call(null,f)], null)));
+if((i__20712 < size__5479__auto__)){
+var f = cljs.core._nth.call(null,c__5478__auto__,i__20712);
+cljs.core.chunk_append.call(null,b__20713,cljs.core.with_meta(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [c3kit.wire.flash.flash_message,f], null),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"key","key",-1516042587),c3kit.wire.flashc.id.call(null,f)], null)));
 
-var G__16278 = (i__16273 + (1));
-i__16273 = G__16278;
+var G__20754 = (i__20712 + (1));
+i__20712 = G__20754;
 continue;
 } else {
 return true;
@@ -106,13 +106,13 @@ return true;
 break;
 }
 })()){
-return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__16274),c3kit$wire$flash$flash_root_$_iter__16271.call(null,cljs.core.chunk_rest.call(null,s__16272__$2)));
+return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__20713),c3kit$wire$flash$flash_root_$_iter__20710.call(null,cljs.core.chunk_rest.call(null,s__20711__$2)));
 } else {
-return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__16274),null);
+return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__20713),null);
 }
 } else {
-var f = cljs.core.first.call(null,s__16272__$2);
-return cljs.core.cons.call(null,cljs.core.with_meta(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [c3kit.wire.flash.flash_message,f], null),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"key","key",-1516042587),c3kit.wire.flashc.id.call(null,f)], null)),c3kit$wire$flash$flash_root_$_iter__16271.call(null,cljs.core.rest.call(null,s__16272__$2)));
+var f = cljs.core.first.call(null,s__20711__$2);
+return cljs.core.cons.call(null,cljs.core.with_meta(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [c3kit.wire.flash.flash_message,f], null),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"key","key",-1516042587),c3kit.wire.flashc.id.call(null,f)], null)),c3kit$wire$flash$flash_root_$_iter__20710.call(null,cljs.core.rest.call(null,s__20711__$2)));
 }
 } else {
 return null;

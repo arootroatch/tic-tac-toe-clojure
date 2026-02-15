@@ -1,5 +1,5 @@
 (ns tic-tac-toe.screens.board-selection
-  (:require [tic-tac-toe.print-utils :as print]
+  (:require [tic-tac-toe.prompts :as prompts]
             [tic-tac-toe.render-screen :refer [render-screen]]
             [tic-tac-toe.board-options :as board]))
 
@@ -26,10 +26,10 @@
     2 (four-by-four-preview)))
 
 (defn- select-board-btn [state n]
-  [:button.select-board-btn {:on-click (partial on-click state n)} (board-preview n) (nth print/board-prompt n)])
+  [:button.select-board-btn {:on-click (partial on-click state n)} (board-preview n) (nth prompts/board-prompt n)])
 
 (defmethod render-screen :board-selection [state]
   [:div#board-selection.screen
-   [:h2 (first print/board-prompt)]
+   [:h2 (first prompts/board-prompt)]
    (for [n [1 2]]
      ^{:key n} [select-board-btn state n])])

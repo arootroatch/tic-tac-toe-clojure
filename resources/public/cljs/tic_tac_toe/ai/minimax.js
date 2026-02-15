@@ -8,10 +8,10 @@ goog.require('tic_tac_toe.player');
 goog.require('tic_tac_toe.print_utils');
 tic_tac_toe.ai.minimax.get_player_paths = (function tic_tac_toe$ai$minimax$get_player_paths(board,player){
 var paths = tic_tac_toe.eval_board.__GT_paths.call(null,board);
-return cljs.core.filter.call(null,(function (p1__17140_SHARP_){
-var and__5000__auto__ = (!(cljs.core.contains_QMARK_.call(null,cljs.core.set.call(null,p1__17140_SHARP_),tic_tac_toe.player.switch_player.call(null,player))));
+return cljs.core.filter.call(null,(function (p1__6583_SHARP_){
+var and__5000__auto__ = (!(cljs.core.contains_QMARK_.call(null,cljs.core.set.call(null,p1__6583_SHARP_),tic_tac_toe.player.switch_player.call(null,player))));
 if(and__5000__auto__){
-return cljs.core.some.call(null,cljs.core.PersistentHashSet.createAsIfByAssoc([player]),p1__17140_SHARP_);
+return cljs.core.some.call(null,cljs.core.PersistentHashSet.createAsIfByAssoc([player]),p1__6583_SHARP_);
 } else {
 return and__5000__auto__;
 }
@@ -63,36 +63,36 @@ var move = cljs.core.first.call(null,available);
 var new_board = cljs.core.assoc.call(null,board,(move - (1)),player);
 var score = tic_tac_toe.ai.minimax.minimax.call(null,new_board,cljs.core.not.call(null,max_QMARK_),(depth + (1)),tic_tac_toe.player.switch_player.call(null,player),new_alpha,new_beta);
 if(cljs.core.truth_(max_QMARK_)){
-var G__17154 = cljs.core.rest.call(null,available);
-var G__17155 = (function (){var x__5087__auto__ = best_score;
+var G__6592 = cljs.core.rest.call(null,available);
+var G__6593 = (function (){var x__5087__auto__ = best_score;
 var y__5088__auto__ = score;
 return ((x__5087__auto__ > y__5088__auto__) ? x__5087__auto__ : y__5088__auto__);
 })();
-var G__17156 = (function (){var x__5087__auto__ = alpha;
+var G__6594 = (function (){var x__5087__auto__ = alpha;
 var y__5088__auto__ = score;
 return ((x__5087__auto__ > y__5088__auto__) ? x__5087__auto__ : y__5088__auto__);
 })();
-var G__17157 = beta;
-available = G__17154;
-best_score = G__17155;
-new_alpha = G__17156;
-new_beta = G__17157;
+var G__6595 = beta;
+available = G__6592;
+best_score = G__6593;
+new_alpha = G__6594;
+new_beta = G__6595;
 continue;
 } else {
-var G__17158 = cljs.core.rest.call(null,available);
-var G__17159 = (function (){var x__5090__auto__ = best_score;
+var G__6596 = cljs.core.rest.call(null,available);
+var G__6597 = (function (){var x__5090__auto__ = best_score;
 var y__5091__auto__ = score;
 return ((x__5090__auto__ < y__5091__auto__) ? x__5090__auto__ : y__5091__auto__);
 })();
-var G__17160 = alpha;
-var G__17161 = (function (){var x__5090__auto__ = beta;
+var G__6598 = alpha;
+var G__6599 = (function (){var x__5090__auto__ = beta;
 var y__5091__auto__ = score;
 return ((x__5090__auto__ < y__5091__auto__) ? x__5090__auto__ : y__5091__auto__);
 })();
-available = G__17158;
-best_score = G__17159;
-new_alpha = G__17160;
-new_beta = G__17161;
+available = G__6596;
+best_score = G__6597;
+new_alpha = G__6598;
+new_beta = G__6599;
 continue;
 }
 }
@@ -130,15 +130,15 @@ return best_move;
 var move = cljs.core.first.call(null,available);
 var new_board = cljs.core.assoc.call(null,board,(move - (1)),player);
 var score = tic_tac_toe.ai.minimax.minimax.call(null,new_board,false,(0),tic_tac_toe.player.switch_player.call(null,player),(-1000),(1000));
-var G__17162 = cljs.core.rest.call(null,available);
-var G__17163 = (((score > best_score))?move:best_move);
-var G__17164 = (function (){var x__5087__auto__ = score;
+var G__6601 = cljs.core.rest.call(null,available);
+var G__6602 = (((score > best_score))?move:best_move);
+var G__6603 = (function (){var x__5087__auto__ = score;
 var y__5088__auto__ = best_score;
 return ((x__5087__auto__ > y__5088__auto__) ? x__5087__auto__ : y__5088__auto__);
 })();
-available = G__17162;
-best_move = G__17163;
-best_score = G__17164;
+available = G__6601;
+best_move = G__6602;
+best_score = G__6603;
 continue;
 }
 break;
