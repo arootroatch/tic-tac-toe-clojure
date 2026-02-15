@@ -26,4 +26,7 @@ jobs:
           restore-keys: clojure-
 
       - name: Run Clojure tests
-        run: clojure -M:test:spec
+        run: clojure -M:test:spec --tag=~db
+
+      - name: Run ClojureScript tests
+        run: clojure -M:test:cljs once
