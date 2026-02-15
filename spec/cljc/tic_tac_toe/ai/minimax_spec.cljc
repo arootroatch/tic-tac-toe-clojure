@@ -1,4 +1,5 @@
 (ns tic-tac-toe.ai.minimax-spec
+  #?(:cljs (:require-macros [speclj.core :refer [describe with-stubs redefs-around context tags it should= stub]]))
   (:require [speclj.core :refer [describe with-stubs redefs-around context tags it should= stub]]
             [tic-tac-toe.ai.minimax :as sut]
             [tic-tac-toe.ai.minimax-test-fns :as test-fns]

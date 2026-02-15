@@ -1,4 +1,5 @@
 (ns tic-tac-toe.bot-moves-spec
+  #?(:cljs (:require-macros [speclj.core :refer [describe with-stubs redefs-around stub it context should= should-have-invoked]]))
   (:require [speclj.core :refer [describe with-stubs redefs-around stub it context should= should-have-invoked]]
             [speclj.stub :as stub]
             [tic-tac-toe.print-utils :as print-utils]

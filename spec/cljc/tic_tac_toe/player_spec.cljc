@@ -1,4 +1,5 @@
 (ns tic-tac-toe.player-spec
+  #?(:cljs (:require-macros [speclj.core :refer [describe context it should=]]))
   (:require [speclj.core :refer [describe context it should=]]
             [tic-tac-toe.player :as sut]))
 

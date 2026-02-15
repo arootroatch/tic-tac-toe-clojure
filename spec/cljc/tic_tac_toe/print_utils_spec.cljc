@@ -1,4 +1,5 @@
 (ns tic-tac-toe.print-utils-spec
+  #?(:cljs (:require-macros [speclj.core :refer [describe with-stubs context it should= stub should-have-invoked]]))
   (:require [speclj.core :refer [describe with-stubs context it should= stub should-have-invoked]]
             [speclj.stub :as stub]
             [tic-tac-toe.print-utils :as sut]))
