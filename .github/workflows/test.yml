@@ -26,4 +26,4 @@ jobs:
           restore-keys: clojure-
 
       - name: Run Clojure tests
-        run: clj -M:test:spec
+        run: clojure -M:test:spec
