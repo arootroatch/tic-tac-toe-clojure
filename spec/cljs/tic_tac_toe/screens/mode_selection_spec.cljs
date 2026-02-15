@@ -4,7 +4,7 @@
   (:require
     [speclj.core]
     [c3kit.wire.spec-helper :as wire]
-    [tic-tac-toe.print-utils :as print]
+    [tic-tac-toe.prompts :as prompts]
     [tic-tac-toe.render-screen :as sut]
     [tic-tac-toe.screens.mode-selection]))
 
@@ -18,11 +18,11 @@
 
   (it "renders mode selection screen"
     (should-select "#mode-selection")
-    (should= (first print/mode-prompt) (wire/text "#mode-selection h2"))
-    (should= (nth print/mode-prompt 1) (wire/text "#mode-selection button:nth-of-type(1)"))
-    (should= (nth print/mode-prompt 2) (wire/text "#mode-selection button:nth-of-type(2)"))
-    (should= (nth print/mode-prompt 3) (wire/text "#mode-selection button:nth-of-type(3)"))
-    (should= (nth print/mode-prompt 4) (wire/text "#mode-selection button:nth-of-type(4)")))
+    (should= (first prompts/mode-prompt) (wire/text "#mode-selection h2"))
+    (should= (nth prompts/mode-prompt 1) (wire/text "#mode-selection button:nth-of-type(1)"))
+    (should= (nth prompts/mode-prompt 2) (wire/text "#mode-selection button:nth-of-type(2)"))
+    (should= (nth prompts/mode-prompt 3) (wire/text "#mode-selection button:nth-of-type(3)"))
+    (should= (nth prompts/mode-prompt 4) (wire/text "#mode-selection button:nth-of-type(4)")))
 
   (it "sets mode to 1 if user selects HvH"
     (wire/click! "#mode-selection button:nth-of-type(1)")

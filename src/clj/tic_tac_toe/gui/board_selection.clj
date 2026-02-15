@@ -2,7 +2,7 @@
   (:require [quil.core :as q]
             [tic-tac-toe.game-logs.sql :as sql]
             [tic-tac-toe.game_logs.edn-logs :as edn]
-            [tic-tac-toe.print-utils :as print]
+            [tic-tac-toe.prompts :as prompts]
             [tic-tac-toe.gui.utils :as utils]
             [tic-tac-toe.board-options :as selection]))
 
@@ -45,7 +45,7 @@
 (defn- board-selection-screen []
   (q/background 0 0 0)
   (q/text-size 30)
-  (q/text (first print/board-prompt) 400 100)
+  (q/text (first prompts/board-prompt) 400 100)
   (three-by-three-container 400 280)
   (four-by-four-container 400 530))
 

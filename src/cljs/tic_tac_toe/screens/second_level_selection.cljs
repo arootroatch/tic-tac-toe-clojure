@@ -1,6 +1,6 @@
 (ns tic-tac-toe.screens.second-level-selection
   (:require [tic-tac-toe.render-screen :refer [render-screen]]
-            [tic-tac-toe.print-utils :as print]
+            [tic-tac-toe.prompts :as prompts]
             [tic-tac-toe.screens.selection-button :refer [selection-button]]))
 
 (defn- on-click [state n]
@@ -11,6 +11,6 @@
 
 (defmethod render-screen :second-level-selection [state]
   [:div#second-level-selection.screen
-   [:h2 (nth print/level-prompt 1)]
+   [:h2 (nth prompts/level-prompt 1)]
    (for [n [3 4 6]]
-     ^{:key n} [selection-button (nth print/level-prompt n) (partial on-click state (set-number n))])])
+     ^{:key n} [selection-button (nth prompts/level-prompt n) (partial on-click state (set-number n))])])

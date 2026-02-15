@@ -153,7 +153,7 @@
 
     (it "logs completed game"
       (utils/update-state end-state)
-      (should-have-invoked :log-completed {:with [{:ds sql/ds :log-file "src/clj/tic_tac_toe/game_logs/game-logs.edn" :state end-state}]}))
+      (should-have-invoked :log-completed {:with [{:ds sql/ds :log-file "data/game-logs.edn" :state end-state}]}))
 
     (it "displays X wins"
       (utils/update-state end-state)

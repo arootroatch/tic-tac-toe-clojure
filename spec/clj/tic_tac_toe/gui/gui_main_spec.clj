@@ -31,7 +31,7 @@
       (with-redefs [launch-quil (stub :launch-quil)
                     game-logs/get-new-game-id (stub :new-id {:return 13})]
         (launch-user-interface ["gui" "--edndb"])
-        (should-have-invoked :launch-quil {:with [{:game-id 13, :filepath "src/clj/tic_tac_toe/game_logs/in_progress/game-13.edn", :current-screen :resume-selection, :db :edn, :second-ai-level nil, :mode nil, :first-ai-level nil, :game-state :in-progress, :human? nil, :ui :gui, :player :x, :board nil}]})))
+        (should-have-invoked :launch-quil {:with [{:game-id 13, :filepath "data/in_progress/game-13.edn", :current-screen :resume-selection, :db :edn, :second-ai-level nil, :mode nil, :first-ai-level nil, :game-state :in-progress, :human? nil, :ui :gui, :player :x, :board nil}]})))
     )
 
   (context "play game sql"
