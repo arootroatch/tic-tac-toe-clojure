@@ -142,7 +142,8 @@
         (reset! state {:board board-3 :player :x :current-screen :play :mode 1})))
 
     (it "clicking button triggers AI if mode 2 or 3"
-      (with-redefs [player/take-turn (stub :turn {:return board-3})]
+      (with-redefs [player/take-turn (stub :turn {:return board-3})
+                    play/defer (fn [f] (f))]
                    (doseq [ai [1 2 3]
                            mode [2 3]
                            n (range 9)]
@@ -159,9 +160,10 @@
       (should= [:x :x :x :o :o 6 7 8 9] (:board @state)))
 
     (it "AI updates game state"
-      (swap! state assoc :board [:x :x 3 :o :o :x :o :o 9] :mode 2 :first-ai-level 3)
-      (wire/click! "#index-8")
-      (should= "O wins!" (:game-state @state)))
+      (with-redefs [play/defer (fn [f] (f))]
+        (swap! state assoc :board [:x :x 3 :o :o :x :o :o 9] :mode 2 :first-ai-level 3)
+        (wire/click! "#index-8")
+        (should= "O wins!" (:game-state @state))))
 
     (it "AI doesn't toggle human? to true if mode 4"
       (with-redefs [player/take-turn (stub :turn {:return board-3})]
@@ -226,7 +228,8 @@
         (reset! state {:board board-4 :player :x :current-screen :play :mode 1})))
 
     (it "clicking button triggers AI if mode 2 or 3"
-      (with-redefs [player/take-turn (stub :turn {:return board-4})]
+      (with-redefs [player/take-turn (stub :turn {:return board-4})
+                    play/defer (fn [f] (f))]
                    (doseq [ai [1 2 3]
                            mode [2 3]
                            n (range 16)]

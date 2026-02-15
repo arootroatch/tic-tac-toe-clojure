@@ -1,4 +1,5 @@
 (ns tic-tac-toe.ai.easy-medium-spec
+  #?(:cljs (:require-macros [speclj.core :refer [describe with-stubs it should= should-contain stub context]]))
   (:require [speclj.core :refer [describe with-stubs it should= should-contain stub context]]
             [speclj.stub :as stub]
             [tic-tac-toe.ai.easy-medium :as sut]))

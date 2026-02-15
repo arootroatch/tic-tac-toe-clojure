@@ -1,5 +1,6 @@
 (ns tic-tac-toe.screens.play
   (:require [clojure.string :as string]
+            [reagent.core :as reagent]
             [tic-tac-toe.bot-moves]
             [tic-tac-toe.eval-board :as eval-board]
             [tic-tac-toe.player :as player]
@@ -27,24 +28,28 @@
                                          (some? token))}
      token]))
 
+(defn defer [f] (js/setTimeout f 0))
+
+(defn ai-turn? [state]
+  (and (= :in-progress (:game-state @state)) (not (:human? @state))))
+
 (defn ai-turn [state]
-  (when (and (= :in-progress (:game-state @state)) (not (:human? @state)))
-    (let [new-board (player/take-turn @state)]
-      (swap! state assoc :player (player/switch-player (:player @state))
-             :board new-board
-             :game-state (eval-board/score new-board)
-             :human? (if (= 4 (:mode @state)) false true)))))
+  (let [new-board (player/take-turn @state)]
+    (swap! state assoc :player (player/switch-player (:player @state))
+           :board new-board
+           :game-state (eval-board/score new-board)
+           :human? (if (= 4 (:mode @state)) false true))))
 
 (defmulti render-board (fn [state] (count (:board @state))))
 
 (defmethod render-board 9 [state]
-  (js/React.useEffect (partial ai-turn state))
+  (reagent/after-render #(when (ai-turn? state) (defer (fn [] (ai-turn state)))))
   [:div.three-grid
    (for [n (range 9)]
      ^{:key n} [board-square state n])])
 
 (defmethod render-board 16 [state]
-  (js/React.useEffect (partial ai-turn state))
+  (reagent/after-render #(when (ai-turn? state) (defer (fn [] (ai-turn state)))))
   [:div.four-grid
    (for [n (range 16)]
      ^{:key n} [board-square state n])])
@@ -71,7 +76,7 @@
 (defmethod render-screen :play [state]
   [:div#board-wrapper
    [play-heading state]
-   [:f> render-board state]
+   [render-board state]
    (when (not= :in-progress (:game-state @state))
      [:button#restart {:on-click (partial reset-state state)} "Restart"])]
   )
