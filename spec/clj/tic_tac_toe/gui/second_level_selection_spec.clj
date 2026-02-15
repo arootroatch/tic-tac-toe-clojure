@@ -5,7 +5,7 @@
             [tic-tac-toe.game-logs.sql :as sql]
             [tic-tac-toe.game_logs.edn-logs :as edn]
             [tic-tac-toe.gui.components :as components]
-            [tic-tac-toe.gui.second-level-selection :refer :all]
+            [tic-tac-toe.gui.level-selection :refer :all]
             [tic-tac-toe.gui.utils :as utils]))
 
 (def state {:current-screen :second-level-selection

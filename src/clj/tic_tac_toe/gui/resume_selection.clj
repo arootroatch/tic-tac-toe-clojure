@@ -5,14 +5,14 @@
             [tic-tac-toe.game_logs.edn-logs :as edn]
             [tic-tac-toe.gui.components :refer [text-button]]
             [tic-tac-toe.gui.utils :as utils]
-            [tic-tac-toe.print-utils :as print]))
+            [tic-tac-toe.prompts :as prompts]))
 
 (defn- resume-selection-screen []
   (q/background 0 0 0)
   (q/text-size 30)
-  (q/text (first print/resume-prompt) 400 100)
-  (text-button (nth print/resume-prompt 1) 400 250 600 60)
-  (text-button (nth print/resume-prompt 2) 400 330 600 60))
+  (q/text (first prompts/resume-prompt) 400 100)
+  (text-button (nth prompts/resume-prompt 1) 400 250 600 60)
+  (text-button (nth prompts/resume-prompt 2) 400 330 600 60))
 
 (defn- get-resumed-game-board [db old-game]
   (when old-game
