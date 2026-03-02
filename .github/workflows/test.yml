@@ -41,7 +41,7 @@ jobs:
 
 
       - name: Run Clojure tests
-        run: clojure -M:test:spec --tag=~db
+        run: clojure -M:test:spec
 
       - name: Run ClojureScript tests
         run: clojure -M:test:cljs once
