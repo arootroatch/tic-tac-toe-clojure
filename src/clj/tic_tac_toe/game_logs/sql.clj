@@ -15,7 +15,7 @@
   (let [admin-ds (jdbc/get-datasource {:dbtype "postgres" :dbname "postgres"})]
     (with-open [conn (jdbc/get-connection admin-ds)]
       (.setAutoCommit conn true)
-      (jdbc/execute! conn [(str "CREATE DATABASE " db-name)]))))
+      (jdbc/execute! conn [(str "CREATE DATABASE \"" db-name "\"")]))))
 
 (defn create-games-table! []
   (jdbc/execute! ds ["CREATE TABLE IF NOT EXISTS games (
