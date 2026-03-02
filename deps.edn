@@ -29,7 +29,9 @@
                                   garden/garden                  {:mvn/version "1.3.10"}
                                   }
                     }
-             :spec {:main-opts ["-m" "speclj.main" "-c"]}
+             :spec {:main-opts ["-m" "speclj.main" "-c" "--tag=~integration"]}
+             :integration {:main-opts ["-m" "speclj.main" "-c" "--tag=integration"]}
+             :spec-fast   {:main-opts ["-m" "speclj.main" "-c" "--tag=~slow"]}
              :run  {:main-opts ["-m" "tic-tac-toe.main"]}
              :cljs {:main-opts ["-m" "c3kit.scaffold.cljs"]}
              :css  {:main-opts ["-m" "c3kit.scaffold.css"]}
