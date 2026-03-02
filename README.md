@@ -101,8 +101,8 @@ Required only if using the `--psqldb` flag. The EDN backend (`--edndb`) needs no
 
 ```bash
 # macOS (Homebrew)
-brew install postgresql@17
-brew services start postgresql@17
+brew install postgresql
+brew services start postgresql
 
 # Ubuntu/Debian
 sudo apt install postgresql

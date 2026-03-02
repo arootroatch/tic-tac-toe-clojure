@@ -15,8 +15,7 @@
              }
 
  :aliases   {
-             :antq {;; Note that it is `:deps`, not `:extra-deps`
-                    :deps      {com.github.liquidz/antq {:mvn/version "RELEASE"}}
+             :antq {:deps      {com.github.liquidz/antq {:mvn/version "RELEASE"}}
                     :main-opts ["-m" "antq.core"]}
              :test {
                     :extra-paths ["spec/clj" "spec/cljs" "spec/cljc"]
