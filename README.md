@@ -153,12 +153,17 @@ Then open `http://localhost:8080` in your browser.
 Tests use [Speclj](https://github.com/slagyr/speclj) with an autorunner that watches for file changes.
 
 ```bash
-# Clojure tests (autorunner)
+# Clojure unit tests (autorunner)
 clj -M:test:spec -a
 
 # ClojureScript tests (autorunner)
 clj -M:test:cljs
+
+# Integration tests (EDN + PostgreSQL)
+clj -M:test:integration
 ```
+
+Integration tests require a running PostgreSQL instance and exercise the EDN file and SQL persistence layers against real databases.
 
 ## Tech Stack
 

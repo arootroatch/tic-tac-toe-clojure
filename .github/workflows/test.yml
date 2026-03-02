@@ -39,9 +39,50 @@ jobs:
       - name: Install Playwright OS dependencies
         run: npx playwright install-deps
 
-
       - name: Run Clojure tests
         run: clojure -M:test:spec
 
       - name: Run ClojureScript tests
         run: clojure -M:test:cljs once
+
+  integration-tests:
+    runs-on: ubuntu-22.04
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: DeLaGuardo/setup-clojure@13.1
+        with:
+          cli: latest
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.gitlibs
+          key: clojure-${{ hashFiles('deps.edn') }}
+          restore-keys: clojure-
+
+      - name: Create PostgreSQL role
+        run: psql -h localhost -U postgres -c "CREATE ROLE runner WITH LOGIN SUPERUSER CREATEDB;"
+
+      - name: Run integration tests
+        run: clojure -M:test:integration
