@@ -43,13 +43,13 @@
 (defmulti render-board (fn [state] (count (:board @state))))
 
 (defmethod render-board 9 [state]
-  (reagent/after-render #(when (ai-turn? state) (defer (fn [] (ai-turn state)))))
+  (reagent/after-render #(when (ai-turn? state) (defer (fn [] (when (ai-turn? state) (ai-turn state))))))
   [:div.three-grid
    (for [n (range 9)]
      ^{:key n} [board-square state n])])
 
 (defmethod render-board 16 [state]
-  (reagent/after-render #(when (ai-turn? state) (defer (fn [] (ai-turn state)))))
+  (reagent/after-render #(when (ai-turn? state) (defer (fn [] (when (ai-turn? state) (ai-turn state))))))
   [:div.four-grid
    (for [n (range 16)]
      ^{:key n} [board-square state n])])
