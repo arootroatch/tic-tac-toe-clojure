@@ -6,6 +6,36 @@
 (def db {:dbtype "postgres" :dbname "ttt"})
 (def ds (jdbc/get-datasource db))
 
+(defn database-exists? [db-name]
+  (let [admin-ds (jdbc/get-datasource {:dbtype "postgres" :dbname "postgres"})]
+    (with-open [conn (jdbc/get-connection admin-ds)]
+      (seq (jdbc/execute! conn ["SELECT 1 FROM pg_database WHERE datname = ?" db-name])))))
+
+(defn create-database! [db-name]
+  (let [admin-ds (jdbc/get-datasource {:dbtype "postgres" :dbname "postgres"})]
+    (with-open [conn (jdbc/get-connection admin-ds)]
+      (.setAutoCommit conn true)
+      (jdbc/execute! conn [(str "CREATE DATABASE " db-name)]))))
+
+(defn create-games-table! []
+  (jdbc/execute! ds ["CREATE TABLE IF NOT EXISTS games (
+    id INTEGER PRIMARY KEY,
+    mode INTEGER,
+    first_ai_level INTEGER,
+    second_ai_level INTEGER,
+    game_state TEXT,
+    current_screen TEXT,
+    human BOOLEAN,
+    ui TEXT,
+    player TEXT,
+    board TEXT,
+    moves TEXT)"]))
+
+(defn ensure-db! []
+  (when-not (database-exists? "ttt")
+    (create-database! "ttt"))
+  (create-games-table!))
+
 (defmethod game-logs/get-new-game-id :sql [{:keys [ds]}]
   (let [query (jdbc/execute! ds ["SELECT id FROM games"])
         ids (map #(:games/id %) query)]

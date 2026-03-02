@@ -79,3 +79,24 @@
   (it "formats completed game state"
     (should= (assoc in-progress-formatted :game-state "O wins!")
              (format-game-state (assoc in-progress :games/game_state "O wins!") false))))
+
+(describe "ensure-db!"
+  (with-stubs)
+
+  (it "creates database and table when database doesn't exist"
+    (with-redefs [database-exists? (stub :db-exists {:return false})
+                  create-database! (stub :create-db)
+                  create-games-table! (stub :create-table)]
+      (ensure-db!)
+      (should-have-invoked :db-exists {:with ["ttt"]})
+      (should-have-invoked :create-db {:with ["ttt"]})
+      (should-have-invoked :create-table)))
+
+  (it "skips database creation when database already exists"
+    (with-redefs [database-exists? (stub :db-exists {:return true})
+                  create-database! (stub :create-db)
+                  create-games-table! (stub :create-table)]
+      (ensure-db!)
+      (should-have-invoked :db-exists {:with ["ttt"]})
+      (should-not-have-invoked :create-db)
+      (should-have-invoked :create-table))))
