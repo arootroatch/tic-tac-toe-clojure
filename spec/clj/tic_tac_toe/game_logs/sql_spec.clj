@@ -2,43 +2,6 @@
   (:require [speclj.core :refer :all]
             [tic-tac-toe.game-logs.sql :refer :all]))
 
-(def initial-state {:game-id         7
-                    :filepath        "src/tic_tac_toe/game_logs/in_progress/gui/game-7.edn"
-                    :current-screen  :play
-                    :second-ai-level nil
-                    :mode            3
-                    :first-ai-level  3
-                    :game-state      :in-progress
-                    :human?          false
-                    :ui              :gui
-                    :player          :x
-                    :board           [1 2 3 4 5 6 7 8 9]})
-
-(def game-log [{:games/current_screen  ":play",
-                :games/game_state      ":in-progress",
-                :games/human           false,
-                :games/mode            3,
-                :games/first_ai_level  3,
-                :games/second_ai_level 0,
-                :games/board           "[1 2 3 4 5 6 7 8 9]",
-                :games/id              7,
-                :games/ui              ":gui",
-                :games/player          ":x",
-                :games/moves           nil}])
-
-(def game-log-formatted {:game-id         7
-                         :current-screen  :play
-                         :db              :sql
-                         :moves           []
-                         :second-ai-level 0
-                         :mode            3
-                         :first-ai-level  3
-                         :game-state      :in-progress
-                         :human?          false
-                         :ui              :gui
-                         :player          :x
-                         :board           [1 2 3 4 5 6 7 8 9]})
-
 (def in-progress {:games/current_screen  "",
                   :games/game_state      ":in-progress",
                   :games/human           false,
