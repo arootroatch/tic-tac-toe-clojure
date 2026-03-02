@@ -51,6 +51,7 @@
     (play-loop (assoc game-options :filepath filepath :ui :tui))))
 
 (defmethod launch-user-interface ["--psqldb"] [_]
+  (sql/ensure-db!)
   (let [old-game (game-logs/get-last-in-progress-game {:db :sql :ds sql/ds})
         game-id (:games/id old-game)
         resume-selection (if (some? old-game) (get-selection {:option :resume-sql :game-id game-id}) nil)
@@ -68,4 +69,5 @@
   (replay (Integer/parseInt (last args)) :edn))
 
 (defmethod launch-user-interface ["--psqldb" "--game"] [args]
+  (sql/ensure-db!)
   (replay (Integer/parseInt (last args)) :sql))

@@ -55,6 +55,7 @@
     (launch-quil new-state)))
 
 (defmethod launch-user-interface ["gui" "--psqldb"] [_]
+  (sql/ensure-db!)
   (let [game-id (game-logs/get-new-game-id {:db :sql :ds sql/ds})
         new-state (assoc state :game-id game-id :db :sql)]
     (launch-quil new-state)))
@@ -77,4 +78,5 @@
   (replay (Integer/parseInt (last args)) :edn))
 
 (defmethod launch-user-interface ["gui" "--psqldb" "--game"] [args]
+  (sql/ensure-db!)
   (replay (Integer/parseInt (last args)) :sql))

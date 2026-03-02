@@ -174,6 +174,7 @@
                     get-options (stub :get-options {:return (assoc get-options-result :db :sql)})
                     sql/format-game-state (stub :format {:return sql-spec/in-progress-formatted})
                     sql/log-game-state (stub :log-state)
+                    sql/ensure-db! (stub :ensure-db)
                     play-loop (stub :play-loop)])
 
     (it "checks for in-progress game"
@@ -195,6 +196,10 @@
         (should-have-invoked :get-options {:with [:sql]})
         (should-have-invoked :log-state {:with [sql/ds (assoc get-options-result :db :sql)]})
         (should-have-invoked :play-loop {:with [(assoc get-options-result :ui :tui :db :sql)]})))
+
+    (it "calls ensure-db! before starting"
+      (with-in-str "1\n" (launch-user-interface ["--psqldb"]))
+      (should-have-invoked :ensure-db))
 
     (it "does not ask user to resume if there's no in-progress game"
       (with-redefs [game-logs/get-last-in-progress-game (stub :get-last {:return nil})
@@ -233,7 +238,12 @@
     (redefs-around [game-logs/get-game-log (stub :game-log {:return sql-spec/game-log-formatted-2})
                     print-utils/display-invalid-game-id-error (stub :id-error)
                     print-utils/display-unfinished-game-error (stub :unfinished)
-                    print-utils/play-logged-game (stub :logged)])
+                    print-utils/play-logged-game (stub :logged)
+                    sql/ensure-db! (stub :ensure-db)])
+
+    (it "calls ensure-db! before replay"
+      (launch-user-interface ["--psqldb" "--game" "5"])
+      (should-have-invoked :ensure-db))
 
     (it "gets game log for given game id"
       (launch-user-interface ["--psqldb" "--game" "5"])
