@@ -95,6 +95,22 @@ sudo ./linux-install.sh
 
 See the [official Clojure install guide](https://clojure.org/guides/install_clojure) for more options.
 
+### PostgreSQL (for TUI/GUI with `--psqldb`)
+
+Required only if using the `--psqldb` flag. The EDN backend (`--edndb`) needs no additional setup.
+
+```bash
+# macOS (Homebrew)
+brew install postgresql@17
+brew services start postgresql@17
+
+# Ubuntu/Debian
+sudo apt install postgresql
+sudo systemctl start postgresql
+```
+
+The app automatically creates the `ttt` database and `games` table on first run.
+
 ## Running
 
 ```
