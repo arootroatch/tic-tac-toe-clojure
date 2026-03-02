@@ -141,7 +141,6 @@
       (jdbc/execute! conn [(str "DROP DATABASE IF EXISTS \"" ensure-db-name "\"")])))
 
   (it "creates database and table from scratch"
-    ;; Clean slate
     (with-open [conn (jdbc/get-connection admin-ds)]
       (.setAutoCommit conn true)
       (jdbc/execute! conn [(str "DROP DATABASE IF EXISTS \"" ensure-db-name "\"")]))
@@ -150,8 +149,6 @@
       (with-redefs [sql/db test-db
                     sql/ds test-ds]
         (sql/ensure-db!)
-        ;; Verify database exists
         (should (sql/database-exists? ensure-db-name))
-        ;; Verify table exists by inserting a row
         (should-not-throw
           (jdbc/execute! test-ds ["INSERT INTO games (id, mode) VALUES (1, 2)"]))))))
