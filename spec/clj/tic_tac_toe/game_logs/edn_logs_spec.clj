@@ -3,9 +3,52 @@
             [tic-tac-toe.game-logs.game-logs :as game-logs]
             [tic-tac-toe.game_logs.edn-logs :refer :all]))
 
+;region Fixture data (inline replacements for filesystem reads)
+
 (def test-path "spec/clj/tic_tac_toe/game_logs/game-logs-test.edn")
 (def game-ids-test-path "spec/clj/tic_tac_toe/game_logs/game-ids.edn")
 (def empty-test-path "spec/clj/tic_tac_toe/game_logs/game-logs-empty-test.edn")
+
+(def test-path-content
+  (str "{:game-id    1\n :moves      []\n :game-state :in-progress\n :ui         :gui}\n"
+       "{:game-id    2\n :moves      []\n :game-state :in-progress\n :ui         :tui}\n"
+       "{:game-id 5, :filepath \"src/clj/tic_tac_toe/game_logs/in_progress/gui/game-5.edn\", :current-screen :play, :moves [[1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x :x 7 8 9] [:o 2 3 :o :x :x 7 8 9] [:o 2 :x :o :x :x 7 8 9] [:o 2 :x :o :x :x :o 8 9]], :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state \"O wins!\", :human? true, :ui :gui, :player :x, :board [1 2 3 4 5 6 7 8 9]}\n"
+       "{:mode 2, :first-ai-level 3, :second-ai-level nil, :board [1 2 3 4 5 6 7 8 9], :player :x, :game-id 6, :ui :tui, :moves [[1 :x 3 4 5 6 7 8 9] [:o :x 3 4 5 6 7 8 9] [:o :x 3 :x 5 6 7 8 9] [:o :x 3 :x :o 6 7 8 9] [:o :x 3 :x :o 6 :x 8 9] [:o :x 3 :x :o 6 :x 8 :o]]}\n"))
+
+(def game-ids-content "1\n2\n3\n4\n")
+
+(def empty-file-content "")
+
+(def game-4-path "spec/clj/tic_tac_toe/game_logs/in_progress/game-4.edn")
+(def game-4-content
+  (str "{:game-id 4\n :game-state :in-progress\n :ui :gui\n :mode 2\n :board [1 2 3 4 5 6 7 8 9]\n :first-ai-level 3\n :second-ai-level nil\n :player :x\n :human? true}\n\n"
+       "[1 2 3 4 5 6 7 8 9]\n"
+       "[1 2 3 4 :x 6 7 8 9]\n"))
+
+(def completed-game-path "spec/clj/tic_tac_toe/game_logs/in_progress/completed-game.edn")
+(def completed-game-content
+  (str "{:game-id 5\n :game-state :in-progress\n :ui :gui\n :mode 2\n :board [1 2 3 4 5 6 7 8 9]\n :first-ai-level 3\n :second-ai-level nil\n :player :x\n :human? true}\n\n"
+       "[1 2 3 4 5 6 7 8 9]\n"
+       "[1 2 3 4 :x 6 7 8 9]\n"
+       "[:o 2 3 4 :x 6 7 8 9]\n"
+       "[:o 2 3 4 :x :x 7 8 9]\n"
+       "[:o 2 3 :o :x :x 7 8 9]\n"
+       "[:o :x 3 :o :x :x 7 8 9]\n"
+       "[:o :x 3 :o :x :x :o 8 9]\n"))
+
+(defn fake-slurp [path]
+  (condp = path
+    test-path test-path-content
+    game-ids-test-path game-ids-content
+    empty-test-path empty-file-content
+    game-4-path game-4-content
+    completed-game-path completed-game-content
+    (throw (java.io.FileNotFoundException. (str "Fake slurp: file not found " path)))))
+
+;endregion
+
+;region Public defs (imported by tui_main_spec)
+
 (def resumed-state {:game-id         4
                     :game-state      :in-progress
                     :ui              :gui
@@ -20,8 +63,12 @@
 
 (def game-log {:game-id 5, :filepath "src/clj/tic_tac_toe/game_logs/in_progress/gui/game-5.edn", :current-screen :play, :moves '([1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x :x 7 8 9] [:o 2 3 :o :x :x 7 8 9] [:o 2 :x :o :x :x 7 8 9] [:o 2 :x :o :x :x :o 8 9]), :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state "O wins!", :human? true, :ui :gui, :player :x, :board [1 2 3 4 5 6 7 8 9]})
 
+;endregion
+
 (describe "logging games"
   (with-stubs)
+  (redefs-around [slurp fake-slurp])
+
   (it "gets all game-logs"
     (should= [
               {:game-id 1, :moves [], :game-state :in-progress, :ui :gui}
@@ -38,11 +85,11 @@
                (game-logs/get-last-in-progress-game {:db :edn :dir-path "spec/tic_tac_toe/game_logs/in_progress"}))))
 
   (it "gets resumed game's board"
-    (should= [1 2 3 4 5 6 7 8 9] (get-resumed-game-board "spec/clj/tic_tac_toe/game_logs/in_progress/game-4.edn")))
+    (should= [1 2 3 4 5 6 7 8 9] (get-resumed-game-board game-4-path)))
 
   (it "gets game state for resumed game"
     (should= resumed-state
-             (get-resumed-game-state "spec/clj/tic_tac_toe/game_logs/in_progress/game-4.edn")))
+             (get-resumed-game-state game-4-path)))
 
   (it "adds game id to game id file"
     (with-redefs [spit (stub :spit)]
@@ -50,18 +97,19 @@
       (should-have-invoked :spit {:with ["spec/clj/tic_tac_toe/game_logs/game-ids.edn" "5\n" :append true]})))
 
   (it "gets paths in given directory"
-    (should= #{"spec/clj/tic_tac_toe/game_logs/game-logs-empty-test.edn"
-               "spec/clj/tic_tac_toe/game_logs/in_progress"
-               "spec/clj/tic_tac_toe/game_logs/in_progress/completed-game.edn"
-               "spec/clj/tic_tac_toe/game_logs/in_progress/game-4.edn"
-               "spec/clj/tic_tac_toe/game_logs/in_progress_empty"
-               "spec/clj/tic_tac_toe/game_logs/in_progress_empty/.gitkeep"
-               "spec/clj/tic_tac_toe/game_logs/game-logs-test.edn"
-               "spec/clj/tic_tac_toe/game_logs/sql_spec.clj"
-               "spec/clj/tic_tac_toe/game_logs/game-ids.edn"
-               "spec/clj/tic_tac_toe/game_logs/test_data.clj"
-               "spec/clj/tic_tac_toe/game_logs/edn_logs_spec.clj"}
-             (set (get-paths-in-dir "spec/clj/tic_tac_toe/game_logs"))))
+    (let [mock-files (map #(java.io.File. %)
+                          ["spec/clj/tic_tac_toe/game_logs"
+                           "spec/clj/tic_tac_toe/game_logs/game-logs-test.edn"
+                           "spec/clj/tic_tac_toe/game_logs/game-ids.edn"
+                           "spec/clj/tic_tac_toe/game_logs/in_progress"
+                           "spec/clj/tic_tac_toe/game_logs/in_progress/game-4.edn"])]
+      (with-redefs [clojure.java.io/file (constantly nil)
+                    file-seq (constantly mock-files)]
+        (should= #{"spec/clj/tic_tac_toe/game_logs/game-logs-test.edn"
+                    "spec/clj/tic_tac_toe/game_logs/game-ids.edn"
+                    "spec/clj/tic_tac_toe/game_logs/in_progress"
+                    "spec/clj/tic_tac_toe/game_logs/in_progress/game-4.edn"}
+                 (set (get-paths-in-dir "spec/clj/tic_tac_toe/game_logs"))))))
 
   (it "creates new filename and path for in progress game"
     (should= "spec/clj/tic_tac_toe/game_logs/in_progress/game-5.edn"
@@ -103,7 +151,7 @@
                 :human?          true
                 :moves           [[1 2 3 4 5 6 7 8 9]
                                   [1 2 3 4 :x 6 7 8 9]]}
-               (format-in-progress-data "spec/clj/tic_tac_toe/game_logs/in_progress/game-4.edn")))
+               (format-in-progress-data game-4-path)))
 
     (it "returns nil if temp-fil does not exist"
       (should= nil (format-in-progress-data "spec/clj/tic_tac_toe/game_logs/in_progress/game-5.edn")))
@@ -114,7 +162,7 @@
     (it "writes completed game to game log"
       (with-redefs [spit (stub :spit)
                     clojure.java.io/delete-file (stub :delete-file)]
-        (game-logs/log-completed-game {:state    {:filepath "spec/clj/tic_tac_toe/game_logs/in_progress/completed-game.edn" :db :edn :game-state "O wins!"}
+        (game-logs/log-completed-game {:state    {:filepath completed-game-path :db :edn :game-state "O wins!"}
                                        :log-file test-path})
         (should-have-invoked :spit {:with ["spec/clj/tic_tac_toe/game_logs/game-logs-test.edn"
                                            "{:game-id 5, :moves [[1 2 3 4 5 6 7 8 9] [1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x :x 7 8 9] [:o 2 3 :o :x :x 7 8 9] [:o :x 3 :o :x :x 7 8 9] [:o :x 3 :o :x :x :o 8 9]], :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state \"O wins!\", :human? true, :ui :gui, :player :x, :board [1 2 3 4 5 6 7 8 9]}\n"
@@ -123,9 +171,9 @@
     (it "deletes temp file after logging"
       (with-redefs [spit (stub :spit)
                     clojure.java.io/delete-file (stub :delete-file)]
-        (game-logs/log-completed-game {:state    {:filepath "spec/clj/tic_tac_toe/game_logs/in_progress/game-4.edn" :db :edn}
+        (game-logs/log-completed-game {:state    {:filepath game-4-path :db :edn}
                                        :log-file test-path})
-        (should-have-invoked :delete-file {:with ["spec/clj/tic_tac_toe/game_logs/in_progress/game-4.edn"]})))
+        (should-have-invoked :delete-file {:with [game-4-path]})))
 
     (it "doesn't run if temp-file does not exist"
       (with-redefs [spit (stub :spit)
