@@ -44,8 +44,9 @@
 
   (context "replay edn"
     (it "displays game id error when invalid game id is entered"
-      (should= "There is no game with ID 50\n"
-               (with-out-str (launch-user-interface ["gui" "--edndb" "--game" "50"]))))
+      (with-redefs [game-logs/get-game-log (stub :game-log {:return nil})]
+        (should= "There is no game with ID 50\n"
+                 (with-out-str (launch-user-interface ["gui" "--edndb" "--game" "50"])))))
 
     (it "displays moves error when game has no moves"
       (with-redefs [game-logs/get-game-log (stub :game-log {:return {:moves [] :game-id 2}})]
@@ -53,16 +54,17 @@
                  (with-out-str (launch-user-interface ["gui" "--edndb" "--game" "50"])))))
 
     (it "sets game-state to state from log and launches quil"
-      (with-redefs [launch-quil (stub :launch-quil)]
+      (with-redefs [launch-quil (stub :launch-quil)
+                    game-logs/get-game-log (stub :game-log {:return {:game-id 2, :filepath "src/clj/tic_tac_toe/game_logs/in_progress/gui/game-2.edn", :moves [[1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 :x 9] [:o :o 3 4 :x 6 7 :x 9] [:o :o 3 4 :x 6 7 :x :x] [:o :o :o 4 :x 6 7 :x :x]], :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state :in-progress, :ui :gui, :board [1 2 3 4 5 6 7 8 9]}})]
         (launch-user-interface ["gui" "--edndb" "--game" "2"])
         (should-have-invoked :launch-quil {:with [{:game-id 2, :filepath "src/clj/tic_tac_toe/game_logs/in_progress/gui/game-2.edn", :current-screen :replay, :db :edn, :moves [[1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 :x 9] [:o :o 3 4 :x 6 7 :x 9] [:o :o 3 4 :x 6 7 :x :x] [:o :o :o 4 :x 6 7 :x :x]], :second-ai-level nil, :mode 2, :first-ai-level 3, :game-state :in-progress, :human? true, :ui :gui, :player :x, :board [1 2 3 4 5 6 7 8 9], :replay? true}]})))
     )
 
   (context "replay sql"
-    (tags :db)
     (it "displays game id error when invalid game id is entered"
-      (should= "There is no game with ID 50\n"
-               (with-out-str (launch-user-interface ["gui" "--psqldb" "--game" "50"]))))
+      (with-redefs [game-logs/get-game-log (stub :game-log {:return nil})]
+        (should= "There is no game with ID 50\n"
+                 (with-out-str (launch-user-interface ["gui" "--psqldb" "--game" "50"])))))
 
     (it "displays moves error when game has no moves"
       (with-redefs [game-logs/get-game-log (stub :game-log {:return {:moves [] :game-id 2}})]
@@ -70,7 +72,8 @@
                  (with-out-str (launch-user-interface ["gui" "--psqldb" "--game" "50"])))))
 
     (it "sets game-state to state from log and launches quil"
-      (with-redefs [launch-quil (stub :launch-quil)]
+      (with-redefs [launch-quil (stub :launch-quil)
+                    game-logs/get-game-log (stub :game-log {:return {:game-id 2, :moves [[1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o :x 3 4 :x 6 7 8 9] [:o :x 3 4 :x 6 7 :o 9] [:o :x :x 4 :x 6 7 :o 9] [:o :x :x 4 :x 6 :o :o 9] [:o :x :x 4 :x :x :o :o 9] [:o :x :x 4 :x :x :o :o :o]], :second-ai-level 0, :mode 2, :first-ai-level 3, :game-state :in-progress, :ui :tui, :board [1 2 3 4 5 6 7 8 9]}})]
         (launch-user-interface ["gui" "--psqldb" "--game" "2"])
         (should-have-invoked :launch-quil {:with [{:game-id 2, :current-screen :replay, :db :sql, :moves [[1 2 3 4 :x 6 7 8 9] [:o 2 3 4 :x 6 7 8 9] [:o :x 3 4 :x 6 7 8 9] [:o :x 3 4 :x 6 7 :o 9] [:o :x :x 4 :x 6 7 :o 9] [:o :x :x 4 :x 6 :o :o 9] [:o :x :x 4 :x :x :o :o 9] [:o :x :x 4 :x :x :o :o :o]], :second-ai-level 0, :mode 2, :first-ai-level 3, :game-state :in-progress, :human? true, :ui :tui, :player :x, :board [1 2 3 4 5 6 7 8 9], :replay? true}]})))
     ))
