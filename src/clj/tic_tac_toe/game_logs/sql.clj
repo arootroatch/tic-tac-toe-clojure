@@ -32,8 +32,9 @@
     moves TEXT)"]))
 
 (defn ensure-db! []
-  (when-not (database-exists? "ttt")
-    (create-database! "ttt"))
+  (let [db-name (:dbname db)]
+    (when-not (database-exists? db-name)
+      (create-database! db-name)))
   (create-games-table!))
 
 (defmethod game-logs/get-new-game-id :sql [{:keys [ds]}]
