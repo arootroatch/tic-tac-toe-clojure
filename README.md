@@ -155,6 +155,8 @@ Tests use [Speclj](https://github.com/slagyr/speclj) with an autorunner that wat
 ```bash
 # Clojure unit tests (autorunner)
 clj -M:test:spec -a
+# Skip tests tagged as slow
+clj -M:test:spec-fast -a
 
 # ClojureScript tests (autorunner)
 clj -M:test:cljs

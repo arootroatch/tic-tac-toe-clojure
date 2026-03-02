@@ -31,7 +31,7 @@
                     }
              :spec {:main-opts ["-m" "speclj.main" "-c" "--tag=~integration"]}
              :integration {:main-opts ["-m" "speclj.main" "-c" "--tag=integration"]}
-             :spec-fast   {:main-opts ["-m" "speclj.main" "-c" "--tag=~slow"]}
+             :spec-fast   {:main-opts ["-m" "speclj.main" "-c" "--tag=~slow" "--tag=~integration"]}
              :run  {:main-opts ["-m" "tic-tac-toe.main"]}
              :cljs {:main-opts ["-m" "c3kit.scaffold.cljs"]}
              :css  {:main-opts ["-m" "c3kit.scaffold.css"]}
