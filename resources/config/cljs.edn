@@ -3,7 +3,7 @@
  :development   {:cache-analysis true
                  :optimizations  :none
                  :output-dir     "resources/public/cljs/"
-                 :output-to      "resources/public/cljs/tic_tac_toe_dev.js"
+                 :output-to      "resources/public/cljs/tic_tac_toe.js"
                  :pretty-print   true
                  ;:source-map     true
                  :sources        ["spec/cljs" "src/cljs"
@@ -17,8 +17,8 @@
 
  :production    {:cache-analysis false
                  :optimizations  :advanced
-                 :output-dir     "out"
-                 :output-to      "out/tic_tac_toe_dev.js"
+                 :output-dir     "resources/public/cljs/"
+                 :output-to      "resources/public/cljs/tic_tac_toe.js"
                  :pretty-print   false
                  :sources        ["src/cljc" "src/cljs"]
                  :specs          false
