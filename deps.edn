@@ -3,7 +3,6 @@
  :mvn/repos {"maven_central" {:url "https://repo.maven.apache.org/maven2/"}}
  :deps      {
              org.clojure/clojure               {:mvn/version "1.12.4"}
-             quil/quil                         {:mvn/version "4.3.1563"}
              com.github.seancorfield/next.jdbc {:mvn/version "1.3.1093"}
              org.postgresql/postgresql         {:mvn/version "42.7.9"}
              cljsjs/react                      {:mvn/version "17.0.2-0"}
@@ -29,6 +28,7 @@
              :spec {:main-opts ["-m" "speclj.main" "-c" "--tag=~integration"]}
              :integration {:main-opts ["-m" "speclj.main" "-c" "--tag=integration"]}
              :spec-fast   {:main-opts ["-m" "speclj.main" "-c" "--tag=~slow" "--tag=~integration"]}
+             :gui  {:extra-deps {quil/quil {:mvn/version "4.3.1563"}}}
              :run  {:main-opts ["-m" "tic-tac-toe.main"]}
              :cljs {:main-opts ["-m" "c3kit.scaffold.cljs"]}
              :css  {:main-opts ["-m" "c3kit.scaffold.css"]}

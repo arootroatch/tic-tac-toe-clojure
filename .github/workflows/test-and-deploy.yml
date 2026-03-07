@@ -40,7 +40,7 @@ jobs:
         run: npx playwright install-deps
 
       - name: Run Clojure tests
-        run: clojure -M:test:spec
+        run: clojure -M:test:gui:spec
 
       - name: Run ClojureScript tests
         run: clojure -M:test:cljs once
@@ -85,7 +85,7 @@ jobs:
         run: psql -h localhost -U postgres -c "CREATE ROLE runner WITH LOGIN SUPERUSER CREATEDB;"
 
       - name: Run integration tests
-        run: clojure -M:test:integration
+        run: clojure -M:test:gui:integration
 
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
