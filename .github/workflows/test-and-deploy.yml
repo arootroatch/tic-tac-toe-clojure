@@ -121,7 +121,7 @@ jobs:
           C3_ENV: production
 
       - name: Build CSS
-        run: clojure -M:test:css
+        run: clojure -M:test:css once
 
       - name: Install Vercel CLI
         run: npm install -g vercel
