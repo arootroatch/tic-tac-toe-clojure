@@ -1,6 +1,6 @@
 # Tic-Tac-Toe
 
-[![Tests](https://github.com/arootroatch/tic-tac-toe-clojure/actions/workflows/test-and-deploy.yml/badge.svg)](https://github.com/arootroatch/tic-tac-toe-clojure/actions/workflows/test-and-deploy.yml)
+[![Tests and Deploy](https://github.com/arootroatch/tic-tac-toe-clojure/actions/workflows/test-and-deploy.yml/badge.svg)](https://github.com/arootroatch/tic-tac-toe-clojure/actions/workflows/test-and-deploy.yml)
 
 A multi-frontend tic-tac-toe engine built in Clojure/ClojureScript, featuring three AI difficulty levels, multiple board sizes, and persistent game logging.
 
